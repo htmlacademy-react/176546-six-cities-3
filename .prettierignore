@@ -1,0 +1,10 @@
+# Игнорируемые артефакты сборки
+node_modules/
+dist/
+build/
+coverage/
+
+# Сгенерированные файлы
+*.min.js
+package-lock.json
+yarn.lock

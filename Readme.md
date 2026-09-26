@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
-* Студент: [Leonid Konovalov](https://up.htmlacademy.ru/react-individual/3/user/176546).
-* Наставник: `Неизвестно`.
+- Студент: [Leonid Konovalov](https://up.htmlacademy.ru/react-individual/3/user/176546).
+- Наставник: [Алексей Хабиров](https://htmlacademy.ru/profile/alex_khab).
 
 ---
 
