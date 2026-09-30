@@ -1,11 +1,13 @@
-import MainPage from '@/pages/main-page/main-page.tsx';
-
-const Settings = {
-  cardCount: 5,
-} as const;
+import { HelmetProvider } from 'react-helmet-async';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
 
 function App(): JSX.Element {
-  return <MainPage cardCount={Settings.cardCount} />;
+  return (
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
+  );
 }
 
 export default App;
