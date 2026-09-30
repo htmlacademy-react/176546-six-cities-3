@@ -1,4 +1,4 @@
-import Logo from '@/components/logo.tsx';
+import Logo from '@/components/logo/logo.tsx';
 import { Helmet } from 'react-helmet-async';
 
 function LoginPage(): JSX.Element {
@@ -11,7 +11,7 @@ function LoginPage(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Logo />
+              <Logo type="header" />
             </div>
           </div>
         </div>
