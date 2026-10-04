@@ -1,10 +1,25 @@
 import { lazy } from 'react';
 
+export const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Root = '/',
-  Offer = '/offer',
+  Offer = '/offer/:id',
   NotFound = '*',
 }
 

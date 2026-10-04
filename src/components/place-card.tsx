@@ -1,24 +1,52 @@
-function PlaceCard(): JSX.Element {
+import type { Offer } from '@/mocks/offers';
+
+type PlaceCardProps = {
+  offer: Offer;
+  variant?: 'cities' | 'near-places';
+  isActive?: boolean;
+  onMouseEnter?: (id: number) => void;
+  onMouseLeave?: () => void;
+};
+
+function PlaceCard({
+  offer,
+  variant = 'cities',
+  isActive = false,
+  onMouseEnter,
+  onMouseLeave,
+}: PlaceCardProps): JSX.Element {
+  const { id, isPremium, price, rating, title, type, previewImage } = offer;
+
+  const cardClass = variant === 'cities' ? 'cities__card' : 'near-places__card';
+  const imageWrapperClass =
+    variant === 'cities' ? 'cities__image-wrapper' : 'near-places__image-wrapper';
+
   return (
-    <article className="cities__card place-card">
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+    <article
+      className={`${cardClass} place-card${isActive ? ' place-card--active' : ''}`}
+      onMouseEnter={() => onMouseEnter?.(id)}
+      onMouseLeave={() => onMouseLeave?.()}
+    >
+      {isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
+      <div className={`${imageWrapperClass} place-card__image-wrapper`}>
+        <a href={`/offer/${id}`}>
           <img
             className="place-card__image"
-            src="img/apartment-01.jpg"
+            src={previewImage}
             width="260"
             height="200"
-            alt="Place image"
+            alt={title}
           />
         </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;120</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
@@ -30,14 +58,14 @@ function PlaceCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: `${(rating / 5) * 100}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+          <a href={`/offer/${id}`}>{title}</a>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );

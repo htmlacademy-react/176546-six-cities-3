@@ -1,12 +1,30 @@
-import PlaceCard from '../components/place-card.tsx';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import Header from '@/components/header/header.tsx';
+import PlacesList from '@/components/places-list';
+import Header from '@/components/header/header';
+import type { Offer } from '@/mocks/offers';
+import type { City } from '@/mocks/cities';
 
 type MainPageProps = {
   cardCount: number;
+  offers: Offer[];
+  cities: City[];
 };
 
-function MainPage({ cardCount }: MainPageProps): JSX.Element {
+function MainPage({ cardCount, offers, cities }: MainPageProps): JSX.Element {
+  const [activeCity, setActiveCity] = useState('Amsterdam');
+  const [activeOfferId, setActiveOfferId] = useState<number | null>(null);
+
+  const cityOffers = offers.filter((offer) => offer.city === activeCity).slice(0, cardCount);
+
+  const handleCardMouseEnter = (id: number) => {
+    setActiveOfferId(id);
+  };
+
+  const handleCardMouseLeave = () => {
+    setActiveOfferId(null);
+  };
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -20,36 +38,23 @@ function MainPage({ cardCount }: MainPageProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {cities.map((city) => (
+                <li className="locations__item" key={city.name}>
+                  <a
+                    className={`locations__item-link tabs__item${
+                      city.name === activeCity ? ' tabs__item--active' : ''
+                    }`}
+                    href="#"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      setActiveCity(city.name);
+                      setActiveOfferId(null);
+                    }}
+                  >
+                    <span>{city.name}</span>
+                  </a>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
@@ -57,7 +62,9 @@ function MainPage({ cardCount }: MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">
+                {cityOffers.length} places to stay in {activeCity}
+              </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -81,11 +88,13 @@ function MainPage({ cardCount }: MainPageProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {Array.from({ length: cardCount }, (_, i) => (
-                  <PlaceCard key={i} />
-                ))}
-              </div>
+
+              <PlacesList
+                offers={cityOffers}
+                activeOfferId={activeOfferId}
+                onCardMouseEnter={handleCardMouseEnter}
+                onCardMouseLeave={handleCardMouseLeave}
+              />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
