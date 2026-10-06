@@ -4,7 +4,6 @@ import type { OfferPreview } from '@/types/offer.ts';
 type PlacesListProps = {
   offers: OfferPreview[];
   variant?: 'cities' | 'near-places';
-  activeOfferId?: string | null;
   onCardMouseEnter?: (id: string) => void;
   onCardMouseLeave?: () => void;
 };
@@ -12,7 +11,6 @@ type PlacesListProps = {
 function PlacesList({
   offers,
   variant = 'cities',
-  activeOfferId = null,
   onCardMouseEnter,
   onCardMouseLeave,
 }: PlacesListProps): JSX.Element {
@@ -28,7 +26,6 @@ function PlacesList({
           key={offer.id}
           offer={offer}
           variant={variant}
-          isActive={offer.id === activeOfferId}
           onMouseEnter={onCardMouseEnter}
           onMouseLeave={onCardMouseLeave}
         />

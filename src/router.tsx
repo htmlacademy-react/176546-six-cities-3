@@ -10,7 +10,6 @@ import {
   MainPage,
   NotFoundPage,
   OfferPage,
-  Settings,
 } from '@/const';
 
 import type { OfferMaximum } from '@/types/offer.ts';
@@ -32,9 +31,7 @@ export const createRoutes = ({ offers, reviews, cities }: RoutesData) =>
     <>
       <Route
         path={AppRoute.Root}
-        element={withSuspense(
-          <MainPage cardCount={Settings.cardCount} offers={offers} cities={cities} />
-        )}
+        element={withSuspense(<MainPage offers={offers} cities={cities} />)}
         errorElement={withSuspense(<NotFoundPage />)}
       />
       <Route path={AppRoute.Login} element={withSuspense(<LoginPage />)} />

@@ -13,15 +13,6 @@ type MainPageProps = {
 
 function MainPage({ offers, cities }: MainPageProps): JSX.Element {
   const [, setActiveCity] = useState('Amsterdam');
-  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
-
-  const handleCardMouseEnter = (id: string) => {
-    setActiveOfferId(id);
-  };
-
-  const handleCardMouseLeave = () => {
-    setActiveOfferId(null);
-  };
 
   return (
     <div className="page page--gray page--main">
@@ -46,7 +37,6 @@ function MainPage({ offers, cities }: MainPageProps): JSX.Element {
                     onClick={(evt) => {
                       evt.preventDefault();
                       setActiveCity(city.name);
-                      setActiveOfferId(null);
                     }}
                   >
                     <span>{city.name}</span>
@@ -85,12 +75,7 @@ function MainPage({ offers, cities }: MainPageProps): JSX.Element {
                 </ul>
               </form>
 
-              <PlacesList
-                offers={offers}
-                activeOfferId={activeOfferId}
-                onCardMouseEnter={handleCardMouseEnter}
-                onCardMouseLeave={handleCardMouseLeave}
-              />
+              <PlacesList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

@@ -3,7 +3,6 @@ import type { OfferPreview } from '@/types/offer.ts';
 type PlaceCardProps = {
   offer: OfferPreview;
   variant?: 'cities' | 'near-places';
-  isActive?: boolean;
   onMouseEnter?: (id: string) => void;
   onMouseLeave?: () => void;
 };
@@ -11,7 +10,6 @@ type PlaceCardProps = {
 function PlaceCard({
   offer,
   variant = 'cities',
-  isActive = false,
   onMouseEnter,
   onMouseLeave,
 }: PlaceCardProps): JSX.Element {
@@ -23,7 +21,7 @@ function PlaceCard({
 
   return (
     <article
-      className={`${cardClass} place-card${isActive ? ' place-card--active' : ''}`}
+      className={`${cardClass} place-card`}
       onMouseEnter={() => onMouseEnter?.(id)}
       onMouseLeave={() => onMouseLeave?.()}
     >
