@@ -69,7 +69,7 @@ export const offers: OfferMaximum[] = [
   {
     id: '5e2786df-644e-4dfa-b22e-ed899bd7b1a3',
     isPremium: false,
-    isFavorite: false,
+    isFavorite: true,
     price: 95,
     rating: 4.2,
     title: 'Canal view studio with a terrace',
@@ -145,7 +145,7 @@ export const offers: OfferMaximum[] = [
   {
     id: 'ce689f5a-8656-40af-81b5-aa8c8fc322fb',
     isPremium: false,
-    isFavorite: false,
+    isFavorite: true,
     price: 55,
     rating: 3.9,
     title: 'Cozy attic room near the station',
@@ -234,7 +234,7 @@ export const offers: OfferMaximum[] = [
   {
     id: 'db19382b-6509-4c70-bf13-85d47177faba',
     isPremium: false,
-    isFavorite: false,
+    isFavorite: true,
     price: 60,
     rating: 3.6,
     title: 'Cozy studio for two',
