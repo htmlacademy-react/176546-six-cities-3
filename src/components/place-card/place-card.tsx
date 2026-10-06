@@ -4,41 +4,42 @@ import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
 import { getRatingWidth } from '@/utils';
 import { AppRoute } from '@/const.ts';
+import { CARD_CLASSES, CARD_IMAGE_SIZES } from '@/components/place-card/const.ts';
+import type { PlaceCardVariant } from '@/components/place-card/const.ts';
 
 type PlaceCardProps = {
   offer: OfferPreview;
-  variant?: 'cities' | 'near-places';
+  variant?: PlaceCardVariant;
   onCardHover?: (id: string | null) => void;
 };
 
 function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): JSX.Element {
   const { id, isPremium, isFavorite, price, rating, title, type, previewImage } = offer;
 
-  const cardClass = variant === 'cities' ? 'cities__card' : 'near-places__card';
-  const imageWrapperClass =
-    variant === 'cities' ? 'cities__image-wrapper' : 'near-places__image-wrapper';
+  const cardClasses = CARD_CLASSES[variant];
+  const imageSize = CARD_IMAGE_SIZES[variant];
   const offerPath = generatePath(AppRoute.Offer, { id });
 
   return (
     <article
-      className={`${cardClass} place-card`}
+      className={`${cardClasses.card} place-card`}
       onMouseEnter={() => onCardHover?.(id)}
       onMouseLeave={() => onCardHover?.(null)}
     >
       <PremiumBadge isPremium={isPremium} />
 
-      <div className={`${imageWrapperClass} place-card__image-wrapper`}>
+      <div className={`${cardClasses.imageWrapper} place-card__image-wrapper`}>
         <Link to={offerPath}>
           <img
             className="place-card__image"
             src={previewImage}
-            width="260"
-            height="200"
+            width={imageSize.width}
+            height={imageSize.height}
             alt={title}
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={cardClasses.info}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
