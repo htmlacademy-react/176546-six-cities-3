@@ -4,16 +4,10 @@ import type { OfferPreview } from '@/types/offer.ts';
 type PlacesListProps = {
   offers: OfferPreview[];
   variant?: 'cities' | 'near-places';
-  onCardMouseEnter?: (id: string) => void;
-  onCardMouseLeave?: () => void;
+  onCardHover?: (id: string | null) => void;
 };
 
-function PlacesList({
-  offers,
-  variant = 'cities',
-  onCardMouseEnter,
-  onCardMouseLeave,
-}: PlacesListProps): JSX.Element {
+function PlacesList({ offers, variant = 'cities', onCardHover }: PlacesListProps): JSX.Element {
   const listClass =
     variant === 'cities'
       ? 'cities__places-list places__list tabs__content'
@@ -22,13 +16,7 @@ function PlacesList({
   return (
     <div className={listClass}>
       {offers.map((offer) => (
-        <PlaceCard
-          key={offer.id}
-          offer={offer}
-          variant={variant}
-          onMouseEnter={onCardMouseEnter}
-          onMouseLeave={onCardMouseLeave}
-        />
+        <PlaceCard key={offer.id} offer={offer} variant={variant} onCardHover={onCardHover} />
       ))}
     </div>
   );

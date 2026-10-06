@@ -3,16 +3,10 @@ import type { OfferPreview } from '@/types/offer.ts';
 type PlaceCardProps = {
   offer: OfferPreview;
   variant?: 'cities' | 'near-places';
-  onMouseEnter?: (id: string) => void;
-  onMouseLeave?: () => void;
+  onCardHover?: (id: string | null) => void;
 };
 
-function PlaceCard({
-  offer,
-  variant = 'cities',
-  onMouseEnter,
-  onMouseLeave,
-}: PlaceCardProps): JSX.Element {
+function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): JSX.Element {
   const { id, isPremium, isFavorite, price, rating, title, type, previewImage } = offer;
 
   const cardClass = variant === 'cities' ? 'cities__card' : 'near-places__card';
@@ -22,8 +16,8 @@ function PlaceCard({
   return (
     <article
       className={`${cardClass} place-card`}
-      onMouseEnter={() => onMouseEnter?.(id)}
-      onMouseLeave={() => onMouseLeave?.()}
+      onMouseEnter={() => onCardHover?.(id)}
+      onMouseLeave={() => onCardHover?.(null)}
     >
       {isPremium && (
         <div className="place-card__mark">
