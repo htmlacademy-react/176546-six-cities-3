@@ -7,6 +7,7 @@ import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { getReviewsByOfferId } from '@/utils';
 import type { OfferMaximum } from '@/types/offer.ts';
 import type { ReviewMock } from '@/mocks/reviews.ts';
+import Map from '@/components/map.tsx';
 
 type OfferPageProps = {
   offers: OfferMaximum[];
@@ -147,7 +148,7 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
             </div>
           </div>
 
-          <section className="offer__map map"></section>
+          <Map className="offer__map" />
         </section>
 
         <div className="container">
