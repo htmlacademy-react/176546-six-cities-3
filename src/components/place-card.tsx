@@ -1,5 +1,7 @@
 import type { OfferPreview } from '@/types/offer.ts';
 import { generatePath, Link } from 'react-router-dom';
+import PremiumBadge from '@/components/premium-badge';
+import BookmarkButton from '@/components/bookmark-button';
 import { AppRoute } from '@/const.ts';
 
 type PlaceCardProps = {
@@ -21,11 +23,8 @@ function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): 
       onMouseEnter={() => onCardHover?.(id)}
       onMouseLeave={() => onCardHover?.(null)}
     >
-      {isPremium && (
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
-      )}
+      <PremiumBadge isPremium={isPremium} />
+
       <div className={`${imageWrapperClass} place-card__image-wrapper`}>
         <Link to={generatePath(AppRoute.Offer, { id })}>
           <img
@@ -43,17 +42,8 @@ function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): 
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={`place-card__bookmark-button button${
-              isFavorite ? ' place-card__bookmark-button--active' : ''
-            }`}
-            type="button"
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
-          </button>
+
+          <BookmarkButton isFavorite={isFavorite} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -62,7 +52,7 @@ function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): 
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={`/offer/${id}`}>{title}</a>
+          <Link to={generatePath(AppRoute.Offer, { id })}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
