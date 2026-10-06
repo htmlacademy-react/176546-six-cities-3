@@ -1,1 +1,0 @@
-import{j as s,L as e}from"./index-e410c835.js";const h={header:{width:81,height:41},footer:{width:64,height:33}};function r({type:o}){const{width:i,height:t}=h[o];return s.jsx(e,{className:`${o}__logo-link`,to:"/",children:s.jsx("img",{className:"header__logo",src:"img/logo.svg",alt:"6 cities logo",width:i,height:t})})}export{r as L};
