@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import Header from '@/components/header/header';
 import Review from '@/components/review';
+import ReviewForm from '@/components/review-form';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { getRatingWidth, getReviewsByOfferId } from '@/utils';
@@ -143,7 +144,7 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
                   ))}
                 </ul>
 
-                <form className="reviews__form form" action="#" method="post"></form>
+                <ReviewForm />
               </section>
             </div>
           </div>
