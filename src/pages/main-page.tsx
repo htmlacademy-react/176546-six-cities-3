@@ -4,18 +4,16 @@ import PlacesList from '@/components/places-list';
 import Header from '@/components/header/header';
 import type { OfferPreview } from '@/types/offer.ts';
 import type { City } from '@/types/city.ts';
+import clsx from 'clsx';
 
 type MainPageProps = {
-  cardCount: number;
   offers: OfferPreview[];
   cities: City[];
 };
 
-function MainPage({ cardCount, offers, cities }: MainPageProps): JSX.Element {
-  const [activeCity, setActiveCity] = useState('Amsterdam');
+function MainPage({ offers, cities }: MainPageProps): JSX.Element {
+  const [, setActiveCity] = useState('Amsterdam');
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
-
-  const cityOffers = offers.filter((offer) => offer.city.name === activeCity).slice(0, cardCount);
 
   const handleCardMouseEnter = (id: string) => {
     setActiveOfferId(id);
@@ -41,9 +39,9 @@ function MainPage({ cardCount, offers, cities }: MainPageProps): JSX.Element {
               {cities.map((city) => (
                 <li className="locations__item" key={city.name}>
                   <a
-                    className={`locations__item-link tabs__item${
-                      city.name === activeCity ? ' tabs__item--active' : ''
-                    }`}
+                    className={clsx('locations__item-link', 'tabs__item', {
+                      'tabs__item--active': city.name === 'Amsterdam',
+                    })}
                     href="#"
                     onClick={(evt) => {
                       evt.preventDefault();
@@ -62,9 +60,7 @@ function MainPage({ cardCount, offers, cities }: MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">
-                {cityOffers.length} places to stay in {activeCity}
-              </b>
+              <b className="places__found">{cities.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -90,7 +86,7 @@ function MainPage({ cardCount, offers, cities }: MainPageProps): JSX.Element {
               </form>
 
               <PlacesList
-                offers={cityOffers}
+                offers={offers}
                 activeOfferId={activeOfferId}
                 onCardMouseEnter={handleCardMouseEnter}
                 onCardMouseLeave={handleCardMouseLeave}
