@@ -15,6 +15,8 @@ export const MONTHS = [
   'December',
 ];
 
+export const MAX_RATING = 5;
+
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
@@ -28,10 +30,6 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
-
-export const Settings = {
-  cardCount: 5,
-} as const;
 
 const MainPage = lazy(() => import('@/pages/main-page'));
 const LoginPage = lazy(() => import('@/pages/login-page'));

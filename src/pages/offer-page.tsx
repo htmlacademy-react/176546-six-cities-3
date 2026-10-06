@@ -4,7 +4,7 @@ import Header from '@/components/header/header';
 import Review from '@/components/review';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
-import { getReviewsByOfferId } from '@/utils';
+import { getRatingWidth, getReviewsByOfferId } from '@/utils';
 import type { OfferMaximum } from '@/types/offer.ts';
 import type { ReviewMock } from '@/mocks/reviews.ts';
 import Map from '@/components/map.tsx';
@@ -77,7 +77,7 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
 
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${(offer.rating / 5) * 100}%` }}></span>
+                  <span style={{ width: getRatingWidth(offer.rating) }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{offer.rating}</span>
