@@ -1,4 +1,6 @@
 import type { OfferPreview } from '@/types/offer.ts';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute } from '@/const.ts';
 
 type PlaceCardProps = {
   offer: OfferPreview;
@@ -25,7 +27,7 @@ function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): 
         </div>
       )}
       <div className={`${imageWrapperClass} place-card__image-wrapper`}>
-        <a href={`/offer/${id}`}>
+        <Link to={generatePath(AppRoute.Offer, { id })}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -33,7 +35,7 @@ function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): 
             height="200"
             alt={title}
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">

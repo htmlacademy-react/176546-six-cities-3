@@ -9,9 +9,7 @@ type PlacesListProps = {
 
 function PlacesList({ offers, variant = 'cities', onCardHover }: PlacesListProps): JSX.Element {
   const listClass =
-    variant === 'cities'
-      ? 'cities__places-list places__list tabs__content'
-      : 'near-places__list places__list';
+    variant === 'cities' ? 'cities__places-list places__list' : 'near-places__list places__list';
 
   return (
     <div className={listClass}>
