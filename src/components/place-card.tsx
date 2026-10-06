@@ -17,6 +17,7 @@ function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): 
   const cardClass = variant === 'cities' ? 'cities__card' : 'near-places__card';
   const imageWrapperClass =
     variant === 'cities' ? 'cities__image-wrapper' : 'near-places__image-wrapper';
+  const offerPath = generatePath(AppRoute.Offer, { id });
 
   return (
     <article
@@ -27,7 +28,7 @@ function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): 
       <PremiumBadge isPremium={isPremium} />
 
       <div className={`${imageWrapperClass} place-card__image-wrapper`}>
-        <Link to={generatePath(AppRoute.Offer, { id })}>
+        <Link to={offerPath}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -53,7 +54,7 @@ function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): 
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={generatePath(AppRoute.Offer, { id })}>{title}</Link>
+          <Link to={offerPath}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
