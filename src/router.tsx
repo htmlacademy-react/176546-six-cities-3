@@ -39,7 +39,7 @@ export const createRoutes = ({ offers, reviews, cities }: RoutesData) =>
         path={AppRoute.Favorites}
         element={withSuspense(
           <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-            <FavoritesPage />
+            <FavoritesPage offers={offers} />
           </PrivateRoute>
         )}
       />
