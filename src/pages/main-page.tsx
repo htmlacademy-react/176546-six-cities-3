@@ -15,9 +15,7 @@ function MainPage({ cardCount, offers, cities }: MainPageProps): JSX.Element {
   const [activeCity, setActiveCity] = useState('Amsterdam');
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
-  const cityOffers = offers
-    .filter((offer) => offer.city.name === activeCity)
-    .slice(0, cardCount);
+  const cityOffers = offers.filter((offer) => offer.city.name === activeCity).slice(0, cardCount);
 
   const handleCardMouseEnter = (id: string) => {
     setActiveOfferId(id);
