@@ -2,22 +2,24 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import PlacesList from '@/components/places-list';
 import Header from '@/components/header/header';
-import type { Offer } from '@/mocks/offers';
-import type { City } from '@/mocks/cities';
+import type { OfferPreview } from '@/types/offer.ts';
+import type { City } from '@/types/city.ts';
 
 type MainPageProps = {
   cardCount: number;
-  offers: Offer[];
+  offers: OfferPreview[];
   cities: City[];
 };
 
 function MainPage({ cardCount, offers, cities }: MainPageProps): JSX.Element {
   const [activeCity, setActiveCity] = useState('Amsterdam');
-  const [activeOfferId, setActiveOfferId] = useState<number | null>(null);
+  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
-  const cityOffers = offers.filter((offer) => offer.city === activeCity).slice(0, cardCount);
+  const cityOffers = offers
+    .filter((offer) => offer.city.name === activeCity)
+    .slice(0, cardCount);
 
-  const handleCardMouseEnter = (id: number) => {
+  const handleCardMouseEnter = (id: string) => {
     setActiveOfferId(id);
   };
 

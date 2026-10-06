@@ -5,17 +5,17 @@ import Review from '@/components/review';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { getReviewsByOfferId } from '@/utils';
-import type { Offer } from '@/mocks/offers';
-import type { Review as ReviewType } from '@/mocks/reviews';
+import type { OfferMaximum } from '@/types/offer.ts';
+import type { ReviewMock } from '@/mocks/reviews.ts';
 
 type OfferPageProps = {
-  offers: Offer[];
-  reviews: ReviewType[];
+  offers: OfferMaximum[];
+  reviews: ReviewMock[];
 };
 
 function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
   const { id } = useParams();
-  const offerId = Number(id);
+  const offerId = id ?? '';
 
   const offer = offers.find((item) => item.id === offerId);
 
@@ -26,7 +26,7 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
   const offerReviews = getReviewsByOfferId(offer.id, reviews);
 
   const nearOffers = offers
-    .filter((item) => item.id !== offer.id && item.city === offer.city)
+    .filter((item) => item.id !== offer.id && item.city.name === offer.city.name)
     .slice(0, 3);
 
   return (
@@ -42,8 +42,8 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {offer.images.map((image) => (
-                <div className="offer__image-wrapper" key={image.id}>
-                  <img className="offer__image" src={image.src} alt="Photo studio" />
+                <div className="offer__image-wrapper" key={image}>
+                  <img className="offer__image" src={image} alt="Photo studio" />
                 </div>
               ))}
             </div>
@@ -59,11 +59,18 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
 
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{offer.title}</h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button
+                  className={`offer__bookmark-button button${
+                    offer.isFavorite ? ' offer__bookmark-button--active' : ''
+                  }`}
+                  type="button"
+                >
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
-                  <span className="visually-hidden">To bookmarks</span>
+                  <span className="visually-hidden">
+                    {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
+                  </span>
                 </button>
               </div>
 

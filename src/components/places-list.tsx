@@ -1,11 +1,11 @@
 import PlaceCard from '@/components/place-card';
-import type { Offer } from '@/mocks/offers';
+import type { OfferPreview } from '@/types/offer.ts';
 
 type PlacesListProps = {
-  offers: Offer[];
+  offers: OfferPreview[];
   variant?: 'cities' | 'near-places';
-  activeOfferId?: number | null;
-  onCardMouseEnter?: (id: number) => void;
+  activeOfferId?: string | null;
+  onCardMouseEnter?: (id: string) => void;
   onCardMouseLeave?: () => void;
 };
 

@@ -1,9 +1,11 @@
-import { Offer } from '@/types/offer.ts';
+import type { OfferMaximum } from '@/types/offer.ts';
+import { amsterdam, cologne, paris } from '@/mocks/cities.ts';
 
-export const offers: Offer[] = [
+export const offers: OfferMaximum[] = [
   {
-    id: 1,
+    id: 'e9a1f6c2-3b4d-4e5f-8a7b-1c2d3e4f5a6b',
     isPremium: true,
+    isFavorite: false,
     price: 120,
     rating: 4.0,
     title: 'Beautiful & luxurious apartment at great location',
@@ -25,12 +27,12 @@ export const offers: Offer[] = [
       'Fridge',
     ],
     images: [
-      { id: 1, src: 'img/room.jpg' },
-      { id: 2, src: 'img/apartment-01.jpg' },
-      { id: 3, src: 'img/apartment-02.jpg' },
-      { id: 4, src: 'img/apartment-03.jpg' },
-      { id: 5, src: 'img/studio-01.jpg' },
-      { id: 6, src: 'img/apartment-01.jpg' },
+      'img/room.jpg',
+      'img/apartment-01.jpg',
+      'img/apartment-02.jpg',
+      'img/apartment-03.jpg',
+      'img/apartment-small-03.jpg',
+      'img/apartment-small-04.jpg',
     ],
     host: {
       name: 'Angelina',
@@ -38,11 +40,13 @@ export const offers: Offer[] = [
       isPro: true,
     },
     previewImage: 'img/apartment-01.jpg',
-    city: 'Amsterdam',
+    city: amsterdam,
+    location: { latitude: 52.380955, longitude: 4.898858, zoom: 13 },
   },
   {
-    id: 2,
+    id: 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d',
     isPremium: false,
+    isFavorite: false,
     price: 80,
     rating: 4.8,
     title: 'Wooden house near the forest',
@@ -52,22 +56,20 @@ export const offers: Offer[] = [
     bedrooms: 2,
     maxAdults: 3,
     goods: ['Wi-Fi', 'Heating', 'Kitchen', 'Fridge', 'Fireplace', 'Free parking'],
-    images: [
-      { id: 1, src: 'img/apartment-02.jpg' },
-      { id: 2, src: 'img/room.jpg' },
-      { id: 3, src: 'img/apartment-small-04.jpg' },
-    ],
+    images: ['img/apartment-02.jpg', 'img/room.jpg', 'img/room-small.jpg'],
     host: {
       name: 'Max',
       avatarUrl: 'img/avatar-max.jpg',
       isPro: false,
     },
     previewImage: 'img/apartment-02.jpg',
-    city: 'Amsterdam',
+    city: amsterdam,
+    location: { latitude: 52.370216, longitude: 4.895168, zoom: 13 },
   },
   {
-    id: 3,
+    id: 'b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e',
     isPremium: true,
+    isFavorite: false,
     price: 200,
     rating: 4.5,
     title: 'Modern loft in the city center',
@@ -77,22 +79,20 @@ export const offers: Offer[] = [
     bedrooms: 1,
     maxAdults: 2,
     goods: ['Wi-Fi', 'Kitchen', 'Dishwasher', 'Coffee machine', 'Air conditioning', 'Elevator'],
-    images: [
-      { id: 1, src: 'img/apartment-03.jpg' },
-      { id: 2, src: 'img/studio-01.jpg' },
-      { id: 3, src: 'img/apartment-01.jpg' },
-    ],
+    images: ['img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/room.jpg'],
     host: {
       name: 'Sophie',
       avatarUrl: 'img/avatar-angelina.jpg',
       isPro: true,
     },
     previewImage: 'img/apartment-03.jpg',
-    city: 'Amsterdam',
+    city: paris,
+    location: { latitude: 48.865064, longitude: 2.352209, zoom: 13 },
   },
   {
-    id: 4,
+    id: 'c3d4e5f6-a7b8-4c9d-8e1f-2a3b4c5d6e7f',
     isPremium: false,
+    isFavorite: false,
     price: 60,
     rating: 3.6,
     title: 'Cozy studio for two',
@@ -102,17 +102,14 @@ export const offers: Offer[] = [
     bedrooms: 1,
     maxAdults: 2,
     goods: ['Wi-Fi', 'Towels', 'Heating', 'Kitchen', 'Fridge'],
-    images: [
-      { id: 1, src: 'img/apartment-small-04.jpg' },
-      { id: 2, src: 'img/room.jpg' },
-      { id: 3, src: 'img/studio-01.jpg' },
-    ],
+    images: ['img/apartment-small-04.jpg', 'img/room.jpg', 'img/room-small.jpg'],
     host: {
       name: 'Liam',
       avatarUrl: 'img/avatar-max.jpg',
       isPro: false,
     },
     previewImage: 'img/apartment-small-04.jpg',
-    city: 'Amsterdam',
+    city: cologne,
+    location: { latitude: 50.941357, longitude: 6.957766, zoom: 13 },
   },
 ];

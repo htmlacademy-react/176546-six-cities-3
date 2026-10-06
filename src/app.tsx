@@ -1,13 +1,13 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { createRoutes } from './router';
-import type { Offer } from './mocks/offers';
-import type { Review } from './mocks/reviews';
-import type { City } from './mocks/cities';
+import type { OfferMaximum } from '@/types/offer.ts';
+import type { ReviewMock } from '@/mocks/reviews.ts';
+import type { City } from '@/types/city.ts';
 
 type AppProps = {
-  offers: Offer[];
-  reviews: Review[];
+  offers: OfferMaximum[];
+  reviews: ReviewMock[];
   cities: City[];
 };
 
