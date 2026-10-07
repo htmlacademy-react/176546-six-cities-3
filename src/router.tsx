@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createRoutesFromElements, Route } from 'react-router-dom';
 import PrivateRoute from './components/private-route';
+
 import {
   AppRoute,
   AuthorizationStatus,
@@ -9,40 +10,43 @@ import {
   MainPage,
   NotFoundPage,
   OfferPage,
-  Settings,
 } from '@/const';
+
+import type { OfferMaximum } from '@/types/offer.ts';
+import type { ReviewMock } from '@/mocks/reviews.ts';
+import type { City } from '@/types/city.ts';
+
+type RoutesData = {
+  offers: OfferMaximum[];
+  reviews: ReviewMock[];
+  cities: City[];
+};
 
 const withSuspense = (element: JSX.Element) => (
   <Suspense fallback={<div>Загрузка...</div>}>{element}</Suspense>
 );
 
-export const router = createBrowserRouter([
-  {
-    path: AppRoute.Root,
-    element: withSuspense(<MainPage cardCount={Settings.cardCount} />),
-    errorElement: withSuspense(<NotFoundPage />),
-  },
-  {
-    path: AppRoute.Login,
-    element: withSuspense(<LoginPage />),
-  },
-  {
-    path: AppRoute.Favorites,
-    element: withSuspense(
-      <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-        <FavoritesPage />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: AppRoute.Offer,
-    children: [
-      { index: true, element: withSuspense(<OfferPage />) },
-      { path: ':id', element: withSuspense(<OfferPage />) },
-    ],
-  },
-  {
-    path: '*',
-    element: withSuspense(<NotFoundPage />),
-  },
-]);
+export const createRoutes = ({ offers, reviews, cities }: RoutesData) =>
+  createRoutesFromElements(
+    <>
+      <Route
+        path={AppRoute.Root}
+        element={withSuspense(<MainPage offers={offers} cities={cities} />)}
+        errorElement={withSuspense(<NotFoundPage />)}
+      />
+      <Route path={AppRoute.Login} element={withSuspense(<LoginPage />)} />
+      <Route
+        path={AppRoute.Favorites}
+        element={withSuspense(
+          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <FavoritesPage offers={offers} />
+          </PrivateRoute>
+        )}
+      />
+      <Route
+        path={AppRoute.Offer}
+        element={withSuspense(<OfferPage offers={offers} reviews={reviews} />)}
+      />
+      <Route path="*" element={withSuspense(<NotFoundPage />)} />
+    </>
+  );
