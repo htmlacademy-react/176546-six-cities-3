@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 type BookmarkButtonProps = {
   isFavorite: boolean;
   variant?: 'place-card' | 'offer';
@@ -12,7 +14,9 @@ function BookmarkButton({ isFavorite, variant = 'place-card' }: BookmarkButtonPr
 
   return (
     <button
-      className={`${buttonClass} button${isFavorite ? ` ${buttonClass}--active` : ''}`}
+      className={clsx(buttonClass, 'button', {
+        [`${buttonClass}--active`]: isFavorite,
+      })}
       type="button"
     >
       <svg className={iconClass} width={iconWidth} height={iconHeight}>

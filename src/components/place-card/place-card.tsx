@@ -2,7 +2,7 @@ import type { OfferPreview } from '@/types/offer.ts';
 import { generatePath, Link } from 'react-router-dom';
 import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
-import { getRatingWidth } from '@/utils';
+import { capitalize, getRatingWidth } from '@/utils';
 import { AppRoute } from '@/const.ts';
 import { CARD_CLASSES, CARD_IMAGE_SIZES } from '@/components/place-card/const.ts';
 import type { PlaceCardVariant } from '@/components/place-card/const.ts';
@@ -26,7 +26,7 @@ function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): 
       onMouseEnter={() => onCardHover?.(id)}
       onMouseLeave={() => onCardHover?.(null)}
     >
-      <PremiumBadge isPremium={isPremium} />
+      {isPremium && <PremiumBadge text="Premium" />}
 
       <div className={`${cardClasses.imageWrapper} place-card__image-wrapper`}>
         <Link to={offerPath}>
@@ -57,7 +57,7 @@ function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): 
         <h2 className="place-card__name">
           <Link to={offerPath}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalize(type)}</p>
       </div>
     </article>
   );

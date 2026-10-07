@@ -10,7 +10,7 @@ type FavoritesPageProps = {
 
 function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-  const favoriteCities = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
+  const offersByCity = Object.groupBy(favoriteOffers, (offer) => offer.city.name);
 
   return (
     <div className="page">
@@ -25,7 +25,7 @@ function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {favoriteCities.map((city) => (
+              {Object.entries(offersByCity).map(([city, cityOffers = []]) => (
                 <li className="favorites__locations-items" key={city}>
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
@@ -35,11 +35,9 @@ function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {favoriteOffers
-                      .filter((offer) => offer.city.name === city)
-                      .map((offer) => (
-                        <PlaceCard key={offer.id} offer={offer} variant="favorites" />
-                      ))}
+                    {cityOffers.map((offer) => (
+                      <PlaceCard key={offer.id} offer={offer} variant="favorites" />
+                    ))}
                   </div>
                 </li>
               ))}
