@@ -1,7 +1,7 @@
-import type { OfferMaximum } from '@/types/offer.ts';
+import type { OfferBase, OfferDetails, OfferPreview } from '@/types/offer.ts';
 import { amsterdam, paris, cologne, brussels, hamburg, dusseldorf } from '@/mocks/cities.ts';
 
-export const offers: OfferMaximum[] = [
+export const offers: OfferBase[] = [
   {
     id: 'bf6a1125-15aa-470e-a764-b975bd7dcd26',
     isPremium: true,
@@ -367,3 +367,7 @@ export const offers: OfferMaximum[] = [
     location: { latitude: 51.222, longitude: 6.772028, zoom: 13 },
   },
 ];
+
+export const listOffers: OfferPreview = [];
+
+export const offerDetail: OfferDetails = {};

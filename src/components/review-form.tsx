@@ -17,12 +17,10 @@ type ReviewFormData = {
 function ReviewForm(): JSX.Element {
   const [reviewData, setReviewData] = useState<ReviewFormData>({ rating: 0, comment: '' });
 
-  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>): void => {
-    setReviewData({ ...reviewData, rating: Number(evt.target.value) });
-  };
+  const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = evt.target;
 
-  const handleCommentChange = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
-    setReviewData({ ...reviewData, comment: evt.target.value });
+    setReviewData({ ...reviewData, [name]: value });
   };
 
   return (
@@ -40,7 +38,7 @@ function ReviewForm(): JSX.Element {
               id={id}
               type="radio"
               checked={reviewData.rating === value}
-              onChange={handleRatingChange}
+              onChange={handleChange}
             />
             <label htmlFor={id} className="reviews__rating-label form__rating-label" title={title}>
               <svg className="form__star-image" width="37" height="33">
@@ -52,16 +50,17 @@ function ReviewForm(): JSX.Element {
       </div>
       <textarea
         className="reviews__textarea form__textarea"
-        id="review"
-        name="review"
+        id="comment"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={reviewData.comment}
-        onChange={handleCommentChange}
+        onChange={handleChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and
-          describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span>
+          and describe your stay with at least
+          <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled>
           Submit

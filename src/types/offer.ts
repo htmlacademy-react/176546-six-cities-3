@@ -1,7 +1,7 @@
 import type { City, Location } from '@/types/city.ts';
 import type { HostInfo } from '@/types/host.ts';
 
-export type OfferMinimum = {
+export type OfferBase = {
   id: string;
   title: string;
   type: string;
@@ -13,23 +13,15 @@ export type OfferMinimum = {
   rating: number;
 };
 
-export type OfferPreview = OfferMinimum & {
+export type OfferPreview = OfferBase & {
   previewImage: string;
 };
 
-type OfferDetails = {
+export type OfferDetails = OfferBase & {
   description: string;
   bedrooms: number;
   goods: string[];
   host: HostInfo;
   images: string[];
   maxAdults: number;
-};
-
-export type Offer = OfferMinimum & OfferDetails;
-
-export type OfferMaximum = OfferPreview & OfferDetails;
-
-export type OfferMaximumFavorite = OfferMaximum & {
-  isFavorite: boolean;
 };
