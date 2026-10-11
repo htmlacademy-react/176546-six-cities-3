@@ -1,4 +1,4 @@
-import type { Offer, OfferPreview } from '@/types/offer.ts';
+import  { Offer, OfferDetails, OfferPreview } from '@/types/offer.ts';
 import { amsterdam, paris, cologne, brussels, hamburg, dusseldorf } from '@/mocks/cities.ts';
 
 export const listOffers: OfferPreview[] = [
@@ -145,10 +145,10 @@ export const listOffers: OfferPreview[] = [
     previewImage: 'img/room-small.jpg',
     city: dusseldorf,
     location: { latitude: 51.222, longitude: 6.772028, zoom: 13 },
-  }
+  },
 ];
 
-export const offerDetails: Offer[] = [
+export const offerDetails: OfferDetails[] = [
   {
     id: 'bf6a1125-15aa-470e-a764-b975bd7dcd26',
     isPremium: true,
