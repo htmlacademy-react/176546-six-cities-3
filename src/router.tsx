@@ -12,12 +12,14 @@ import {
   OfferPage,
 } from '@/const';
 
-import type { OfferMaximum } from '@/types/offer.ts';
+import type { Offer } from '@/types/offer.ts';
+import type { OfferPreview } from '@/types/offer.ts';
 import type { ReviewMock } from '@/mocks/reviews.ts';
 import type { City } from '@/types/city.ts';
 
 type RoutesData = {
-  offers: OfferMaximum[];
+  offers: OfferPreview[];
+  offerDetail: Offer;
   reviews: ReviewMock[];
   cities: City[];
 };
@@ -26,7 +28,7 @@ const withSuspense = (element: JSX.Element) => (
   <Suspense fallback={<div>Загрузка...</div>}>{element}</Suspense>
 );
 
-export const createRoutes = ({ offers, reviews, cities }: RoutesData) =>
+export const createRoutes = ({ offers, offerDetail, reviews, cities }: RoutesData) =>
   createRoutesFromElements(
     <>
       <Route
@@ -45,7 +47,7 @@ export const createRoutes = ({ offers, reviews, cities }: RoutesData) =>
       />
       <Route
         path={AppRoute.Offer}
-        element={withSuspense(<OfferPage offers={offers} reviews={reviews} />)}
+        element={withSuspense(<OfferPage offers={offers} offerDetail={offerDetail} reviews={reviews} />)}
       />
       <Route path="*" element={withSuspense(<NotFoundPage />)} />
     </>

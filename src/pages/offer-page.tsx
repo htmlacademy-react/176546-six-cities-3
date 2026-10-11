@@ -6,20 +6,22 @@ import ReviewForm from '@/components/review-form';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { getRatingWidth, getReviewsByOfferId } from '@/utils';
-import type { OfferMaximum } from '@/types/offer.ts';
+import type { Offer } from '@/types/offer.ts';
+import type { OfferPreview } from '@/types/offer.ts';
 import type { ReviewMock } from '@/mocks/reviews.ts';
 import Map from '@/components/map.tsx';
 
 type OfferPageProps = {
-  offers: OfferMaximum[];
+  offers: OfferPreview[];
+  offerDetail: Offer;
   reviews: ReviewMock[];
 };
 
-function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
+function OfferPage({ offers, offerDetail, reviews }: OfferPageProps): JSX.Element {
   const { id } = useParams();
   const offerId = id ?? '';
 
-  const offer = offers.find((item) => item.id === offerId);
+  const offer: Offer | undefined = offerId === offerDetail.id ? offerDetail : undefined;
 
   if (!offer) {
     return <NotFoundPage />;
