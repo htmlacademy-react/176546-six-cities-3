@@ -13,15 +13,15 @@ import Map from '@/components/map.tsx';
 
 type OfferPageProps = {
   offers: OfferPreview[];
-  offerDetail: Offer;
+  offerDetails: Offer[];
   reviews: ReviewMock[];
 };
 
-function OfferPage({ offers, offerDetail, reviews }: OfferPageProps): JSX.Element {
+function OfferPage({ offers, offerDetails, reviews }: OfferPageProps): JSX.Element {
   const { id } = useParams();
   const offerId = id ?? '';
 
-  const offer: Offer | undefined = offerId === offerDetail.id ? offerDetail : undefined;
+  const offer: Offer | undefined = offerDetails.find((item) => item.id === offerId);
 
   if (!offer) {
     return <NotFoundPage />;

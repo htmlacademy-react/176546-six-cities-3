@@ -17,19 +17,11 @@ export type OfferPreview = OfferBase & {
   previewImage: string;
 };
 
-type OfferDetails = {
+export type OfferDetails = OfferBase & {
   description: string;
   bedrooms: number;
   goods: string[];
   host: HostInfo;
   images: string[];
   maxAdults: number;
-};
-
-export type Offer = OfferBase & OfferDetails;
-
-export type OfferMaximum = OfferPreview & OfferDetails;
-
-export type OfferMaximumFavorite = OfferMaximum & {
-  isFavorite: boolean;
 };

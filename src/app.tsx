@@ -8,13 +8,13 @@ import type { City } from '@/types/city.ts';
 
 type AppProps = {
   offers: OfferPreview[];
-  offerDetail: Offer;
+  offerDetails: Offer[];
   reviews: ReviewMock[];
   cities: City[];
 };
 
-function App({ offers, offerDetail, reviews, cities }: AppProps): JSX.Element {
-  const router = createBrowserRouter(createRoutes({ offers, offerDetail, reviews, cities }));
+function App({ offers, offerDetails, reviews, cities }: AppProps): JSX.Element {
+  const router = createBrowserRouter(createRoutes({ offers, offerDetails, reviews, cities }));
 
   return (
     <HelmetProvider>
