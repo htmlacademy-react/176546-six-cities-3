@@ -1,8 +1,21 @@
 import { HelmetProvider } from 'react-helmet-async';
-import { RouterProvider } from 'react-router-dom';
-import { router } from './router';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createRoutes } from './router';
+import type { OfferDetails } from '@/types/offer.ts';
+import type { OfferPreview } from '@/types/offer.ts';
+import type { ReviewMock } from '@/mocks/reviews.ts';
+import type { City } from '@/types/city.ts';
 
-function App(): JSX.Element {
+type AppProps = {
+  offers: OfferPreview[];
+  offerDetails: OfferDetails[];
+  reviews: ReviewMock[];
+  cities: City[];
+};
+
+function App({ offers, offerDetails, reviews, cities }: AppProps): JSX.Element {
+  const router = createBrowserRouter(createRoutes({ offers, offerDetails, reviews, cities }));
+
   return (
     <HelmetProvider>
       <RouterProvider router={router} />
