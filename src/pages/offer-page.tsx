@@ -6,14 +6,14 @@ import ReviewForm from '@/components/review-form';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { getRatingWidth, getReviewsByOfferId } from '@/utils';
-import type { Offer } from '@/types/offer.ts';
+import type { OfferDetails } from '@/types/offer.ts';
 import type { OfferPreview } from '@/types/offer.ts';
 import type { ReviewMock } from '@/mocks/reviews.ts';
 import Map from '@/components/map.tsx';
 
 type OfferPageProps = {
   offers: OfferPreview[];
-  offerDetails: Offer[];
+  offerDetails: OfferDetails[];
   reviews: ReviewMock[];
 };
 
@@ -21,7 +21,7 @@ function OfferPage({ offers, offerDetails, reviews }: OfferPageProps): JSX.Eleme
   const { id } = useParams();
   const offerId = id ?? '';
 
-  const offer: Offer | undefined = offerDetails.find((item) => item.id === offerId);
+  const offer: OfferDetails | undefined = offerDetails.find((item) => item.id === offerId);
 
   if (!offer) {
     return <NotFoundPage />;

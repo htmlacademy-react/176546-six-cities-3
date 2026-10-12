@@ -12,14 +12,14 @@ import {
   OfferPage,
 } from '@/const';
 
-import type { Offer } from '@/types/offer.ts';
+import type { OfferDetails } from '@/types/offer.ts';
 import type { OfferPreview } from '@/types/offer.ts';
 import type { ReviewMock } from '@/mocks/reviews.ts';
 import type { City } from '@/types/city.ts';
 
 type RoutesData = {
   offers: OfferPreview[];
-  offerDetails: Offer[];
+  offerDetails: OfferDetails[];
   reviews: ReviewMock[];
   cities: City[];
 };
