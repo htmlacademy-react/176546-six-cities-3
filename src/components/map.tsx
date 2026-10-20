@@ -1,52 +1,54 @@
+import { useEffect, useRef } from 'react';
 import clsx from 'clsx';
-import { useRef, useEffect } from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import useMap from '../hooks/useMap';
-import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../const';
+import { useMap } from '@/hooks/useMap';
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '@/const';
+import type { Location } from '@/types/city.ts';
+
+type MapPoint = Location & { id: string };
 
 type MapProps = {
   className: string;
+  city: Location;
+  points: MapPoint[];
+  selectedPointId?: string;
 };
 
-function Map({ className }: MapProps): JSX.Element {
-  const mapRef = useRef(null);
+const defaultIcon = leaflet.icon({
+  iconUrl: URL_MARKER_DEFAULT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+const currentIcon = leaflet.icon({
+  iconUrl: URL_MARKER_CURRENT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
 
+function Map({ className, city, points, selectedPointId }: MapProps): JSX.Element {
+  const mapRef = useRef<HTMLDivElement>(null);
   const map = useMap(mapRef, city);
-
-  const defaultCustomIcon = leaflet.icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
-  const currentCustomIcon = leaflet.icon({
-    iconUrl: URL_MARKER_CURRENT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
+  const markersRef = useRef<leaflet.Marker[]>([]);
 
   useEffect(() => {
-    if (map) {
-      points.forEach((point) => {
-        leaflet
-          .marker(
-            {
-              lat: point.lat,
-              lng: point.lng,
-            },
-            {
-              icon: defaultCustomIcon,
-            }
-          )
-          .addTo(map);
-      });
+    if (!map) {
+      return;
     }
-  }, [map, points]);
+
+    markersRef.current.forEach((marker) => marker.remove());
+    markersRef.current = points.map((point) => {
+      const marker = leaflet.marker([point.latitude, point.longitude], {
+        icon: point.id === selectedPointId ? currentIcon : defaultIcon,
+      });
+      marker.addTo(map);
+      return marker;
+    });
+  }, [map, points, selectedPointId]);
 
   return (
     <section className={clsx(className, 'map')}>
-      <div style={{ height: '500px' }} ref={mapRef}></div>
+      <div className="map__inner" ref={mapRef}></div>
     </section>
   );
 }

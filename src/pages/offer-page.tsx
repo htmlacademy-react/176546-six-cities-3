@@ -151,7 +151,12 @@ function OfferPage({ offers, offerDetails, reviews }: OfferPageProps): JSX.Eleme
             </div>
           </div>
 
-          <Map className="offer__map" />
+          <Map
+            className="offer__map"
+            city={offer.location}
+            points={[{ id: offer.id, ...offer.location }]}
+            selectedPointId={offer.id}
+          />
         </section>
 
         <div className="container">

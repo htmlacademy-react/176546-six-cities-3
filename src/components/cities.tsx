@@ -21,7 +21,11 @@ function Cities({ offers, placesCount }: CitiesProps): JSX.Element {
           <PlacesList offers={offers} />
         </section>
         <div className="cities__right-section">
-          <Map className="cities__map" />
+          <Map
+            className="cities__map"
+            city={city}
+            points={offers.map(({ id, location }) => ({ id, ...location }))}
+          />
         </div>
       </div>
     </div>

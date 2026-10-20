@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import type { City } from '@/types/city.ts';
 
-const ACTIVE_CITY = 'Amsterdam';
-
 type TabsProps = {
   cities: City[];
+  activeCity: City;
+  onCityChange: (city: City) => void;
 };
 
 function Tabs({ cities }: TabsProps): JSX.Element {
@@ -16,9 +16,13 @@ function Tabs({ cities }: TabsProps): JSX.Element {
             <li className="locations__item" key={city.name}>
               <a
                 className={clsx('locations__item-link', 'tabs__item', {
-                  'tabs__item--active': city.name === ACTIVE_CITY,
+                  'tabs__item--active': city.name === activeCity.name,
                 })}
                 href="#"
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  onCityChange(city);
+                }}
               >
                 <span>{city.name}</span>
               </a>
