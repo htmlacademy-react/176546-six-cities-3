@@ -1,10 +1,11 @@
+import { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/header/header';
 import Tabs from '@/components/tabs';
 import Cities from '@/components/cities';
+import { DEFAULT_CITY } from '@/const';
 import type { OfferPreview } from '@/types/offer.ts';
 import type { City } from '@/types/city.ts';
-import { useState } from 'react';
 
 type MainPageProps = {
   offers: OfferPreview[];
@@ -12,7 +13,19 @@ type MainPageProps = {
 };
 
 function MainPage({ offers, cities }: MainPageProps): JSX.Element {
-  const [activeCity, setActiveCity] = useState<City>(cities[0]);
+  const initialCity = cities.find((city) => city.name === DEFAULT_CITY) ?? cities[0];
+  const [activeCity, setActiveCity] = useState<City>(initialCity);
+
+  const cityOffers = useMemo(
+    () => offers.filter((offer) => offer.city.name === activeCity.name),
+    [offers, activeCity]
+  );
+
+  const points = cityOffers.map((offer) => ({
+    id: offer.id,
+    latitude: offer.location.latitude,
+    longitude: offer.location.longitude,
+  }));
 
   return (
     <div className="page page--gray page--main">
@@ -27,7 +40,13 @@ function MainPage({ offers, cities }: MainPageProps): JSX.Element {
 
         <Tabs cities={cities} activeCity={activeCity} onCityChange={setActiveCity} />
 
-        <Cities offers={offers} placesCount={offers.length} city={activeCity.location} />
+        <Cities
+          offers={cityOffers}
+          placesCount={cityOffers.length}
+          city={activeCity.location}
+          cityName={activeCity.name}
+          points={points}
+        />
       </main>
     </div>
   );

@@ -17,6 +17,8 @@ export const MONTHS = [
 
 export const MAX_RATING = 5;
 
+export const DEFAULT_CITY = 'Amsterdam';
+
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',

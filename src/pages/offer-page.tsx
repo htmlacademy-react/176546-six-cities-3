@@ -154,7 +154,13 @@ function OfferPage({ offers, offerDetails, reviews }: OfferPageProps): JSX.Eleme
           <Map
             className="offer__map"
             city={offer.location}
-            points={[{ id: offer.id, ...offer.location }]}
+            points={[
+              {
+                id: offer.id,
+                latitude: offer.location.latitude,
+                longitude: offer.location.longitude,
+              },
+            ]}
             selectedPointId={offer.id}
           />
         </section>

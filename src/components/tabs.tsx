@@ -7,7 +7,7 @@ type TabsProps = {
   onCityChange: (city: City) => void;
 };
 
-function Tabs({ cities }: TabsProps): JSX.Element {
+function Tabs({ cities, activeCity, onCityChange }: TabsProps): JSX.Element {
   return (
     <div className="tabs">
       <section className="locations container">
