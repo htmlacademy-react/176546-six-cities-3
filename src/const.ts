@@ -31,6 +31,12 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export const URL_MARKER_DEFAULT =
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+
+export const URL_MARKER_CURRENT =
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+
 const MainPage = lazy(() => import('@/pages/main-page'));
 const LoginPage = lazy(() => import('@/pages/login-page'));
 const FavoritesPage = lazy(() => import('@/pages/favorites-page'));

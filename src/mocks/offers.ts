@@ -187,7 +187,7 @@ export const offerDetails: OfferDetails[] = [
       isPro: true,
     },
     city: amsterdam,
-    location: { latitude: 52.380955, longitude: 4.898858, zoom: 13 },
+    location: { latitude: 52.3909553943508, longitude: 4.85309666406198, zoom: 13 },
   },
   {
     id: '5b9b3675-e5cb-499e-9242-5cad57f1f39b',
@@ -209,7 +209,7 @@ export const offerDetails: OfferDetails[] = [
       isPro: false,
     },
     city: amsterdam,
-    location: { latitude: 52.370216, longitude: 4.895168, zoom: 13 },
+    location: { latitude: 52.3609553943508, longitude: 4.85309666406198, zoom: 13 },
   },
   {
     id: '5e2786df-644e-4dfa-b22e-ed899bd7b1a3',
@@ -246,7 +246,7 @@ export const offerDetails: OfferDetails[] = [
       isPro: true,
     },
     city: amsterdam,
-    location: { latitude: 52.377484, longitude: 4.902097, zoom: 13 },
+    location: { latitude: 52.3909553943508, longitude: 4.929309666406198, zoom: 13 },
   },
   {
     id: '8c8b89fd-4233-4be1-9c51-38584afbd89a',
@@ -283,7 +283,7 @@ export const offerDetails: OfferDetails[] = [
       isPro: false,
     },
     city: amsterdam,
-    location: { latitude: 52.376271, longitude: 4.903244, zoom: 13 },
+    location: { latitude: 52.3809553943508, longitude: 4.939309666406198, zoom: 13 },
   },
   {
     id: 'ce689f5a-8656-40af-81b5-aa8c8fc322fb',
@@ -500,5 +500,5 @@ export const offerDetails: OfferDetails[] = [
     },
     city: dusseldorf,
     location: { latitude: 51.222, longitude: 6.772028, zoom: 13 },
-  }
+  },
 ];
