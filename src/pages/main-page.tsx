@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/header/header';
 import Tabs from '@/components/tabs';
 import Cities from '@/components/cities';
-import { DEFAULT_CITY } from '@/const';
 import type { OfferPreview } from '@/types/offer.ts';
 import type { City } from '@/types/city.ts';
 
@@ -13,8 +12,7 @@ type MainPageProps = {
 };
 
 function MainPage({ offers, cities }: MainPageProps): JSX.Element {
-  const initialCity = cities.find((city) => city.name === DEFAULT_CITY) ?? cities[0];
-  const [activeCity, setActiveCity] = useState<City>(initialCity);
+  const [activeCity, setActiveCity] = useState<City>(cities[0]);
 
   const cityOffers = useMemo(
     () => offers.filter((offer) => offer.city.name === activeCity.name),
