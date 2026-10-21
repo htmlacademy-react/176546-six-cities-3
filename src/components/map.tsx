@@ -3,20 +3,20 @@ import clsx from 'clsx';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '@/hooks/useMap';
-import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '@/const';
+import { MARKER_HEIGHT, MARKER_WIDTH, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '@/const';
 import type { Location } from '@/types/city.ts';
 import type { MapPoint } from '@/types/map.ts';
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [MARKER_WIDTH, MARKER_HEIGHT],
+  iconAnchor: [MARKER_WIDTH / 2, MARKER_HEIGHT],
 });
 
 const currentCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [MARKER_WIDTH, MARKER_HEIGHT],
+  iconAnchor: [MARKER_WIDTH / 2, MARKER_HEIGHT],
 });
 
 type MapProps = {
