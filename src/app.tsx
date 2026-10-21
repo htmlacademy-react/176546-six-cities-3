@@ -1,20 +1,22 @@
+import { useMemo } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { createRoutes } from './router';
 import type { OfferDetails } from '@/types/offer.ts';
 import type { OfferPreview } from '@/types/offer.ts';
 import type { ReviewMock } from '@/mocks/reviews.ts';
-import type { City } from '@/types/city.ts';
 
 type AppProps = {
   offers: OfferPreview[];
   offerDetails: OfferDetails[];
   reviews: ReviewMock[];
-  cities: City[];
 };
 
-function App({ offers, offerDetails, reviews, cities }: AppProps): JSX.Element {
-  const router = createBrowserRouter(createRoutes({ offers, offerDetails, reviews, cities }));
+function App({ offers, offerDetails, reviews }: AppProps): JSX.Element {
+  const router = useMemo(
+    () => createBrowserRouter(createRoutes({ offers, offerDetails, reviews })),
+    [offers, offerDetails, reviews]
+  );
 
   return (
     <HelmetProvider>
