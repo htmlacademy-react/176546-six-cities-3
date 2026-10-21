@@ -1,5 +1,7 @@
 import type { OfferDetails, OfferPreview } from '@/types/offer.ts';
-import { amsterdam, paris, cologne, brussels, hamburg, dusseldorf } from '@/mocks/cities.ts';
+import { CITIES } from '@/const';
+
+const [paris, cologne, brussels, amsterdam, hamburg, dusseldorf] = CITIES;
 
 export const listOffers: OfferPreview[] = [
   {
