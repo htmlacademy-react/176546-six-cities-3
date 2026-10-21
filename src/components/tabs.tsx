@@ -1,18 +1,18 @@
 import clsx from 'clsx';
+import { CITIES } from '@/const';
 import type { City } from '@/types/city.ts';
 
 type TabsProps = {
-  cities: City[];
   activeCity: City;
   onCityChange: (city: City) => void;
 };
 
-function Tabs({ cities, activeCity, onCityChange }: TabsProps): JSX.Element {
+function Tabs({ activeCity, onCityChange }: TabsProps): JSX.Element {
   return (
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {cities.map((city) => (
+          {CITIES.map((city) => (
             <li className="locations__item" key={city.name}>
               <a
                 className={clsx('locations__item-link', 'tabs__item', {

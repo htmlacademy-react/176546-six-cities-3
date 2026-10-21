@@ -3,16 +3,16 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/header/header';
 import Tabs from '@/components/tabs';
 import Cities from '@/components/cities';
+import { CITIES } from '@/const';
 import type { OfferPreview } from '@/types/offer.ts';
 import type { City } from '@/types/city.ts';
 
 type MainPageProps = {
   offers: OfferPreview[];
-  cities: City[];
 };
 
-function MainPage({ offers, cities }: MainPageProps): JSX.Element {
-  const [activeCity, setActiveCity] = useState<City>(cities[0]);
+function MainPage({ offers }: MainPageProps): JSX.Element {
+  const [activeCity, setActiveCity] = useState<City>(CITIES[0]);
 
   const cityOffers = useMemo(
     () => offers.filter((offer) => offer.city.name === activeCity.name),
@@ -36,7 +36,7 @@ function MainPage({ offers, cities }: MainPageProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
 
-        <Tabs cities={cities} activeCity={activeCity} onCityChange={setActiveCity} />
+        <Tabs activeCity={activeCity} onCityChange={setActiveCity} />
 
         <Cities
           offers={cityOffers}

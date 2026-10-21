@@ -7,20 +7,18 @@ import { AppRoute, AuthorizationStatus } from '@/const';
 import type { OfferDetails } from '@/types/offer.ts';
 import type { OfferPreview } from '@/types/offer.ts';
 import type { ReviewMock } from '@/mocks/reviews.ts';
-import type { City } from '@/types/city.ts';
 
 type RoutesData = {
   offers: OfferPreview[];
   offerDetails: OfferDetails[];
   reviews: ReviewMock[];
-  cities: City[];
 };
 
 const withSuspense = (element: JSX.Element) => (
   <Suspense fallback={<div>Загрузка...</div>}>{element}</Suspense>
 );
 
-export const createRoutes = ({ offers, offerDetails, reviews, cities }: RoutesData) => {
+export const createRoutes = ({ offers, offerDetails, reviews }: RoutesData) => {
   const MainPage = lazy(() => import('@/pages/main-page'));
   const LoginPage = lazy(() => import('@/pages/login-page'));
   const FavoritesPage = lazy(() => import('@/pages/favorites-page'));
@@ -31,7 +29,7 @@ export const createRoutes = ({ offers, offerDetails, reviews, cities }: RoutesDa
     <>
       <Route
         path={AppRoute.Root}
-        element={withSuspense(<MainPage offers={offers} cities={cities} />)}
+        element={withSuspense(<MainPage offers={offers} />)}
         errorElement={withSuspense(<NotFoundPage />)}
       />
       <Route path={AppRoute.Login} element={withSuspense(<LoginPage />)} />
