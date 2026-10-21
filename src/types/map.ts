@@ -1,5 +1,7 @@
-export type MapPoint = {
+export type MapOffer = {
   id: string;
-  latitude: number;
-  longitude: number;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
 };

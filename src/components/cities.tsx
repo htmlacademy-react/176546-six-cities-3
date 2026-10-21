@@ -3,17 +3,15 @@ import Sorting from '@/components/sorting';
 import Map from '@/components/map';
 import type { OfferPreview } from '@/types/offer.ts';
 import type { Location } from '@/types/city.ts';
-import type { MapPoint } from '@/types/map.ts';
 
 type CitiesProps = {
   offers: OfferPreview[];
   placesCount: number;
   city: Location;
   cityName: string;
-  points: MapPoint[];
 };
 
-function Cities({ offers, placesCount, city, cityName, points }: CitiesProps): JSX.Element {
+function Cities({ offers, placesCount, city, cityName }: CitiesProps): JSX.Element {
   return (
     <div className="cities">
       <div className="cities__places-container container">
@@ -28,7 +26,7 @@ function Cities({ offers, placesCount, city, cityName, points }: CitiesProps): J
           <PlacesList offers={offers} />
         </section>
         <div className="cities__right-section">
-          <Map className="cities__map" city={city} points={points} />
+          <Map className="cities__map" city={city} offers={offers} />
         </div>
       </div>
     </div>

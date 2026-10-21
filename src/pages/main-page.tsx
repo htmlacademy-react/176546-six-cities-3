@@ -19,12 +19,6 @@ function MainPage({ offers }: MainPageProps): JSX.Element {
     [offers, activeCity]
   );
 
-  const points = cityOffers.map((offer) => ({
-    id: offer.id,
-    latitude: offer.location.latitude,
-    longitude: offer.location.longitude,
-  }));
-
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -43,7 +37,6 @@ function MainPage({ offers }: MainPageProps): JSX.Element {
           placesCount={cityOffers.length}
           city={activeCity.location}
           cityName={activeCity.name}
-          points={points}
         />
       </main>
     </div>

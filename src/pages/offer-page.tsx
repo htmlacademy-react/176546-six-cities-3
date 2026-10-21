@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import Header from '@/components/header/header';
@@ -22,6 +23,7 @@ function OfferPage({ offers, offerDetails, reviews }: OfferPageProps): JSX.Eleme
   const offerId = id ?? '';
 
   const offer: OfferDetails | undefined = offerDetails.find((item) => item.id === offerId);
+  const mapOffers = useMemo(() => (offer ? [offer] : []), [offer]);
 
   if (!offer) {
     return <NotFoundPage />;
@@ -154,13 +156,7 @@ function OfferPage({ offers, offerDetails, reviews }: OfferPageProps): JSX.Eleme
           <Map
             className="offer__map"
             city={offer.location}
-            points={[
-              {
-                id: offer.id,
-                latitude: offer.location.latitude,
-                longitude: offer.location.longitude,
-              },
-            ]}
+            offers={mapOffers}
             selectedPointId={offer.id}
           />
         </section>
