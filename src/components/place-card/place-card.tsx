@@ -1,11 +1,11 @@
-import type { OfferPreview } from '@/types/offer.ts';
+import type { OfferPreview } from '@/types/offer';
 import { generatePath, Link } from 'react-router-dom';
 import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
 import { capitalize, getRatingWidth } from '@/utils';
-import { AppRoute } from '@/const.ts';
-import { CARD_CLASSES, CARD_IMAGE_SIZES } from '@/components/place-card/const.ts';
-import type { PlaceCardVariant } from '@/components/place-card/const.ts';
+import { AppRoute } from '@/const';
+import { CARD_CLASSES, CARD_IMAGE_SIZES } from '@/components/place-card/const';
+import type { PlaceCardVariant } from '@/components/place-card/const';
 
 type PlaceCardProps = {
   offer: OfferPreview;

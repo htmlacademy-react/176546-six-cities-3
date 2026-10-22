@@ -1,5 +1,5 @@
-import type { ReviewMock } from '@/mocks/reviews.ts';
-import { MAX_RATING } from '@/const.ts';
+import type { ReviewMock } from '@/mocks/reviews';
+import { MAX_RATING } from '@/const';
 
 export const getReviewsByOfferId = (offerId: string, reviews: ReviewMock[]): ReviewMock[] =>
   reviews.filter((review) => review.offerId === offerId);

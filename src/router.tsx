@@ -12,9 +12,9 @@ import {
   OfferPage,
 } from '@/const';
 
-import type { OfferDetails } from '@/types/offer.ts';
-import type { OfferPreview } from '@/types/offer.ts';
-import type { ReviewMock } from '@/mocks/reviews.ts';
+import type { OfferDetails } from '@/types/offer';
+import type { OfferPreview } from '@/types/offer';
+import type { ReviewMock } from '@/mocks/reviews';
 
 type RoutesData = {
   offers: OfferPreview[];

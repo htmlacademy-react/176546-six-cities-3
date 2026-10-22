@@ -1,4 +1,4 @@
-import type { OfferDetails, OfferPreview } from '@/types/offer.ts';
+import type { OfferDetails, OfferPreview } from '@/types/offer';
 import { CITIES } from '@/const';
 
 const [paris, cologne, brussels, amsterdam, hamburg, dusseldorf] = CITIES;

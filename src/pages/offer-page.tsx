@@ -7,10 +7,10 @@ import ReviewForm from '@/components/review-form';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { getRatingWidth, getReviewsByOfferId } from '@/utils';
-import type { OfferDetails } from '@/types/offer.ts';
-import type { OfferPreview } from '@/types/offer.ts';
-import type { ReviewMock } from '@/mocks/reviews.ts';
-import Map from '@/components/map.tsx';
+import type { OfferDetails } from '@/types/offer';
+import type { OfferPreview } from '@/types/offer';
+import type { ReviewMock } from '@/mocks/reviews';
+import Map from '@/components/map';
 
 type OfferPageProps = {
   offers: OfferPreview[];

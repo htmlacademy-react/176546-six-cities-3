@@ -2,8 +2,8 @@ import { useState } from 'react';
 import PlacesList from '@/components/places-list';
 import Sorting from '@/components/sorting';
 import Map from '@/components/map';
-import type { OfferPreview } from '@/types/offer.ts';
-import type { Location } from '@/types/city.ts';
+import type { OfferPreview } from '@/types/offer';
+import type { Location } from '@/types/city';
 
 type CitiesProps = {
   offers: OfferPreview[];

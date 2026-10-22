@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, type RefObject } from 'react';
 import leaflet from 'leaflet';
-import type { Location } from '@/types/city.ts';
+import type { Location } from '@/types/city';
 
 function useMap(mapRef: RefObject<HTMLDivElement>, city: Location): leaflet.Map | null {
   const [map, setMap] = useState<leaflet.Map | null>(null);

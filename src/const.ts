@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 
-import type { City } from '@/types/city.ts';
+import type { City } from '@/types/city';
 
 export const MONTHS = [
   'January',

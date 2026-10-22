@@ -1,9 +1,9 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { createRoutes } from './router';
-import type { OfferDetails } from '@/types/offer.ts';
-import type { OfferPreview } from '@/types/offer.ts';
-import type { ReviewMock } from '@/mocks/reviews.ts';
+import type { OfferDetails } from '@/types/offer';
+import type { OfferPreview } from '@/types/offer';
+import type { ReviewMock } from '@/mocks/reviews';
 
 type AppProps = {
   offers: OfferPreview[];

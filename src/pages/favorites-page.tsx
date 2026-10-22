@@ -1,8 +1,8 @@
-import Logo from '@/components/logo/logo.tsx';
+import Logo from '@/components/logo/logo';
 import { Helmet } from 'react-helmet-async';
-import Header from '@/components/header/header.tsx';
+import Header from '@/components/header/header';
 import PlaceCard from '@/components/place-card/place-card';
-import type { OfferPreview } from '@/types/offer.ts';
+import type { OfferPreview } from '@/types/offer';
 
 type FavoritesPageProps = {
   offers: OfferPreview[];

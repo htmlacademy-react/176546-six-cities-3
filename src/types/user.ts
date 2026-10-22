@@ -1,4 +1,4 @@
-import type { HostInfo } from '@/types/host.ts';
+import type { HostInfo } from '@/types/host';
 
 export type User = {
   email: string;
