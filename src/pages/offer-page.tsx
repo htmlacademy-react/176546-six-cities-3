@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import Header from '@/components/header/header';
-import ReviewsList from '@/components/reviews-list/reviews-list';
+import Review from '@/components/reviews-item/reviews-item';
 import ReviewForm from '@/components/review-form';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
@@ -23,17 +23,22 @@ function OfferPage({ offers, offerDetails, reviews }: OfferPageProps): JSX.Eleme
   const offerId = id ?? '';
 
   const offer: OfferDetails | undefined = offerDetails.find((item) => item.id === offerId);
-  const mapOffers = useMemo(() => (offer ? [offer] : []), [offer]);
+
+  const nearOffers = useMemo(
+    () =>
+      offers
+        .filter((item) => item.id !== offer?.id && item.city.name === offer?.city.name)
+        .slice(0, 3),
+    [offers, offer]
+  );
+
+  const mapOffers = useMemo(() => (offer ? [offer, ...nearOffers] : []), [offer, nearOffers]);
 
   if (!offer) {
     return <NotFoundPage />;
   }
 
   const offerReviews = getReviewsByOfferId(offer.id, reviews);
-
-  const nearOffers = offers
-    .filter((item) => item.id !== offer.id && item.city.name === offer.city.name)
-    .slice(0, 3);
 
   return (
     <div className="page">
@@ -142,7 +147,11 @@ function OfferPage({ offers, offerDetails, reviews }: OfferPageProps): JSX.Eleme
                 <h2 className="reviews__title">
                   Reviews &middot; <span className="reviews__amount">{offerReviews.length}</span>
                 </h2>
-                <ReviewsList reviews={offerReviews} />
+                <ul className="reviews__list">
+                  {offerReviews.map((review) => (
+                    <Review key={review.id} review={review} />
+                  ))}
+                </ul>
 
                 <ReviewForm />
               </section>
