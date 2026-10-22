@@ -11,7 +11,7 @@ const MainPage = lazy(() => import('@/pages/main-page'));
 const LoginPage = lazy(() => import('@/pages/login-page'));
 const FavoritesPage = lazy(() => import('@/pages/favorites-page'));
 const OfferPage = lazy(() => import('@/pages/offer-page'));
-const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page.tsx'));
+const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page'));
 
 type RoutesData = {
   offers: OfferPreview[];
