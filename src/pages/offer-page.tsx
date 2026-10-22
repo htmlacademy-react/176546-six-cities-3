@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import Header from '@/components/header/header';
-import Review from '@/components/review';
+import ReviewsList from '@/components/reviews-list/reviews-list';
 import ReviewForm from '@/components/review-form';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
@@ -142,11 +142,7 @@ function OfferPage({ offers, offerDetails, reviews }: OfferPageProps): JSX.Eleme
                 <h2 className="reviews__title">
                   Reviews &middot; <span className="reviews__amount">{offerReviews.length}</span>
                 </h2>
-                <ul className="reviews__list">
-                  {offerReviews.map((review) => (
-                    <Review key={review.id} review={review} />
-                  ))}
-                </ul>
+                <ReviewsList reviews={offerReviews} />
 
                 <ReviewForm />
               </section>

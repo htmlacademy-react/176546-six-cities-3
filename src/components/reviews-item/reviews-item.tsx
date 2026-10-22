@@ -1,6 +1,6 @@
 import type { Review as ReviewType } from '@/types/review.ts';
 import { MONTHS } from '@/const.ts';
-import { getRatingWidth } from '@/utils';
+import { getRatingWidth } from '@/utils.ts';
 
 type ReviewProps = {
   review: ReviewType;
@@ -11,7 +11,7 @@ function formatDate(isoDate: string): string {
   return `${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-function Review({ review }: ReviewProps): JSX.Element {
+function ReviewsItem({ review }: ReviewProps): JSX.Element {
   const { user, rating, comment, date } = review;
 
   return (
@@ -49,4 +49,4 @@ function Review({ review }: ReviewProps): JSX.Element {
   );
 }
 
-export default Review;
+export default ReviewsItem;
