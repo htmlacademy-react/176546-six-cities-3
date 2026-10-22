@@ -1,15 +1,9 @@
 import type { Review as ReviewType } from '@/types/review';
-import { MONTHS } from '@/const';
-import { getRatingWidth } from '@/utils';
+import { formatReviewDate, getRatingWidth } from '@/utils';
 
 type ReviewProps = {
   review: ReviewType;
 };
-
-function formatDate(isoDate: string): string {
-  const date = new Date(isoDate);
-  return `${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
-}
 
 function ReviewsItem({ review }: ReviewProps): JSX.Element {
   const { user, rating, comment, date } = review;
@@ -42,7 +36,7 @@ function ReviewsItem({ review }: ReviewProps): JSX.Element {
         </div>
         <p className="reviews__text">{comment}</p>
         <time className="reviews__time" dateTime={date}>
-          {formatDate(date)}
+          {formatReviewDate(date)}
         </time>
       </div>
     </li>

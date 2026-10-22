@@ -1,21 +1,4 @@
-import { lazy } from 'react';
-
 import type { City } from '@/types/city';
-
-export const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
 export const MAX_RATING = 5;
 
@@ -67,11 +50,3 @@ export const CITIES: City[] = [
     location: { latitude: 51.225402, longitude: 6.776314, zoom: 13 },
   },
 ];
-
-const MainPage = lazy(() => import('@/pages/main-page'));
-const LoginPage = lazy(() => import('@/pages/login-page'));
-const FavoritesPage = lazy(() => import('@/pages/favorites-page'));
-const OfferPage = lazy(() => import('@/pages/offer-page'));
-const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page.tsx'));
-
-export { MainPage, LoginPage, FavoritesPage, OfferPage, NotFoundPage };

@@ -12,6 +12,8 @@ import type { OfferPreview } from '@/types/offer';
 import type { ReviewMock } from '@/mocks/reviews';
 import Map from '@/components/map';
 
+const NEAR_OFFERS = 3;
+
 type OfferPageProps = {
   offers: OfferPreview[];
   offerDetails: OfferDetails[];
@@ -28,7 +30,7 @@ function OfferPage({ offers, offerDetails, reviews }: OfferPageProps): JSX.Eleme
     () =>
       offers
         .filter((item) => item.id !== offer?.id && item.city.name === offer?.city.name)
-        .slice(0, 3),
+        .slice(0, NEAR_OFFERS),
     [offers, offer]
   );
 

@@ -1,20 +1,17 @@
-import { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { createRoutesFromElements, Route } from 'react-router-dom';
 import PrivateRoute from './components/private-route';
 
-import {
-  AppRoute,
-  AuthorizationStatus,
-  FavoritesPage,
-  LoginPage,
-  MainPage,
-  NotFoundPage,
-  OfferPage,
-} from '@/const';
+import { AppRoute, AuthorizationStatus } from '@/const';
 
-import type { OfferDetails } from '@/types/offer';
-import type { OfferPreview } from '@/types/offer';
+import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { ReviewMock } from '@/mocks/reviews';
+
+const MainPage = lazy(() => import('@/pages/main-page'));
+const LoginPage = lazy(() => import('@/pages/login-page'));
+const FavoritesPage = lazy(() => import('@/pages/favorites-page'));
+const OfferPage = lazy(() => import('@/pages/offer-page'));
+const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page.tsx'));
 
 type RoutesData = {
   offers: OfferPreview[];
