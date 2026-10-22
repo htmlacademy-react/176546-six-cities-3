@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import PlacesList from '@/components/places-list';
 import Sorting from '@/components/sorting';
 import Map from '@/components/map';
-import type { OfferPreview } from '@/types/offer.ts';
-import type { Location } from '@/types/city.ts';
+import type { OfferPreview } from '@/types/offer';
+import type { Location } from '@/types/city';
 
 type CitiesProps = {
   offers: OfferPreview[];
@@ -12,6 +13,8 @@ type CitiesProps = {
 };
 
 function Cities({ offers, placesCount, city, cityName }: CitiesProps): JSX.Element {
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+
   return (
     <div className="cities">
       <div className="cities__places-container container">
@@ -23,10 +26,15 @@ function Cities({ offers, placesCount, city, cityName }: CitiesProps): JSX.Eleme
 
           <Sorting />
 
-          <PlacesList offers={offers} />
+          <PlacesList offers={offers} onCardHover={setHoveredId} />
         </section>
         <div className="cities__right-section">
-          <Map className="cities__map" city={city} offers={offers} />
+          <Map
+            className="cities__map"
+            city={city}
+            offers={offers}
+            selectedPointId={hoveredId ?? undefined}
+          />
         </div>
       </div>
     </div>

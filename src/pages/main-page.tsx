@@ -4,8 +4,8 @@ import Header from '@/components/header/header';
 import Tabs from '@/components/tabs';
 import Cities from '@/components/cities';
 import { CITIES } from '@/const';
-import type { OfferPreview } from '@/types/offer.ts';
-import type { City } from '@/types/city.ts';
+import type { OfferPreview } from '@/types/offer';
+import type { City } from '@/types/city';
 
 type MainPageProps = {
   offers: OfferPreview[];

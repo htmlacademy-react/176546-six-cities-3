@@ -4,9 +4,14 @@ import PrivateRoute from './components/private-route';
 
 import { AppRoute, AuthorizationStatus } from '@/const';
 
-import type { OfferDetails } from '@/types/offer.ts';
-import type { OfferPreview } from '@/types/offer.ts';
-import type { ReviewMock } from '@/mocks/reviews.ts';
+import type { OfferDetails, OfferPreview } from '@/types/offer';
+import type { ReviewMock } from '@/mocks/reviews';
+
+const MainPage = lazy(() => import('@/pages/main-page'));
+const LoginPage = lazy(() => import('@/pages/login-page'));
+const FavoritesPage = lazy(() => import('@/pages/favorites-page'));
+const OfferPage = lazy(() => import('@/pages/offer-page'));
+const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page'));
 
 type RoutesData = {
   offers: OfferPreview[];
@@ -18,14 +23,8 @@ const withSuspense = (element: JSX.Element) => (
   <Suspense fallback={<div>Загрузка...</div>}>{element}</Suspense>
 );
 
-export const createRoutes = ({ offers, offerDetails, reviews }: RoutesData) => {
-  const MainPage = lazy(() => import('@/pages/main-page'));
-  const LoginPage = lazy(() => import('@/pages/login-page'));
-  const FavoritesPage = lazy(() => import('@/pages/favorites-page'));
-  const OfferPage = lazy(() => import('@/pages/offer-page'));
-  const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page.tsx'));
-
-  return createRoutesFromElements(
+export const createRoutes = ({ offers, offerDetails, reviews }: RoutesData) =>
+  createRoutesFromElements(
     <>
       <Route
         path={AppRoute.Root}
@@ -50,4 +49,3 @@ export const createRoutes = ({ offers, offerDetails, reviews }: RoutesData) => {
       <Route path="*" element={withSuspense(<NotFoundPage />)} />
     </>
   );
-};

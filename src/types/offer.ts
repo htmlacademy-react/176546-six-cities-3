@@ -1,5 +1,5 @@
-import type { City, Location } from '@/types/city.ts';
-import type { HostInfo } from '@/types/host.ts';
+import type { City, Location } from '@/types/city';
+import type { HostInfo } from '@/types/host';
 
 export type OfferBase = {
   id: string;

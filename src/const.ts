@@ -1,19 +1,4 @@
-import type { City } from '@/types/city.ts';
-
-export const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+import type { City } from '@/types/city';
 
 export const MAX_RATING = 5;
 

@@ -1,4 +1,4 @@
-import Logo from '@/components/logo/logo.tsx';
+import Logo from '@/components/logo/logo';
 import { Helmet } from 'react-helmet-async';
 
 function LoginPage(): JSX.Element {

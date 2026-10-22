@@ -1,4 +1,4 @@
-import Logo from '@/components/logo/logo.tsx';
+import Logo from '@/components/logo/logo';
 import Nav from '@/components/header/nav';
 
 function Header(): JSX.Element {

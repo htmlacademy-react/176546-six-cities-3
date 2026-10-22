@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { CITIES } from '@/const';
-import type { City } from '@/types/city.ts';
+import type { City } from '@/types/city';
 
 type TabsProps = {
   activeCity: City;

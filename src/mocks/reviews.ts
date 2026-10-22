@@ -1,4 +1,4 @@
-import type { Review } from '@/types/review.ts';
+import type { Review } from '@/types/review';
 
 export type ReviewMock = Review & {
   offerId: string;

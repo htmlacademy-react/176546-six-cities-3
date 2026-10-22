@@ -1,5 +1,5 @@
 import PlaceCard from '@/components/place-card/place-card';
-import type { OfferPreview } from '@/types/offer.ts';
+import type { OfferPreview } from '@/types/offer';
 
 type PlacesListProps = {
   offers: OfferPreview[];

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, type RefObject } from 'react';
 import leaflet from 'leaflet';
-import type { Location } from '@/types/city.ts';
+import type { Location } from '@/types/city';
 
 function useMap(mapRef: RefObject<HTMLDivElement>, city: Location): leaflet.Map | null {
   const [map, setMap] = useState<leaflet.Map | null>(null);
@@ -15,9 +15,10 @@ function useMap(mapRef: RefObject<HTMLDivElement>, city: Location): leaflet.Map 
       });
 
       leaflet
-        .tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        .tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
           attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         })
         .addTo(instance);
 
@@ -26,10 +27,6 @@ function useMap(mapRef: RefObject<HTMLDivElement>, city: Location): leaflet.Map 
       isRenderedRef.current = true;
     }
   }, [mapRef, city]);
-
-  useEffect(() => {
-    map?.invalidateSize();
-  }, [map]);
 
   useEffect(
     () => () => {
