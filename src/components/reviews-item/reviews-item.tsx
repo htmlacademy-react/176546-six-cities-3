@@ -1,6 +1,6 @@
-import type { Review as ReviewType } from '@/types/review.ts';
-import { MONTHS } from '@/const.ts';
-import { getRatingWidth } from '@/utils.ts';
+import type { Review as ReviewType } from '@/types/review';
+import { MONTHS } from '@/const';
+import { getRatingWidth } from '@/utils';
 
 type ReviewProps = {
   review: ReviewType;
