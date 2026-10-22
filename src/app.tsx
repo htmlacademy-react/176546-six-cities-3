@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { createRoutes } from './router';
@@ -13,10 +12,7 @@ type AppProps = {
 };
 
 function App({ offers, offerDetails, reviews }: AppProps): JSX.Element {
-  const router = useMemo(
-    () => createBrowserRouter(createRoutes({ offers, offerDetails, reviews })),
-    [offers, offerDetails, reviews]
-  );
+  const router = createBrowserRouter(createRoutes({ offers, offerDetails, reviews }));
 
   return (
     <HelmetProvider>
