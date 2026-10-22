@@ -27,10 +27,6 @@ function useMap(mapRef: RefObject<HTMLDivElement>, city: Location): leaflet.Map 
     }
   }, [mapRef, city]);
 
-  useEffect(() => {
-    map?.invalidateSize();
-  }, [map]);
-
   useEffect(
     () => () => {
       mapInstanceRef.current?.remove();
