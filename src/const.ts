@@ -24,7 +24,7 @@ export const MARKER_WIDTH = 27;
 
 export const MARKER_HEIGHT = 39;
 
-export const CITIES: City[] = [
+export const CITIES = [
   {
     name: 'Paris',
     location: { latitude: 48.85661, longitude: 2.351499, zoom: 13 },
@@ -49,4 +49,4 @@ export const CITIES: City[] = [
     name: 'Dusseldorf',
     location: { latitude: 51.225402, longitude: 6.776314, zoom: 13 },
   },
-];
+] as const satisfies readonly City[];
