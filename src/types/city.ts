@@ -1,4 +1,4 @@
-import { CITIES } from '@/const';
+import type { CITIES } from '@/const';
 
 export type Location = {
   latitude: number;
