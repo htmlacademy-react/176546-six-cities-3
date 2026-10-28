@@ -26,7 +26,11 @@ function MainPage(): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
 
-        <Tabs activeCity={activeCity} onCityChange={(cityName) => dispatch(changeCity(cityName))} />
+        <Tabs
+          cities={CITIES}
+          activeCity={activeCity}
+          onCityChange={(cityName) => dispatch(changeCity(cityName))}
+        />
 
         <Cities
           offers={cityOffers}
