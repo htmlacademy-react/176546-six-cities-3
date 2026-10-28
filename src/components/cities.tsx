@@ -1,6 +1,6 @@
 import { useState } from 'react';
+import type { ReactNode } from 'react';
 import PlacesList from '@/components/places-list';
-import Sorting from '@/components/sorting';
 import Map from '@/components/map';
 import type { OfferPreview } from '@/types/offer';
 import type { Location } from '@/types/city';
@@ -10,9 +10,10 @@ type CitiesProps = {
   placesCount: number;
   city: Location;
   cityName: string;
+  sorting: ReactNode;
 };
 
-function Cities({ offers, placesCount, city, cityName }: CitiesProps): JSX.Element {
+function Cities({ offers, placesCount, city, cityName, sorting }: CitiesProps): JSX.Element {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
@@ -24,7 +25,7 @@ function Cities({ offers, placesCount, city, cityName }: CitiesProps): JSX.Eleme
             {placesCount} places to stay in {cityName}
           </b>
 
-          <Sorting />
+          {sorting}
 
           <PlacesList offers={offers} onCardHover={setHoveredId} />
         </section>

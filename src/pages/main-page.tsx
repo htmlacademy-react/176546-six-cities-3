@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/header/header';
 import Tabs from '@/components/tabs';
 import Cities from '@/components/cities';
+import Sorting from '@/components/sorting';
 import { CITIES } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { changeCity } from '@/store/action';
@@ -37,6 +38,7 @@ function MainPage(): JSX.Element {
           placesCount={cityOffers.length}
           city={activeCity.location}
           cityName={activeCity.name}
+          sorting={<Sorting />}
         />
       </main>
     </div>
