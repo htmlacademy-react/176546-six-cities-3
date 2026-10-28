@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import { CITIES } from '@/const';
-import type { City } from '@/types/city';
+import type { City, CityName } from '@/types/city';
 
 type TabsProps = {
   activeCity: City;
-  onCityChange: (city: City) => void;
+  onCityChange: (cityName: CityName) => void;
 };
 
 function Tabs({ activeCity, onCityChange }: TabsProps): JSX.Element {
@@ -21,7 +21,7 @@ function Tabs({ activeCity, onCityChange }: TabsProps): JSX.Element {
                 href="#"
                 onClick={(evt) => {
                   evt.preventDefault();
-                  onCityChange(city);
+                  onCityChange(city.name);
                 }}
               >
                 <span>{city.name}</span>

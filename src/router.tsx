@@ -28,7 +28,7 @@ export const createRoutes = ({ offers, offerDetails, reviews }: RoutesData) =>
     <>
       <Route
         path={AppRoute.Root}
-        element={withSuspense(<MainPage offers={offers} />)}
+        element={withSuspense(<MainPage />)}
         errorElement={withSuspense(<NotFoundPage />)}
       />
       <Route path={AppRoute.Login} element={withSuspense(<LoginPage />)} />
