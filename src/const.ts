@@ -2,6 +2,15 @@ import type { City } from '@/types/city';
 
 export const MAX_RATING = 5;
 
+export const SORT_OPTIONS = [
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first',
+] as const;
+
+export type SortType = (typeof SORT_OPTIONS)[number];
+
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
