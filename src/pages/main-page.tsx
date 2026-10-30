@@ -6,7 +6,6 @@ import Cities from '@/components/cities';
 import { CITIES } from '@/const';
 import { useAppSelector } from '@/hooks';
 import { getCity, getOffersByCity, getSortType } from '@/store/selectors';
-import type { City } from '@/types/city';
 import { sortOffers } from '@/utils';
 
 function MainPage(): JSX.Element {
@@ -14,7 +13,7 @@ function MainPage(): JSX.Element {
   const cityOffers = useAppSelector(getOffersByCity);
   const sortType = useAppSelector(getSortType);
 
-  const activeCity: City = CITIES.find((city) => city.name === selectedCity) ?? CITIES[0];
+  const activeCity = CITIES.find((city) => city.name === selectedCity) ?? CITIES[0];
   const sortedOffers = useMemo(() => sortOffers(cityOffers, sortType), [cityOffers, sortType]);
 
   return (
@@ -28,7 +27,7 @@ function MainPage(): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
 
-        <Tabs activeCity={activeCity} />
+        <Tabs activeCityName={activeCity.name} />
 
         <Cities
           offers={sortedOffers}
