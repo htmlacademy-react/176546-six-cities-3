@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import clsx from 'clsx';
 import { SORT_OPTIONS, SORT_OPTIONS_DICTIONARY } from '@/const';
 import type { SortType } from '@/const';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { useAppDispatch, useAppSelector, useOnClickOutside } from '@/hooks';
 import { changeSortType } from '@/store/action';
 import { getSortType } from '@/store/selectors';
 
@@ -12,6 +12,9 @@ function Sorting(): JSX.Element {
   const dispatch = useAppDispatch();
   const sortType = useAppSelector(getSortType);
   const [isOpen, setIsOpen] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useOnClickOutside(formRef, () => setIsOpen(false));
 
   const handleOptionClick = (option: SortType) => {
     dispatch(changeSortType(option));
@@ -19,7 +22,7 @@ function Sorting(): JSX.Element {
   };
 
   return (
-    <form className="places__sorting" action="#" method="get">
+    <form ref={formRef} className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span
         className="places__sorting-type"
