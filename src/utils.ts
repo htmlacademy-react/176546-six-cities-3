@@ -1,6 +1,6 @@
 import type { ReviewMock } from '@/mocks/reviews';
 import type { OfferPreview } from '@/types/offer';
-import { MAX_RATING } from '@/const';
+import { MAX_RATING, SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
 
 export const getReviewsByOfferId = (offerId: string, reviews: ReviewMock[]): ReviewMock[] =>
@@ -22,13 +22,17 @@ export const formatReviewDate = (isoDate: string): string => {
 
 export const sortOffers = (offers: OfferPreview[], sortType: SortType): OfferPreview[] => {
   switch (sortType) {
-    case 'PriceAsc':
-      return [...offers].sort((first, second) => first.price - second.price);
-    case 'PriceDesc':
-      return [...offers].sort((first, second) => second.price - first.price);
-    case 'TopRated':
-      return [...offers].sort((first, second) => second.rating - first.rating);
-    default:
+    case SORT_OPTIONS.Popular:
       return offers;
+    case SORT_OPTIONS.PriceAsc:
+      return [...offers].sort((first, second) => first.price - second.price);
+    case SORT_OPTIONS.PriceDesc:
+      return [...offers].sort((first, second) => second.price - first.price);
+    case SORT_OPTIONS.TopRated:
+      return [...offers].sort((first, second) => second.rating - first.rating);
+    default: {
+      const unhandled: never = sortType;
+      throw new Error(`Unhandled sort type: ${String(unhandled)}`);
+    }
   }
 };
