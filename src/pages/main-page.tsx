@@ -28,7 +28,7 @@ function MainPage(): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
 
-        <Tabs cities={CITIES} activeCity={activeCity} />
+        <Tabs activeCity={activeCity} />
 
         <Cities
           offers={sortedOffers}

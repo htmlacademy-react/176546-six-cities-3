@@ -1,16 +1,14 @@
 import clsx from 'clsx';
+import { CITIES } from '@/const';
 import { useAppDispatch } from '@/hooks';
 import { changeCity } from '@/store/action';
 import type { City, CityName } from '@/types/city';
 
-type CityOption = City & { name: CityName };
-
 type TabsProps = {
-  cities: readonly CityOption[];
   activeCity: City;
 };
 
-function Tabs({ cities, activeCity }: TabsProps): JSX.Element {
+function Tabs({ activeCity }: TabsProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleCityClick = (cityName: CityName) => {
@@ -21,7 +19,7 @@ function Tabs({ cities, activeCity }: TabsProps): JSX.Element {
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {cities.map((city) => (
+          {CITIES.map((city) => (
             <li className="locations__item" key={city.name}>
               <a
                 className={clsx('locations__item-link', 'tabs__item', {
