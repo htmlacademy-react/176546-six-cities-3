@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import clsx from 'clsx';
-import { SORT_OPTIONS } from '@/const';
+import { SORT_OPTIONS, SORT_OPTIONS_DICTIONARY } from '@/const';
 import type { SortType } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { changeSortType } from '@/store/action';
 import { getSortType } from '@/store/selectors';
+
+const sortKeys = Object.keys(SORT_OPTIONS) as SortType[];
 
 function Sorting(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -24,7 +26,7 @@ function Sorting(): JSX.Element {
         tabIndex={0}
         onClick={() => setIsOpen((opened) => !opened)}
       >
-        {sortType}
+        {SORT_OPTIONS_DICTIONARY[sortType]}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -34,7 +36,7 @@ function Sorting(): JSX.Element {
           'places__options--opened': isOpen,
         })}
       >
-        {SORT_OPTIONS.map((option) => (
+        {sortKeys.map((option) => (
           <li
             className={clsx('places__option', {
               'places__option--active': option === sortType,
@@ -43,7 +45,7 @@ function Sorting(): JSX.Element {
             tabIndex={0}
             onClick={() => handleOptionClick(option)}
           >
-            {option}
+            {SORT_OPTIONS_DICTIONARY[option]}
           </li>
         ))}
       </ul>

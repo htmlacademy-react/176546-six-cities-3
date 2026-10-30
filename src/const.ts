@@ -2,14 +2,21 @@ import type { City } from '@/types/city';
 
 export const MAX_RATING = 5;
 
-export const SORT_OPTIONS = [
-  'Popular',
-  'Price: low to high',
-  'Price: high to low',
-  'Top rated first',
-] as const;
+export const SORT_OPTIONS = {
+  Popular: 'Popular',
+  PriceAsc: 'PriceAsc',
+  PriceDesc: 'PriceDesc',
+  TopRated: 'TopRated',
+} as const;
 
-export type SortType = (typeof SORT_OPTIONS)[number];
+export type SortType = keyof typeof SORT_OPTIONS;
+
+export const SORT_OPTIONS_DICTIONARY: Record<SortType, string> = {
+  [SORT_OPTIONS.Popular]: 'Popular',
+  [SORT_OPTIONS.PriceAsc]: 'Price: low to high',
+  [SORT_OPTIONS.PriceDesc]: 'Price: high to low',
+  [SORT_OPTIONS.TopRated]: 'Top rated first',
+};
 
 export enum AppRoute {
   Login = '/login',

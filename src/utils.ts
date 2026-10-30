@@ -22,11 +22,11 @@ export const formatReviewDate = (isoDate: string): string => {
 
 export const sortOffers = (offers: OfferPreview[], sortType: SortType): OfferPreview[] => {
   switch (sortType) {
-    case 'Price: low to high':
+    case 'PriceAsc':
       return [...offers].sort((first, second) => first.price - second.price);
-    case 'Price: high to low':
+    case 'PriceDesc':
       return [...offers].sort((first, second) => second.price - first.price);
-    case 'Top rated first':
+    case 'TopRated':
       return [...offers].sort((first, second) => second.rating - first.rating);
     default:
       return offers;
