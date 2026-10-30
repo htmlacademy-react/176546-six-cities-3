@@ -2,17 +2,17 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import { SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { changeSortType } from '@/store/action';
+import { getSortType } from '@/store/selectors';
 
-type SortingProps = {
-  sortType: SortType;
-  onSortChange: (sortType: SortType) => void;
-};
-
-function Sorting({ sortType, onSortChange }: SortingProps): JSX.Element {
+function Sorting(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const sortType = useAppSelector(getSortType);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOptionClick = (option: SortType) => {
-    onSortChange(option);
+    dispatch(changeSortType(option));
     setIsOpen(false);
   };
 
