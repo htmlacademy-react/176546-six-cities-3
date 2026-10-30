@@ -10,7 +10,7 @@ import { getRatingWidth, getReviewsByOfferId } from '@/utils';
 import type { OfferDetails } from '@/types/offer';
 import type { OfferPreview } from '@/types/offer';
 import type { ReviewMock } from '@/mocks/reviews';
-import Map from '@/components/map';
+import Map from '@/components/map/map.tsx';
 
 const NEAR_OFFERS = 3;
 

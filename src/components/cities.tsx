@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PlacesList from '@/components/places-list';
-import Map from '@/components/map';
+import Map from '@/components/map/map.tsx';
 import Sorting from '@/components/sorting';
 import type { OfferPreview } from '@/types/offer';
 import type { Location } from '@/types/city';
