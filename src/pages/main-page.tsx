@@ -4,14 +4,12 @@ import Header from '@/components/header/header';
 import Tabs from '@/components/tabs';
 import Cities from '@/components/cities';
 import { CITIES } from '@/const';
-import { useAppDispatch, useAppSelector } from '@/hooks';
-import { changeCity } from '@/store/action';
+import { useAppSelector } from '@/hooks';
 import { getCity, getOffersByCity, getSortType } from '@/store/selectors';
 import type { City } from '@/types/city';
 import { sortOffers } from '@/utils';
 
 function MainPage(): JSX.Element {
-  const dispatch = useAppDispatch();
   const selectedCity = useAppSelector(getCity);
   const cityOffers = useAppSelector(getOffersByCity);
   const sortType = useAppSelector(getSortType);
@@ -30,11 +28,7 @@ function MainPage(): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
 
-        <Tabs
-          cities={CITIES}
-          activeCity={activeCity}
-          onCityChange={(cityName) => dispatch(changeCity(cityName))}
-        />
+        <Tabs cities={CITIES} activeCity={activeCity} />
 
         <Cities
           offers={sortedOffers}

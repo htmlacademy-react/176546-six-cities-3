@@ -1,4 +1,6 @@
 import clsx from 'clsx';
+import { useAppDispatch } from '@/hooks';
+import { changeCity } from '@/store/action';
 import type { City, CityName } from '@/types/city';
 
 type CityOption = City & { name: CityName };
@@ -6,10 +8,15 @@ type CityOption = City & { name: CityName };
 type TabsProps = {
   cities: readonly CityOption[];
   activeCity: City;
-  onCityChange: (cityName: CityName) => void;
 };
 
-function Tabs({ cities, activeCity, onCityChange }: TabsProps): JSX.Element {
+function Tabs({ cities, activeCity }: TabsProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const handleCityClick = (cityName: CityName) => {
+    dispatch(changeCity(cityName));
+  };
+
   return (
     <div className="tabs">
       <section className="locations container">
@@ -23,7 +30,7 @@ function Tabs({ cities, activeCity, onCityChange }: TabsProps): JSX.Element {
                 href="#"
                 onClick={(evt) => {
                   evt.preventDefault();
-                  onCityChange(city.name);
+                  handleCityClick(city.name);
                 }}
               >
                 <span>{city.name}</span>
