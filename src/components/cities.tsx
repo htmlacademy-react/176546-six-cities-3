@@ -7,12 +7,11 @@ import type { Location } from '@/types/city';
 
 type CitiesProps = {
   offers: OfferPreview[];
-  placesCount: number;
   city: Location;
   cityName: string;
 };
 
-function Cities({ offers, placesCount, city, cityName }: CitiesProps): JSX.Element {
+function Cities({ offers, city, cityName }: CitiesProps): JSX.Element {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
@@ -21,7 +20,7 @@ function Cities({ offers, placesCount, city, cityName }: CitiesProps): JSX.Eleme
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">
-            {placesCount} places to stay in {cityName}
+            {offers.length} places to stay in {cityName}
           </b>
 
           <Sorting />

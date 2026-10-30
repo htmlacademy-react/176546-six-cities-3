@@ -31,7 +31,6 @@ function MainPage(): JSX.Element {
 
         <Cities
           offers={sortedOffers}
-          placesCount={sortedOffers.length}
           city={activeCity.location}
           cityName={activeCity.name}
         />
