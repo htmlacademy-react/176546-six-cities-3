@@ -1,20 +1,16 @@
-import { useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/header/header';
 import Tabs from '@/components/tabs';
 import Cities from '@/components/cities';
 import { CITIES } from '@/const';
 import { useAppSelector } from '@/hooks';
-import { getCity, getOffersByCity, getSortType } from '@/store/selectors';
-import { sortOffers } from '@/utils';
+import { getCity, getSortedOffers } from '@/store/selectors';
 
 function MainPage(): JSX.Element {
   const selectedCity = useAppSelector(getCity);
-  const cityOffers = useAppSelector(getOffersByCity);
-  const sortType = useAppSelector(getSortType);
+  const sortedOffers = useAppSelector(getSortedOffers);
 
   const activeCity = CITIES.find((city) => city.name === selectedCity) ?? CITIES[0];
-  const sortedOffers = useMemo(() => sortOffers(cityOffers, sortType), [cityOffers, sortType]);
 
   return (
     <div className="page page--gray page--main">
