@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '@/hooks/useMap';
-import { MARKER_HEIGHT, MARKER_WIDTH, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '@/const';
+import { MARKER_HEIGHT, MARKER_WIDTH, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './const';
 import type { Location } from '@/types/city';
 import type { MapOffer } from '@/types/map';
 
