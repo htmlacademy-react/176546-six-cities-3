@@ -6,6 +6,7 @@ import { reviews } from './mocks/reviews';
 import { Provider } from 'react-redux';
 import { store } from '@/store';
 import { fillOffersList } from '@/store/action';
+//
 
 store.dispatch(fillOffersList(listOffers));
 
