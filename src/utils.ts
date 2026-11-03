@@ -1,10 +1,6 @@
-import type { ReviewMock } from '@/mocks/reviews';
 import type { OfferPreview } from '@/types/offer';
 import { MAX_RATING, SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
-
-export const getReviewsByOfferId = (offerId: string, reviews: ReviewMock[]): ReviewMock[] =>
-  reviews.filter((review) => review.offerId === offerId);
 
 export const getRatingWidth = (rating: number): string => `${(rating / MAX_RATING) * 100}%`;
 

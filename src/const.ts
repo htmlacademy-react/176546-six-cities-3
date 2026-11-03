@@ -28,6 +28,7 @@ export enum AppRoute {
 
 export enum ApiRoute {
   Offers = '/offers',
+  Comments = '/comments',
 }
 
 export enum AuthorizationStatus {

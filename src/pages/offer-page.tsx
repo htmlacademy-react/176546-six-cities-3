@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import Header from '@/components/header/header';
@@ -6,26 +6,31 @@ import Review from '@/components/reviews-item/reviews-item';
 import ReviewForm from '@/components/review-form';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
-import { getRatingWidth, getReviewsByOfferId } from '@/utils';
-import { useAppSelector } from '@/hooks';
-import { getOffers } from '@/store/selectors';
-import type { OfferDetails } from '@/types/offer';
-import type { ReviewMock } from '@/mocks/reviews';
+import { getRatingWidth } from '@/utils';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { getComments, getIsOfferLoading, getOffer, getOffers } from '@/store/selectors';
+import { fetchCommentsAction, fetchOfferAction } from '@/store/api-actions';
 import Map from '@/components/map/map.tsx';
 
 const NEAR_OFFERS = 3;
 
-type OfferPageProps = {
-  offerDetails: OfferDetails[];
-  reviews: ReviewMock[];
-};
-
-function OfferPage({ offerDetails, reviews }: OfferPageProps): JSX.Element {
+function OfferPage(): JSX.Element {
   const { id } = useParams();
   const offerId = id ?? '';
+  const dispatch = useAppDispatch();
   const offers = useAppSelector(getOffers);
+  const offer = useAppSelector(getOffer);
+  const offerReviews = useAppSelector(getComments);
+  const isOfferLoading = useAppSelector(getIsOfferLoading);
 
-  const offer: OfferDetails | undefined = offerDetails.find((item) => item.id === offerId);
+  useEffect(() => {
+    if (!offerId) {
+      return;
+    }
+
+    dispatch(fetchOfferAction(offerId));
+    dispatch(fetchCommentsAction(offerId));
+  }, [dispatch, offerId]);
 
   const nearOffers = useMemo(
     () =>
@@ -37,11 +42,13 @@ function OfferPage({ offerDetails, reviews }: OfferPageProps): JSX.Element {
 
   const mapOffers = useMemo(() => (offer ? [offer, ...nearOffers] : []), [offer, nearOffers]);
 
-  if (!offer) {
-    return <NotFoundPage />;
+  if (isOfferLoading) {
+    return <div className="page">Загрузка...</div>;
   }
 
-  const offerReviews = getReviewsByOfferId(offer.id, reviews);
+  if (!offer || offer.id !== offerId) {
+    return <NotFoundPage />;
+  }
 
   return (
     <div className="page">

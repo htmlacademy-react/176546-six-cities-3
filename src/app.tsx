@@ -1,16 +1,9 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { createRoutes } from './router';
-import type { OfferDetails } from '@/types/offer';
-import type { ReviewMock } from '@/mocks/reviews';
 
-type AppProps = {
-  offerDetails: OfferDetails[];
-  reviews: ReviewMock[];
-};
-
-function App({ offerDetails, reviews }: AppProps): JSX.Element {
-  const router = createBrowserRouter(createRoutes({ offerDetails, reviews }));
+function App(): JSX.Element {
+  const router = createBrowserRouter(createRoutes());
 
   return (
     <HelmetProvider>
