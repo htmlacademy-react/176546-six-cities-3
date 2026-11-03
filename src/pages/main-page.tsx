@@ -2,13 +2,15 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/header/header';
 import Tabs from '@/components/tabs';
 import Cities from '@/components/cities';
+import Spinner from '@/components/spinner/spinner';
 import { CITIES } from '@/const';
 import { useAppSelector } from '@/hooks';
-import { getCity, getSortedOffers } from '@/store/selectors';
+import { getCity, getIsOffersLoading, getSortedOffers } from '@/store/selectors';
 
 function MainPage(): JSX.Element {
   const selectedCity = useAppSelector(getCity);
   const sortedOffers = useAppSelector(getSortedOffers);
+  const isOffersLoading = useAppSelector(getIsOffersLoading);
 
   const activeCity = CITIES.find((city) => city.name === selectedCity) ?? CITIES[0];
 
@@ -25,11 +27,15 @@ function MainPage(): JSX.Element {
 
         <Tabs activeCityName={activeCity.name} />
 
-        <Cities
-          offers={sortedOffers}
-          city={activeCity.location}
-          cityName={activeCity.name}
-        />
+        {isOffersLoading ? (
+          <Spinner />
+        ) : (
+          <Cities
+            offers={sortedOffers}
+            city={activeCity.location}
+            cityName={activeCity.name}
+          />
+        )}
       </main>
     </div>
   );

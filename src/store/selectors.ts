@@ -18,6 +18,8 @@ export const getComments = (state: RootState): Review[] => state.comments;
 
 export const getIsOfferLoading = (state: RootState): boolean => state.isOfferLoading;
 
+export const getIsOffersLoading = (state: RootState): boolean => state.isOffersLoading;
+
 export const getOffersByCity = createSelector([getCity, getOffers], (city, offers) =>
   offers.filter((offer) => offer.city.name === city)
 );
