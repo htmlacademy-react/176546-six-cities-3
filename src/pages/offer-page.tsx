@@ -7,22 +7,23 @@ import ReviewForm from '@/components/review-form';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { getRatingWidth, getReviewsByOfferId } from '@/utils';
+import { useAppSelector } from '@/hooks';
+import { getOffers } from '@/store/selectors';
 import type { OfferDetails } from '@/types/offer';
-import type { OfferPreview } from '@/types/offer';
 import type { ReviewMock } from '@/mocks/reviews';
 import Map from '@/components/map/map.tsx';
 
 const NEAR_OFFERS = 3;
 
 type OfferPageProps = {
-  offers: OfferPreview[];
   offerDetails: OfferDetails[];
   reviews: ReviewMock[];
 };
 
-function OfferPage({ offers, offerDetails, reviews }: OfferPageProps): JSX.Element {
+function OfferPage({ offerDetails, reviews }: OfferPageProps): JSX.Element {
   const { id } = useParams();
   const offerId = id ?? '';
+  const offers = useAppSelector(getOffers);
 
   const offer: OfferDetails | undefined = offerDetails.find((item) => item.id === offerId);
 

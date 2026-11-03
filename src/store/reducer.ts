@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, changeSortType, fillOffersList } from '@/store/action';
+import { changeCity, changeSortType } from '@/store/action';
+import { fetchOffersAction } from '@/store/api-actions';
 import { CITIES } from '@/const';
 import type { SortType } from '@/const';
 import type { CityName } from '@/types/city';
@@ -25,7 +26,7 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(changeSortType, (state, action) => {
       state.sortType = action.payload;
     })
-    .addCase(fillOffersList, (state, action) => {
+    .addCase(fetchOffersAction.fulfilled, (state, action) => {
       state.offers = action.payload;
     });
 });

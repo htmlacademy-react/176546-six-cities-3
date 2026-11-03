@@ -4,7 +4,7 @@ import PrivateRoute from './components/private-route';
 
 import { AppRoute, AuthorizationStatus } from '@/const';
 
-import type { OfferDetails, OfferPreview } from '@/types/offer';
+import type { OfferDetails } from '@/types/offer';
 import type { ReviewMock } from '@/mocks/reviews';
 
 const MainPage = lazy(() => import('@/pages/main-page'));
@@ -14,7 +14,6 @@ const OfferPage = lazy(() => import('@/pages/offer-page'));
 const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page'));
 
 type RoutesData = {
-  offers: OfferPreview[];
   offerDetails: OfferDetails[];
   reviews: ReviewMock[];
 };
@@ -23,7 +22,7 @@ const withSuspense = (element: JSX.Element) => (
   <Suspense fallback={<div>Загрузка...</div>}>{element}</Suspense>
 );
 
-export const createRoutes = ({ offers, offerDetails, reviews }: RoutesData) =>
+export const createRoutes = ({ offerDetails, reviews }: RoutesData) =>
   createRoutesFromElements(
     <>
       <Route
@@ -36,14 +35,14 @@ export const createRoutes = ({ offers, offerDetails, reviews }: RoutesData) =>
         path={AppRoute.Favorites}
         element={withSuspense(
           <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-            <FavoritesPage offers={offers} />
+            <FavoritesPage />
           </PrivateRoute>
         )}
       />
       <Route
         path={AppRoute.Offer}
         element={withSuspense(
-          <OfferPage offers={offers} offerDetails={offerDetails} reviews={reviews} />
+          <OfferPage offerDetails={offerDetails} reviews={reviews} />
         )}
       />
       <Route path="*" element={withSuspense(<NotFoundPage />)} />

@@ -2,13 +2,11 @@ import Logo from '@/components/logo/logo';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/header/header';
 import PlaceCard from '@/components/place-card/place-card';
-import type { OfferPreview } from '@/types/offer';
+import { useAppSelector } from '@/hooks';
+import { getOffers } from '@/store/selectors';
 
-type FavoritesPageProps = {
-  offers: OfferPreview[];
-};
-
-function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
+function FavoritesPage(): JSX.Element {
+  const offers = useAppSelector(getOffers);
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   const offersByCity = Object.groupBy(favoriteOffers, (offer) => offer.city.name);
 
