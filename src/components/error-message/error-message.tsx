@@ -11,10 +11,10 @@ function ErrorMessage(): JSX.Element {
 
   return (
     <div className={styles.error} role="alert">
-      <p className={styles.title}>Не удалось загрузить предложения</p>
-      <p className={styles.text}>Проверьте соединение и попробуйте ещё раз.</p>
+      <p className={styles.title}>Could not load offers</p>
+      <p className={styles.text}>Check your connection and try again.</p>
       <button className={styles.button} type="button" onClick={handleRetry}>
-        Попробовать снова
+        Try again
       </button>
     </div>
   );
