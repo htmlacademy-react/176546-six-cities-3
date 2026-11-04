@@ -26,6 +26,11 @@ export enum AppRoute {
   NotFound = '*',
 }
 
+export enum ApiRoute {
+  Offers = '/offers',
+  Comments = '/comments',
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
