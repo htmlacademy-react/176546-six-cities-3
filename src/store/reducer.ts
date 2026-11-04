@@ -1,11 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { changeCity, changeSortType } from '@/store/action';
 import { fetchCommentsAction, fetchOfferAction, fetchOffersAction } from '@/store/api-actions';
-import { CITIES } from '@/const';
+import { CITIES, SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
 import type { CityName } from '@/types/city';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
+
+export enum RequestStatus {
+  Idle = 'Idle',
+  Loading = 'Loading',
+  Success = 'Success',
+  Failed = 'Failed',
+}
 
 export type State = {
   city: CityName;
@@ -13,18 +20,16 @@ export type State = {
   sortType: SortType;
   offer: OfferDetails | null;
   comments: Review[];
-  isOfferLoading: boolean;
-  isOffersLoading: boolean;
+  offersStatus: RequestStatus;
 };
 
 const initialState: State = {
   city: CITIES[0].name,
   offers: [],
-  sortType: 'Popular',
+  sortType: SORT_OPTIONS.Popular,
   offer: null,
   comments: [],
-  isOfferLoading: false,
-  isOffersLoading: false,
+  offersStatus: RequestStatus.Idle,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -36,14 +41,14 @@ export const reducer = createReducer(initialState, (builder) => {
       state.sortType = action.payload;
     })
     .addCase(fetchOffersAction.pending, (state) => {
-      state.isOffersLoading = true;
+      state.RequestStatus.Loading = true;
     })
     .addCase(fetchOffersAction.fulfilled, (state, action) => {
       state.offers = action.payload;
-      state.isOffersLoading = false;
+      state.RequestStatus.Success = false;
     })
     .addCase(fetchOffersAction.rejected, (state) => {
-      state.isOffersLoading = false;
+      state.RequestStatus.Failed = false;
     })
     .addCase(fetchOfferAction.pending, (state) => {
       state.isOfferLoading = true;

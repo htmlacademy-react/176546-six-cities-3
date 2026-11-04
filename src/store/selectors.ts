@@ -5,6 +5,7 @@ import type { CityName } from '@/types/city';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
 import { sortOffers } from '@/utils';
+import { RequestStatus } from '@/store/reducer.ts';
 
 export const getCity = (state: RootState): CityName => state.city;
 
@@ -20,6 +21,8 @@ export const getIsOfferLoading = (state: RootState): boolean => state.isOfferLoa
 
 export const getIsOffersLoading = (state: RootState): boolean => state.isOffersLoading;
 
+export const getOffersStatus = (state: RootState): RequestStatus => state.offersStatus;
+
 export const getOffersByCity = createSelector([getCity, getOffers], (city, offers) =>
   offers.filter((offer) => offer.city.name === city)
 );
@@ -27,3 +30,8 @@ export const getOffersByCity = createSelector([getCity, getOffers], (city, offer
 export const getSortedOffers = createSelector([getOffersByCity, getSortType], (offers, sortType) =>
   sortOffers(offers, sortType)
 );
+
+export const selectOffersStatus = createSelector([getOffersStatus], (status) => ({
+  isLoading: status === RequestStatus.Idle || status === RequestStatus.Loading,
+  isSuccess: status === RequestStatus.Success || RequestStatus.Failed,
+}));

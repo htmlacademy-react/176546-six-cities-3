@@ -5,14 +5,27 @@ import Cities from '@/components/cities';
 import Spinner from '@/components/spinner/spinner';
 import { CITIES } from '@/const';
 import { useAppSelector } from '@/hooks';
-import { getCity, getIsOffersLoading, getSortedOffers } from '@/store/selectors';
+import {
+  getCity,
+  getIsOffersLoading,
+  getSortedOffers,
+  selectOffersStatus,
+} from '@/store/selectors';
 
 function MainPage(): JSX.Element {
   const selectedCity = useAppSelector(getCity);
   const sortedOffers = useAppSelector(getSortedOffers);
-  const isOffersLoading = useAppSelector(getIsOffersLoading);
+  const { isLoading, isSuccess, isError } = useAppSelector(selectOffersStatus);
 
   const activeCity = CITIES.find((city) => city.name === selectedCity) ?? CITIES[0];
+
+  const rederContent = () => {
+    if (isLoading) {
+      return <Spinner />;
+    }
+
+    return <Cities offers={sortedOffers} city={activeCity.location} cityName={activeCity.name} />;
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -27,15 +40,7 @@ function MainPage(): JSX.Element {
 
         <Tabs activeCityName={activeCity.name} />
 
-        {isOffersLoading ? (
-          <Spinner />
-        ) : (
-          <Cities
-            offers={sortedOffers}
-            city={activeCity.location}
-            cityName={activeCity.name}
-          />
-        )}
+        {rederContent()}
       </main>
     </div>
   );
