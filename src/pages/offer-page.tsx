@@ -8,7 +8,7 @@ import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { getRatingWidth } from '@/utils';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { getComments, getIsOfferLoading, getOffer, getOffers } from '@/store/selectors';
+import { getComments, getOffer, getOffers, selectOfferStatus } from '@/store/selectors';
 import { fetchCommentsAction, fetchOfferAction } from '@/store/api-actions';
 import Map from '@/components/map/map.tsx';
 
@@ -21,7 +21,7 @@ function OfferPage(): JSX.Element {
   const offers = useAppSelector(getOffers);
   const offer = useAppSelector(getOffer);
   const offerReviews = useAppSelector(getComments);
-  const isOfferLoading = useAppSelector(getIsOfferLoading);
+  const { isLoading: isOfferLoading } = useAppSelector(selectOfferStatus);
 
   useEffect(() => {
     if (!offerId) {

@@ -21,6 +21,7 @@ export type State = {
   offer: OfferDetails | null;
   comments: Review[];
   offersStatus: RequestStatus;
+  offerStatus: RequestStatus;
 };
 
 const initialState: State = {
@@ -30,6 +31,7 @@ const initialState: State = {
   offer: null,
   comments: [],
   offersStatus: RequestStatus.Idle,
+  offerStatus: RequestStatus.Idle,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -41,25 +43,25 @@ export const reducer = createReducer(initialState, (builder) => {
       state.sortType = action.payload;
     })
     .addCase(fetchOffersAction.pending, (state) => {
-      state.RequestStatus.Loading = true;
+      state.offersStatus = RequestStatus.Loading;
     })
     .addCase(fetchOffersAction.fulfilled, (state, action) => {
       state.offers = action.payload;
-      state.RequestStatus.Success = false;
+      state.offersStatus = RequestStatus.Success;
     })
     .addCase(fetchOffersAction.rejected, (state) => {
-      state.RequestStatus.Failed = false;
+      state.offersStatus = RequestStatus.Failed;
     })
     .addCase(fetchOfferAction.pending, (state) => {
-      state.isOfferLoading = true;
+      state.offerStatus = RequestStatus.Loading;
     })
     .addCase(fetchOfferAction.fulfilled, (state, action) => {
       state.offer = action.payload;
-      state.isOfferLoading = false;
+      state.offerStatus = RequestStatus.Success;
     })
     .addCase(fetchOfferAction.rejected, (state) => {
       state.offer = null;
-      state.isOfferLoading = false;
+      state.offerStatus = RequestStatus.Failed;
     })
     .addCase(fetchCommentsAction.fulfilled, (state, action) => {
       state.comments = action.payload;
