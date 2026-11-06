@@ -9,9 +9,18 @@ import { loginAction } from '@/store/api-actions';
 import { getAuthorizationStatus } from '@/store/selectors';
 import styles from './login-page.module.css';
 
+type FieldName = 'email' | 'password';
+
+type LoginForm = Record<FieldName, string>;
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const validate = (email: string, password: string): string => {
+const EMPTY_FORM: LoginForm = { email: '', password: '' };
+
+const isFieldName = (name: string): name is FieldName =>
+  name === 'email' || name === 'password';
+
+const validate = ({ email, password }: LoginForm): string => {
   if (!EMAIL_PATTERN.test(email.trim())) {
     return 'Enter a valid email address.';
   }
@@ -28,8 +37,7 @@ function LoginPage(): JSX.Element {
   const navigate = useNavigate();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setForm] = useState<LoginForm>(EMPTY_FORM);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,18 +48,15 @@ function LoginPage(): JSX.Element {
   const handleFieldChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
 
-    if (name === 'email') {
-      setEmail(value);
+    if (!isFieldName(name)) {
       return;
     }
 
-    if (name === 'password') {
-      setPassword(value);
-    }
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const submit = async (): Promise<void> => {
-    const validationError = validate(email, password);
+    const validationError = validate(form);
 
     if (validationError) {
       setError(validationError);
@@ -62,7 +67,7 @@ function LoginPage(): JSX.Element {
     setIsSubmitting(true);
 
     try {
-      await dispatch(loginAction({ email: email.trim(), password })).unwrap();
+      await dispatch(loginAction({ ...form, email: form.email.trim() })).unwrap();
       navigate(AppRoute.Root, { replace: true });
     } catch (reason) {
       setError(typeof reason === 'string' ? reason : 'Sign in failed. Please try again.');
@@ -108,7 +113,7 @@ function LoginPage(): JSX.Element {
                   placeholder="Email"
                   autoComplete="email"
                   required
-                  value={email}
+                  value={form.email}
                   disabled={isSubmitting}
                   onChange={handleFieldChange}
                 />
@@ -125,7 +130,7 @@ function LoginPage(): JSX.Element {
                   placeholder="Password"
                   autoComplete="current-password"
                   required
-                  value={password}
+                  value={form.password}
                   disabled={isSubmitting}
                   onChange={handleFieldChange}
                 />
