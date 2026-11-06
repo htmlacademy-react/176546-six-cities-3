@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiRoute, AuthorizationStatus } from '@/const';
-import { dropToken } from '@/services/token';
+import { dropToken, saveToken } from '@/services/token';
+import { getApiErrorMessage } from '@/utils';
 import { changeAuthorizationStatus, changeUser } from '@/store/action';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
 import type { ThunkOptions } from '@/types/thunk';
-import type { AuthInfo } from '@/types/user';
+import type { AuthInfo, AuthInfoWithToken, User } from '@/types/user';
 
 export const checkAuthAction = createAsyncThunk<void, undefined, ThunkOptions>(
   'user/checkAuth',
@@ -27,6 +28,23 @@ export const logoutAction = createAsyncThunk<void, undefined, ThunkOptions>(
     dropToken();
     dispatch(changeUser(null));
     dispatch(changeAuthorizationStatus(AuthorizationStatus.NoAuth));
+  }
+);
+
+type LoginThunkConfig = ThunkOptions & { rejectValue: string };
+
+export const loginAction = createAsyncThunk<void, User, LoginThunkConfig>(
+  'user/login',
+  async ({ email, password }, { dispatch, rejectWithValue, extra: api }) => {
+    try {
+      const { data } = await api.post<AuthInfoWithToken>(ApiRoute.Login, { email, password });
+
+      saveToken(data.token);
+      dispatch(changeUser(data));
+      dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
+    } catch (error) {
+      return rejectWithValue(getApiErrorMessage(error));
+    }
   }
 );
 
