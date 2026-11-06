@@ -1,8 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ApiRoute } from '@/const';
+import { ApiRoute, AuthorizationStatus } from '@/const';
+import { changeAuthorizationStatus } from '@/store/action';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
 import type { ThunkOptions } from '@/types/thunk';
+
+export const checkAuthAction = createAsyncThunk<void, undefined, ThunkOptions>(
+  'user/checkAuth',
+  async (_arg, { dispatch, extra: api }) => {
+    try {
+      await api.get(ApiRoute.Login);
+      dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
+    } catch {
+      dispatch(changeAuthorizationStatus(AuthorizationStatus.NoAuth));
+    }
+  }
+);
 
 export const fetchOffersAction = createAsyncThunk<OfferPreview[], undefined, ThunkOptions>(
   'data/fetchOffers',
