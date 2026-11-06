@@ -1,11 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { SortType } from '@/const';
+import type { AuthorizationStatus, SortType } from '@/const';
 import type { RootState } from '@/store';
 import type { CityName } from '@/types/city';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
 import { sortOffers } from '@/utils';
 import { RequestStatus } from '@/store/reducer';
+
+export const getAuthorizationStatus = (state: RootState): AuthorizationStatus =>
+  state.authorizationStatus;
 
 export const getCity = (state: RootState): CityName => state.city;
 

@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, changeSortType } from '@/store/action';
+import { changeAuthorizationStatus, changeCity, changeSortType } from '@/store/action';
 import { fetchCommentsAction, fetchOfferAction, fetchOffersAction } from '@/store/api-actions';
-import { CITIES, SORT_OPTIONS } from '@/const';
+import { AuthorizationStatus, CITIES, SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
 import type { CityName } from '@/types/city';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
@@ -15,6 +15,7 @@ export enum RequestStatus {
 }
 
 export type State = {
+  authorizationStatus: AuthorizationStatus;
   city: CityName;
   offers: OfferPreview[];
   sortType: SortType;
@@ -25,6 +26,7 @@ export type State = {
 };
 
 const initialState: State = {
+  authorizationStatus: AuthorizationStatus.Unknown,
   city: CITIES[0].name,
   offers: [],
   sortType: SORT_OPTIONS.Popular,
@@ -41,6 +43,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeSortType, (state, action) => {
       state.sortType = action.payload;
+    })
+    .addCase(changeAuthorizationStatus, (state, action) => {
+      state.authorizationStatus = action.payload;
     })
     .addCase(fetchOffersAction.pending, (state) => {
       state.offersStatus = RequestStatus.Loading;
