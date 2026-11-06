@@ -16,10 +16,6 @@ function Nav(): JSX.Element {
     dispatch(logoutAction());
   };
 
-  if (authorizationStatus === AuthorizationStatus.Unknown) {
-    return <nav className="header__nav" />;
-  }
-
   if (authorizationStatus !== AuthorizationStatus.Auth || !user) {
     return (
       <nav className="header__nav">
