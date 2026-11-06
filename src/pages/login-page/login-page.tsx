@@ -37,12 +37,17 @@ function LoginPage(): JSX.Element {
     return <Navigate to={AppRoute.Root} replace />;
   }
 
-  const handleEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setEmail(evt.target.value);
-  };
+  const handleFieldChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target;
 
-  const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setPassword(evt.target.value);
+    if (name === 'email') {
+      setEmail(value);
+      return;
+    }
+
+    if (name === 'password') {
+      setPassword(value);
+    }
   };
 
   const submit = async (): Promise<void> => {
@@ -105,7 +110,7 @@ function LoginPage(): JSX.Element {
                   required
                   value={email}
                   disabled={isSubmitting}
-                  onChange={handleEmailChange}
+                  onChange={handleFieldChange}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -122,7 +127,7 @@ function LoginPage(): JSX.Element {
                   required
                   value={password}
                   disabled={isSubmitting}
-                  onChange={handlePasswordChange}
+                  onChange={handleFieldChange}
                 />
               </div>
               {error && (
