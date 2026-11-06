@@ -20,5 +20,9 @@ module.exports = {
       files: ['*test*'],
       rules: { '@typescript-eslint/unbound-method': 'off' },
     },
+    {
+      files: ['src/router.tsx'],
+      rules: { 'react-refresh/only-export-components': 'off' },
+    },
   ],
 };
