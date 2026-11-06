@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { AuthorizationStatus, SortType } from '@/const';
+import { AuthorizationStatus } from '@/const';
+import type { SortType } from '@/const';
 import type { RootState } from '@/store';
 import type { CityName } from '@/types/city';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
@@ -12,6 +13,23 @@ export const getAuthorizationStatus = (state: RootState): AuthorizationStatus =>
   state.authorizationStatus;
 
 export const getUser = (state: RootState): AuthInfo | null => state.user;
+
+export const getLoginStatus = (state: RootState): RequestStatus => state.loginStatus;
+
+export const getLoginError = (state: RootState): string => state.loginError;
+
+export const selectAuthState = createSelector(
+  [getAuthorizationStatus, getUser],
+  (authorizationStatus, user) => ({
+    isAuthenticated: authorizationStatus === AuthorizationStatus.Auth,
+    user,
+  })
+);
+
+export const selectLoginStatus = createSelector([getLoginStatus], (status) => ({
+  isLoading: status === RequestStatus.Loading,
+  isSuccess: status === RequestStatus.Success,
+}));
 
 export const getCity = (state: RootState): CityName => state.city;
 

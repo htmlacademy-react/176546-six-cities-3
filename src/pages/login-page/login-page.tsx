@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Logo from '@/components/logo/logo';
-import { AppRoute, AuthorizationStatus } from '@/const';
+import { AppRoute } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { loginAction } from '@/store/api-actions';
-import { getAuthorizationStatus } from '@/store/selectors';
+import { getLoginError, selectAuthState, selectLoginStatus } from '@/store/selectors';
 import styles from './login-page.module.css';
 
 type FieldName = 'email' | 'password';
@@ -34,14 +34,14 @@ const validate = ({ email, password }: LoginForm): string => {
 
 function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const { isAuthenticated } = useAppSelector(selectAuthState);
+  const { isLoading } = useAppSelector(selectLoginStatus);
+  const serverError = useAppSelector(getLoginError);
 
   const [form, setForm] = useState<LoginForm>(EMPTY_FORM);
-  const [error, setError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [validationError, setValidationError] = useState('');
 
-  if (authorizationStatus === AuthorizationStatus.Auth) {
+  if (isAuthenticated) {
     return <Navigate to={AppRoute.Root} replace />;
   }
 
@@ -55,31 +55,24 @@ function LoginPage(): JSX.Element {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const submit = async (): Promise<void> => {
-    const validationError = validate(form);
+  const submit = () => {
+    const validationMessage = validate(form);
 
-    if (validationError) {
-      setError(validationError);
+    if (validationMessage) {
+      setValidationError(validationMessage);
       return;
     }
 
-    setError('');
-    setIsSubmitting(true);
-
-    try {
-      await dispatch(loginAction({ ...form, email: form.email.trim() })).unwrap();
-      navigate(AppRoute.Root, { replace: true });
-    } catch (reason) {
-      setError(typeof reason === 'string' ? reason : 'Sign in failed. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
+    setValidationError('');
+    dispatch(loginAction({ ...form, email: form.email.trim() }));
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    void submit();
+    submit();
   };
+
+  const message = validationError || serverError;
 
   return (
     <div className="page page--gray page--login">
@@ -114,7 +107,7 @@ function LoginPage(): JSX.Element {
                   autoComplete="email"
                   required
                   value={form.email}
-                  disabled={isSubmitting}
+                  disabled={isLoading}
                   onChange={handleFieldChange}
                 />
               </div>
@@ -131,21 +124,21 @@ function LoginPage(): JSX.Element {
                   autoComplete="current-password"
                   required
                   value={form.password}
-                  disabled={isSubmitting}
+                  disabled={isLoading}
                   onChange={handleFieldChange}
                 />
               </div>
-              {error && (
+              {message && (
                 <p className={styles.error} role="alert">
-                  {error}
+                  {message}
                 </p>
               )}
               <button
                 className="login__submit form__submit button"
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isLoading}
               >
-                {isSubmitting ? 'Signing in…' : 'Sign in'}
+                {isLoading ? 'Signing in…' : 'Sign in'}
               </button>
             </form>
           </section>
