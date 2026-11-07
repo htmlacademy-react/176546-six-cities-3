@@ -1,11 +1,19 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, changeSortType } from '@/store/action';
-import { fetchCommentsAction, fetchOfferAction, fetchOffersAction } from '@/store/api-actions';
-import { CITIES, SORT_OPTIONS } from '@/const';
+import { changeAuthorizationStatus, changeCity, changeSortType, changeUser } from '@/store/action';
+import {
+  checkAuthAction,
+  fetchCommentsAction,
+  fetchOfferAction,
+  fetchOffersAction,
+  loginAction,
+  logoutAction,
+} from '@/store/api-actions';
+import { AuthorizationStatus, CITIES, SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
 import type { CityName } from '@/types/city';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
+import type { AuthInfo } from '@/types/user';
 
 export enum RequestStatus {
   Idle = 'Idle',
@@ -15,6 +23,10 @@ export enum RequestStatus {
 }
 
 export type State = {
+  authorizationStatus: AuthorizationStatus;
+  user: AuthInfo | null;
+  loginStatus: RequestStatus;
+  loginError: string;
   city: CityName;
   offers: OfferPreview[];
   sortType: SortType;
@@ -25,6 +37,10 @@ export type State = {
 };
 
 const initialState: State = {
+  authorizationStatus: AuthorizationStatus.Unknown,
+  user: null,
+  loginStatus: RequestStatus.Idle,
+  loginError: '',
   city: CITIES[0].name,
   offers: [],
   sortType: SORT_OPTIONS.Popular,
@@ -41,6 +57,39 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeSortType, (state, action) => {
       state.sortType = action.payload;
+    })
+    .addCase(changeAuthorizationStatus, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(changeUser, (state, action) => {
+      state.user = action.payload;
+    })
+    .addCase(checkAuthAction.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.authorizationStatus = AuthorizationStatus.Auth;
+    })
+    .addCase(checkAuthAction.rejected, (state) => {
+      state.user = null;
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+    })
+    .addCase(loginAction.pending, (state) => {
+      state.loginStatus = RequestStatus.Loading;
+      state.loginError = '';
+    })
+    .addCase(loginAction.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.authorizationStatus = AuthorizationStatus.Auth;
+      state.loginStatus = RequestStatus.Success;
+    })
+    .addCase(loginAction.rejected, (state, action) => {
+      state.loginStatus = RequestStatus.Failed;
+      state.loginError = action.payload ?? 'Sign in failed. Please try again.';
+    })
+    .addCase(logoutAction.fulfilled, (state) => {
+      state.user = null;
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.loginStatus = RequestStatus.Idle;
+      state.loginError = '';
     })
     .addCase(fetchOffersAction.pending, (state) => {
       state.offersStatus = RequestStatus.Loading;

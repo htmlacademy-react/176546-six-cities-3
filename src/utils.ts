@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import type { OfferPreview } from '@/types/offer';
 import { MAX_RATING, SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
@@ -14,6 +15,21 @@ const reviewDateFormatter = new Intl.DateTimeFormat('en-US', {
 export const formatReviewDate = (isoDate: string): string => {
   const date = new Date(isoDate);
   return Number.isNaN(date.getTime()) ? '' : reviewDateFormatter.format(date);
+};
+
+type ApiErrorBody = {
+  message?: string;
+  details?: { messages?: string[] }[];
+};
+
+export const getApiErrorMessage = (
+  error: unknown,
+  fallback = 'Something went wrong. Please try again.'
+): string => {
+  const { response } = error as AxiosError<ApiErrorBody>;
+  const detailMessage = response?.data?.details?.flatMap((detail) => detail.messages ?? [])[0];
+
+  return detailMessage ?? response?.data?.message ?? fallback;
 };
 
 export const sortOffers = (offers: OfferPreview[], sortType: SortType): OfferPreview[] => {

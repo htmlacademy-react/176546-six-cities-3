@@ -2,10 +2,10 @@ import { lazy, Suspense } from 'react';
 import { createRoutesFromElements, Route } from 'react-router-dom';
 import PrivateRoute from './components/private-route';
 
-import { AppRoute, AuthorizationStatus } from '@/const';
+import { AppRoute } from '@/const';
 
 const MainPage = lazy(() => import('@/pages/main-page'));
-const LoginPage = lazy(() => import('@/pages/login-page'));
+const LoginPage = lazy(() => import('@/pages/login-page/login-page'));
 const FavoritesPage = lazy(() => import('@/pages/favorites-page'));
 const OfferPage = lazy(() => import('@/pages/offer-page'));
 const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page'));
@@ -26,7 +26,7 @@ export const createRoutes = () =>
       <Route
         path={AppRoute.Favorites}
         element={withSuspense(
-          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+          <PrivateRoute>
             <FavoritesPage />
           </PrivateRoute>
         )}

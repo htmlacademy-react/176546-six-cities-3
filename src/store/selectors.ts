@@ -1,11 +1,35 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { AuthorizationStatus } from '@/const';
 import type { SortType } from '@/const';
 import type { RootState } from '@/store';
 import type { CityName } from '@/types/city';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
+import type { AuthInfo } from '@/types/user';
 import { sortOffers } from '@/utils';
 import { RequestStatus } from '@/store/reducer';
+
+export const getAuthorizationStatus = (state: RootState): AuthorizationStatus =>
+  state.authorizationStatus;
+
+export const getUser = (state: RootState): AuthInfo | null => state.user;
+
+export const getLoginStatus = (state: RootState): RequestStatus => state.loginStatus;
+
+export const getLoginError = (state: RootState): string => state.loginError;
+
+export const selectAuthState = createSelector(
+  [getAuthorizationStatus, getUser],
+  (authorizationStatus, user) => ({
+    isAuthenticated: authorizationStatus === AuthorizationStatus.Auth,
+    user,
+  })
+);
+
+export const selectLoginStatus = createSelector([getLoginStatus], (status) => ({
+  isLoading: status === RequestStatus.Loading,
+  isSuccess: status === RequestStatus.Success,
+}));
 
 export const getCity = (state: RootState): CityName => state.city;
 
@@ -20,6 +44,10 @@ export const getComments = (state: RootState): Review[] => state.comments;
 export const getOffersStatus = (state: RootState): RequestStatus => state.offersStatus;
 
 export const getOfferStatus = (state: RootState): RequestStatus => state.offerStatus;
+
+export const getFavoriteCount = createSelector([getOffers], (offers) =>
+  offers.filter((offer) => offer.isFavorite).length
+);
 
 export const getOffersByCity = createSelector([getCity, getOffers], (city, offers) =>
   offers.filter((offer) => offer.city.name === city)
