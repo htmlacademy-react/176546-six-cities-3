@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { OfferPreview } from '@/types/offer';
 import { generatePath, Link } from 'react-router-dom';
 import PremiumBadge from '@/components/premium-badge';
@@ -13,7 +14,7 @@ type PlaceCardProps = {
   onCardHover?: (id: string | null) => void;
 };
 
-function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): JSX.Element {
+function PlaceCardView({ offer, variant = 'cities', onCardHover }: PlaceCardProps): JSX.Element {
   const { id, isPremium, isFavorite, price, rating, title, type, previewImage } = offer;
 
   const cardClasses = CARD_CLASSES[variant];
@@ -62,5 +63,7 @@ function PlaceCard({ offer, variant = 'cities', onCardHover }: PlaceCardProps): 
     </article>
   );
 }
+
+const PlaceCard = memo(PlaceCardView);
 
 export default PlaceCard;

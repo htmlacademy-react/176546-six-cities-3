@@ -7,6 +7,8 @@ import { MARKER_HEIGHT, MARKER_WIDTH, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } f
 import type { Location } from '@/types/city';
 import type { MapOffer } from '@/types/map';
 
+type Point = [number, number];
+
 const defaultCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
   iconSize: [MARKER_WIDTH, MARKER_HEIGHT],
@@ -29,7 +31,12 @@ type MapProps = {
 function Map({ className, city, offers, selectedPointId }: MapProps): JSX.Element {
   const mapRef = useRef<HTMLDivElement>(null);
   const map = useMap(mapRef, city);
-  const markersRef = useRef<leaflet.Marker[]>([]);
+  const markersRef = useRef(new globalThis.Map<string, leaflet.Marker>());
+
+  const points: Point[] = offers.map((offer) => [offer.location.latitude, offer.location.longitude]);
+  const pointsKey = points.map(([latitude, longitude]) => `${latitude},${longitude}`).join('|');
+  const pointsRef = useRef<Point[]>(points);
+  pointsRef.current = points;
 
   useEffect(() => {
     if (!map) {
@@ -37,30 +44,38 @@ function Map({ className, city, offers, selectedPointId }: MapProps): JSX.Elemen
     }
 
     markersRef.current.forEach((marker) => marker.remove());
-    markersRef.current = offers.map((offer) =>
-      leaflet
-        .marker([offer.location.latitude, offer.location.longitude], {
-          icon: offer.id === selectedPointId ? currentCustomIcon : defaultCustomIcon,
-        })
-        .addTo(map)
-    );
-  }, [map, offers, selectedPointId]);
+    markersRef.current.clear();
+
+    offers.forEach((offer) => {
+      const marker = leaflet
+        .marker([offer.location.latitude, offer.location.longitude], { icon: defaultCustomIcon })
+        .addTo(map);
+
+      markersRef.current.set(offer.id, marker);
+    });
+  }, [map, offers]);
+
+  useEffect(() => {
+    markersRef.current.forEach((marker, id) => {
+      marker.setIcon(id === selectedPointId ? currentCustomIcon : defaultCustomIcon);
+    });
+  }, [selectedPointId, offers]);
 
   useEffect(() => {
     if (!map) {
       return;
     }
 
-    if (offers.length === 0) {
+    if (pointsRef.current.length === 0) {
       map.setView([city.latitude, city.longitude], city.zoom);
       return;
     }
 
-    const bounds = leaflet.latLngBounds(
-      offers.map((offer) => [offer.location.latitude, offer.location.longitude])
-    );
-    map.fitBounds(bounds, { padding: [40, 40], maxZoom: city.zoom });
-  }, [map, city, offers]);
+    map.fitBounds(leaflet.latLngBounds(pointsRef.current), {
+      padding: [40, 40],
+      maxZoom: city.zoom,
+    });
+  }, [map, city, pointsKey]);
 
   return (
     <section className={clsx(className, 'map')}>

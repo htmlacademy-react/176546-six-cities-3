@@ -6,7 +6,6 @@ import { AuthorizationStatus } from '@/const';
 import { useAppSelector } from '@/hooks';
 import { getAuthorizationStatus } from '@/store/selectors';
 import { createRoutes } from './router';
-//
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
