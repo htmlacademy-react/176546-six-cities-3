@@ -9,6 +9,8 @@ const RATING_OPTIONS = [
   { value: 1, id: '1-star', title: 'terribly' },
 ];
 
+const MIN_COMMENT_LENGTH = 50;
+
 type ReviewFormData = {
   rating: number;
   comment: string;
@@ -20,8 +22,16 @@ function ReviewForm(): JSX.Element {
   const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = evt.target;
 
-    setReviewData({ ...reviewData, [name]: value });
+    if (name === 'rating') {
+      setReviewData((prev) => ({ ...prev, rating: Number(value) }));
+      return;
+    }
+
+    setReviewData((prev) => ({ ...prev, comment: value }));
   };
+
+  const isSubmitDisabled =
+    reviewData.rating === 0 || reviewData.comment.trim().length < MIN_COMMENT_LENGTH;
 
   return (
     <form className="reviews__form form" action="#" method="post">
@@ -60,9 +70,13 @@ function ReviewForm(): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span>
           and describe your stay with at least
-          <b className="reviews__text-amount">50 characters</b>.
+          <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={isSubmitDisabled}
+        >
           Submit
         </button>
       </div>
