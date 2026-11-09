@@ -3,8 +3,8 @@ import type { ChangeEvent, FormEvent } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AppRoute } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { loginAction } from '@/store/api-actions';
-import { getLoginError, selectAuthState, selectLoginStatus } from '@/store/selectors';
+import { getLoginError, loginAction, selectAuthState, selectLoginStatus } from '@/store/slices/auth';
+
 import { EMAIL_PATTERN, EMPTY_FORM, LOGIN_FIELDS } from './const';
 
 type FieldName = 'email' | 'password';

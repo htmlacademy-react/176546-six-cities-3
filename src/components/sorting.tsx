@@ -3,8 +3,7 @@ import clsx from 'clsx';
 import { SORT_OPTIONS, SORT_OPTIONS_DICTIONARY } from '@/const';
 import type { SortType } from '@/const';
 import { useAppDispatch, useAppSelector, useOnClickOutside } from '@/hooks';
-import { changeSortType } from '@/store/offers-slice';
-import { getSortType } from '@/store/selectors';
+import { changeSortType, getSortType } from '@/store/slices/offers';
 
 const sortKeys = Object.keys(SORT_OPTIONS) as SortType[];
 

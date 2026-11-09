@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCommentsAction, fetchOfferAction } from '@/store/api-actions';
+import { fetchCommentsAction, fetchOfferAction } from '@/store/slices/offer/offer-api-actions';
 import { RequestStatus } from '@/store/types';
 import type { OfferState } from '@/store/types';
 
@@ -31,5 +31,3 @@ export const offerSlice = createSlice({
       });
   },
 });
-
-export default offerSlice.reducer;

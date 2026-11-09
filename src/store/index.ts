@@ -4,18 +4,13 @@ import { StatusCodes } from 'http-status-codes';
 import { AuthorizationStatus } from '@/const';
 import { createAPI } from '@/services/api';
 import { dropToken } from '@/services/token';
-import { authSlice, changeAuthorizationStatus } from '@/store/auth-slice';
-import { offersSlice } from '@/store/offers-slice';
-import { offerSlice } from '@/store/offer-slice';
+import { changeAuthorizationStatus } from '@/store/slices/auth';
+import { rootReducer } from '@/store/root-reducer';
 
 export const api = createAPI();
 
 export const store = configureStore({
-  reducer: {
-    auth: authSlice.reducer,
-    offers: offersSlice.reducer,
-    offer: offerSlice.reducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {

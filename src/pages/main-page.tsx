@@ -6,7 +6,7 @@ import Spinner from '@/components/spinner/spinner';
 import ErrorMessage from '@/components/error-message/error-message';
 import { CITIES } from '@/const';
 import { useAppSelector } from '@/hooks';
-import { getCity, getSortedOffers, selectOffersStatus } from '@/store/selectors';
+import { getCity, getSortedOffers, selectOffersStatus } from '@/store/slices/offers';
 
 function MainPage(): JSX.Element {
   const selectedCity = useAppSelector(getCity);

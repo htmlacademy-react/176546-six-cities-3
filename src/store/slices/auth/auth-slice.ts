@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '@/const';
-import { checkAuthAction, loginAction, logoutAction } from '@/store/api-actions';
+import { checkAuthAction, loginAction, logoutAction } from '@/store/slices/auth/auth-api-actions';
 import { RequestStatus } from '@/store/types';
 import type { AuthState } from '@/store/types';
 

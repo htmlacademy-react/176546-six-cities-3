@@ -12,8 +12,9 @@ import OfferGallery from '@/components/offer-gallery';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { getComments, getOffer, getOffers, selectOfferStatus } from '@/store/selectors';
-import { fetchCommentsAction, fetchOfferAction } from '@/store/api-actions';
+import { getComments, getOffer, selectOfferStatus } from '@/store/slices/offer';
+import { getOffers } from '@/store/slices/offers';
+import { fetchCommentsAction, fetchOfferAction } from '@/store/slices/offer';
 import Map from '@/components/map/map.tsx';
 
 const NEAR_OFFERS = 3;

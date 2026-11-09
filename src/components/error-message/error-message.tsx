@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/hooks';
-import { fetchOffersAction } from '@/store/api-actions';
+import { fetchOffersAction } from '@/store/slices/offers';
 import styles from './error-message.module.css';
 
 function ErrorMessage(): JSX.Element {

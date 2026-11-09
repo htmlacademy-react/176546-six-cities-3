@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/header/header';
 import PlaceCard from '@/components/place-card/place-card';
 import { useAppSelector } from '@/hooks';
-import { getFavoriteOffersByCity } from '@/store/selectors';
+import { getFavoriteOffersByCity } from '@/store/slices/offers';
 
 function FavoritesPage(): JSX.Element {
   const offersByCity = useAppSelector(getFavoriteOffersByCity);
