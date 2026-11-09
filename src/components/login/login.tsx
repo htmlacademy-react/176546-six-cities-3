@@ -5,7 +5,7 @@ import { AppRoute } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { loginAction } from '@/store/api-actions';
 import { getLoginError, selectAuthState, selectLoginStatus } from '@/store/selectors';
-import { EMAIL_PATTERN, EMPTY_FORM } from './const';
+import { EMAIL_PATTERN, EMPTY_FORM, LOGIN_FIELDS } from './const';
 
 type FieldName = 'email' | 'password';
 
@@ -49,7 +49,9 @@ function Login(): JSX.Element {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const submit = () => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
     const validationMessage = validate(form);
 
     if (validationMessage) {
@@ -61,51 +63,31 @@ function Login(): JSX.Element {
     dispatch(loginAction({ ...form, email: form.email.trim() }));
   };
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    submit();
-  };
-
   const message = validationError || serverError;
 
   return (
     <section className="login">
       <h1 className="login__title">Sign in</h1>
       <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
-        <div className="login__input-wrapper form__input-wrapper">
-          <label className="visually-hidden" htmlFor="login-email">
-            E-mail
-          </label>
-          <input
-            className="login__input form__input"
-            id="login-email"
-            type="email"
-            name="email"
-            placeholder="Email"
-            autoComplete="email"
-            required
-            value={form.email}
-            disabled={isLoading}
-            onChange={handleFieldChange}
-          />
-        </div>
-        <div className="login__input-wrapper form__input-wrapper">
-          <label className="visually-hidden" htmlFor="login-password">
-            Password
-          </label>
-          <input
-            className="login__input form__input"
-            id="login-password"
-            type="password"
-            name="password"
-            placeholder="Password"
-            autoComplete="current-password"
-            required
-            value={form.password}
-            disabled={isLoading}
-            onChange={handleFieldChange}
-          />
-        </div>
+        {LOGIN_FIELDS.map((field) => (
+          <div className="login__input-wrapper form__input-wrapper" key={field.name}>
+            <label className="visually-hidden" htmlFor={`login-${field.name}`}>
+              {field.label}
+            </label>
+            <input
+              className="login__input form__input"
+              id={`login-${field.name}`}
+              type={field.type}
+              name={field.name}
+              placeholder={field.placeholder}
+              autoComplete={field.autoComplete}
+              required
+              value={form[field.name]}
+              disabled={isLoading}
+              onChange={handleFieldChange}
+            />
+          </div>
+        ))}
         {message && (
           <p role="alert">
             {message}
