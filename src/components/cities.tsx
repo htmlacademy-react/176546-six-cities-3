@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import PlacesList from '@/components/places-list';
-import Map from '@/components/map/map.tsx';
-import Sorting from '@/components/sorting';
+import PlacesSection from '@/components/places-section';
+import MapSection from '@/components/map-section';
 import type { OfferPreview } from '@/types/offer';
 import type { Location } from '@/types/city';
 
@@ -17,24 +16,8 @@ function Cities({ offers, city, cityName }: CitiesProps): JSX.Element {
   return (
     <div className="cities">
       <div className="cities__places-container container">
-        <section className="cities__places places">
-          <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">
-            {offers.length} places to stay in {cityName}
-          </b>
-
-          <Sorting />
-
-          <PlacesList offers={offers} onCardHover={setHoveredId} />
-        </section>
-        <div className="cities__right-section">
-          <Map
-            className="cities__map"
-            city={city}
-            offers={offers}
-            selectedPointId={hoveredId ?? undefined}
-          />
-        </div>
+        <PlacesSection offers={offers} cityName={cityName} onCardHover={setHoveredId} />
+        <MapSection city={city} offers={offers} selectedPointId={hoveredId ?? undefined} />
       </div>
     </div>
   );

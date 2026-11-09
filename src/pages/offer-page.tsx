@@ -2,14 +2,19 @@ import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import Header from '@/components/header/header';
-import Review from '@/components/reviews-item/reviews-item';
+import PremiumBadge from '@/components/premium-badge';
+import BookmarkButton from '@/components/bookmark-button';
+import RatingStars from '@/components/rating-stars/rating-stars';
+import ReviewsList from '@/components/reviews-list/reviews-list';
 import ReviewForm from '@/components/review-form';
+import OfferHost from '@/components/offer-host';
+import OfferGallery from '@/components/offer-gallery';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
-import { getRatingWidth } from '@/utils';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { getComments, getOffer, getOffers, selectOfferStatus } from '@/store/selectors';
-import { fetchCommentsAction, fetchOfferAction } from '@/store/api-actions';
+import { getComments, getOffer, selectOfferStatus } from '@/store/slices/offer';
+import { getOffers } from '@/store/slices/offers';
+import { fetchCommentsAction, fetchOfferAction } from '@/store/slices/offer';
 import Map from '@/components/map/map.tsx';
 
 const NEAR_OFFERS = 3;
@@ -43,7 +48,7 @@ function OfferPage(): JSX.Element {
   const mapOffers = useMemo(() => (offer ? [offer, ...nearOffers] : []), [offer, nearOffers]);
 
   if (isOfferLoading) {
-    return <div className="page">Загрузка...</div>;
+    return <div className="page">Loading&hellip;</div>;
   }
 
   if (!offer || offer.id !== offerId) {
@@ -60,48 +65,18 @@ function OfferPage(): JSX.Element {
 
       <main className="page__main page__main--offer">
         <section className="offer">
-          <div className="offer__gallery-container container">
-            <div className="offer__gallery">
-              {offer.images.map((image) => (
-                <div className="offer__image-wrapper" key={image}>
-                  <img className="offer__image" src={image} alt="Photo studio" />
-                </div>
-              ))}
-            </div>
-          </div>
+          <OfferGallery images={offer.images} />
 
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {offer.isPremium && (
-                <div className="offer__mark">
-                  <span>Premium</span>
-                </div>
-              )}
+              {offer.isPremium && <PremiumBadge text="Premium" variant="offer" />}
 
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{offer.title}</h1>
-                <button
-                  className={`offer__bookmark-button button${
-                    offer.isFavorite ? ' offer__bookmark-button--active' : ''
-                  }`}
-                  type="button"
-                >
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">
-                    {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
-                  </span>
-                </button>
+                <BookmarkButton isFavorite={offer.isFavorite} variant="offer" />
               </div>
 
-              <div className="offer__rating rating">
-                <div className="offer__stars rating__stars">
-                  <span style={{ width: getRatingWidth(offer.rating) }}></span>
-                  <span className="visually-hidden">Rating</span>
-                </div>
-                <span className="offer__rating-value rating__value">{offer.rating}</span>
-              </div>
+              <RatingStars rating={offer.rating} variant="offer" />
 
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">{offer.type}</li>
@@ -129,39 +104,13 @@ function OfferPage(): JSX.Element {
                 </ul>
               </div>
 
-              <div className="offer__host">
-                <h2 className="offer__host-title">Meet the host</h2>
-                <div className="offer__host-user user">
-                  <div
-                    className={`offer__avatar-wrapper user__avatar-wrapper${
-                      offer.host.isPro ? ' offer__avatar-wrapper--pro' : ''
-                    }`}
-                  >
-                    <img
-                      className="offer__avatar user__avatar"
-                      src={offer.host.avatarUrl}
-                      width="74"
-                      height="74"
-                      alt="Host avatar"
-                    />
-                  </div>
-                  <span className="offer__user-name">{offer.host.name}</span>
-                  {offer.host.isPro && <span className="offer__user-status">Pro</span>}
-                </div>
-                <div className="offer__description">
-                  <p className="offer__text">{offer.description}</p>
-                </div>
-              </div>
+              <OfferHost host={offer.host} description={offer.description} />
 
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews &middot; <span className="reviews__amount">{offerReviews.length}</span>
                 </h2>
-                <ul className="reviews__list">
-                  {offerReviews.map((review) => (
-                    <Review key={review.id} review={review} />
-                  ))}
-                </ul>
+                <ReviewsList reviews={offerReviews} />
 
                 <ReviewForm />
               </section>

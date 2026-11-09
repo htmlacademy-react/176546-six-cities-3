@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Spinner from '@/components/spinner/spinner';
 import { AuthorizationStatus } from '@/const';
 import { useAppSelector } from '@/hooks';
-import { getAuthorizationStatus } from '@/store/selectors';
+import { getAuthorizationStatus } from '@/store/slices/auth';
 import { createRoutes } from './router';
 
 function App(): JSX.Element {

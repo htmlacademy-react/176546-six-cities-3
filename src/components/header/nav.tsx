@@ -2,8 +2,8 @@ import type { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { logoutAction } from '@/store/api-actions';
-import { getAuthorizationStatus, getFavoriteCount, getUser } from '@/store/selectors';
+import { getAuthorizationStatus, getUser, logoutAction } from '@/store/slices/auth';
+import { getFavoriteCount } from '@/store/slices/offers';
 
 function Nav(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
