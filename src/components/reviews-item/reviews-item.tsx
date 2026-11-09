@@ -1,5 +1,6 @@
 import type { Review as ReviewType } from '@/types/review';
 import RatingStars from '@/components/rating-stars/rating-stars';
+import UserBadge from '@/components/user-badge/user-badge';
 import { formatReviewDate } from '@/utils';
 
 type ReviewProps = {
@@ -11,23 +12,7 @@ function ReviewsItem({ review }: ReviewProps): JSX.Element {
 
   return (
     <li className="reviews__item">
-      <div className="reviews__user user">
-        <div
-          className={`reviews__avatar-wrapper user__avatar-wrapper${
-            user.isPro ? ' reviews__avatar-wrapper--pro' : ''
-          }`}
-        >
-          <img
-            className="reviews__avatar user__avatar"
-            src={user.avatarUrl}
-            width="54"
-            height="54"
-            alt={`${user.name} avatar`}
-          />
-        </div>
-        <span className="reviews__user-name">{user.name}</span>
-        {user.isPro && <span className="reviews__user-status">Pro</span>}
-      </div>
+      <UserBadge user={user} variant="reviews" />
       <div className="reviews__info">
         <RatingStars rating={rating} variant="reviews" />
         <p className="reviews__text">{comment}</p>

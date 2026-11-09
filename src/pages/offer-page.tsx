@@ -7,6 +7,8 @@ import BookmarkButton from '@/components/bookmark-button';
 import RatingStars from '@/components/rating-stars/rating-stars';
 import ReviewsList from '@/components/reviews-list/reviews-list';
 import ReviewForm from '@/components/review-form';
+import OfferHost from '@/components/offer-host';
+import OfferGallery from '@/components/offer-gallery';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { useAppDispatch, useAppSelector } from '@/hooks';
@@ -62,15 +64,7 @@ function OfferPage(): JSX.Element {
 
       <main className="page__main page__main--offer">
         <section className="offer">
-          <div className="offer__gallery-container container">
-            <div className="offer__gallery">
-              {offer.images.map((image) => (
-                <div className="offer__image-wrapper" key={image}>
-                  <img className="offer__image" src={image} alt="Photo studio" />
-                </div>
-              ))}
-            </div>
-          </div>
+          <OfferGallery images={offer.images} />
 
           <div className="offer__container container">
             <div className="offer__wrapper">
@@ -109,29 +103,7 @@ function OfferPage(): JSX.Element {
                 </ul>
               </div>
 
-              <div className="offer__host">
-                <h2 className="offer__host-title">Meet the host</h2>
-                <div className="offer__host-user user">
-                  <div
-                    className={`offer__avatar-wrapper user__avatar-wrapper${
-                      offer.host.isPro ? ' offer__avatar-wrapper--pro' : ''
-                    }`}
-                  >
-                    <img
-                      className="offer__avatar user__avatar"
-                      src={offer.host.avatarUrl}
-                      width="74"
-                      height="74"
-                      alt="Host avatar"
-                    />
-                  </div>
-                  <span className="offer__user-name">{offer.host.name}</span>
-                  {offer.host.isPro && <span className="offer__user-status">Pro</span>}
-                </div>
-                <div className="offer__description">
-                  <p className="offer__text">{offer.description}</p>
-                </div>
-              </div>
+              <OfferHost host={offer.host} description={offer.description} />
 
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">
