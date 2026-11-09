@@ -9,32 +9,8 @@ import {
   logoutAction,
 } from '@/store/api-actions';
 import { AuthorizationStatus, CITIES, SORT_OPTIONS } from '@/const';
-import type { SortType } from '@/const';
-import type { CityName } from '@/types/city';
-import type { OfferDetails, OfferPreview } from '@/types/offer';
-import type { Review } from '@/types/review';
-import type { AuthInfo } from '@/types/user';
-
-export enum RequestStatus {
-  Idle = 'Idle',
-  Loading = 'Loading',
-  Success = 'Success',
-  Failed = 'Failed',
-}
-
-export type State = {
-  authorizationStatus: AuthorizationStatus;
-  user: AuthInfo | null;
-  loginStatus: RequestStatus;
-  loginError: string;
-  city: CityName;
-  offers: OfferPreview[];
-  sortType: SortType;
-  offer: OfferDetails | null;
-  comments: Review[];
-  offersStatus: RequestStatus;
-  offerStatus: RequestStatus;
-};
+import { RequestStatus } from '@/store/types';
+import type { State } from '@/store/types';
 
 const initialState: State = {
   authorizationStatus: AuthorizationStatus.Unknown,

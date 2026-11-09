@@ -7,7 +7,7 @@ import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
 import type { AuthInfo } from '@/types/user';
 import { sortOffers } from '@/utils';
-import { RequestStatus } from '@/store/reducer';
+import { RequestStatus } from '@/store/types';
 
 export const getAuthorizationStatus = (state: RootState): AuthorizationStatus =>
   state.authorizationStatus;
