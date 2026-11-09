@@ -2,6 +2,8 @@ import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import Header from '@/components/header/header';
+import PremiumBadge from '@/components/premium-badge';
+import BookmarkButton from '@/components/bookmark-button';
 import ReviewsList from '@/components/reviews-list/reviews-list';
 import ReviewForm from '@/components/review-form';
 import PlacesList from '@/components/places-list';
@@ -72,27 +74,11 @@ function OfferPage(): JSX.Element {
 
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {offer.isPremium && (
-                <div className="offer__mark">
-                  <span>Premium</span>
-                </div>
-              )}
+              {offer.isPremium && <PremiumBadge text="Premium" variant="offer" />}
 
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{offer.title}</h1>
-                <button
-                  className={`offer__bookmark-button button${
-                    offer.isFavorite ? ' offer__bookmark-button--active' : ''
-                  }`}
-                  type="button"
-                >
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">
-                    {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
-                  </span>
-                </button>
+                <BookmarkButton isFavorite={offer.isFavorite} variant="offer" />
               </div>
 
               <div className="offer__rating rating">
