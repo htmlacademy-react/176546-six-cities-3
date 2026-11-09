@@ -31,4 +31,8 @@ export type OfferState = {
   offerStatus: RequestStatus;
 };
 
-export type State = AuthState & OffersState & OfferState;
+export type State = {
+  auth: AuthState;
+  offers: OffersState;
+  offer: OfferState;
+};

@@ -10,13 +10,13 @@ import { sortOffers } from '@/utils';
 import { RequestStatus } from '@/store/types';
 
 export const getAuthorizationStatus = (state: RootState): AuthorizationStatus =>
-  state.authorizationStatus;
+  state.auth.authorizationStatus;
 
-export const getUser = (state: RootState): AuthInfo | null => state.user;
+export const getUser = (state: RootState): AuthInfo | null => state.auth.user;
 
-export const getLoginStatus = (state: RootState): RequestStatus => state.loginStatus;
+export const getLoginStatus = (state: RootState): RequestStatus => state.auth.loginStatus;
 
-export const getLoginError = (state: RootState): string => state.loginError;
+export const getLoginError = (state: RootState): string => state.auth.loginError;
 
 export const selectAuthState = createSelector(
   [getAuthorizationStatus, getUser],
@@ -31,19 +31,19 @@ export const selectLoginStatus = createSelector([getLoginStatus], (status) => ({
   isSuccess: status === RequestStatus.Success,
 }));
 
-export const getCity = (state: RootState): CityName => state.city;
+export const getCity = (state: RootState): CityName => state.offers.city;
 
-export const getSortType = (state: RootState): SortType => state.sortType;
+export const getSortType = (state: RootState): SortType => state.offers.sortType;
 
-export const getOffers = (state: RootState): OfferPreview[] => state.offers;
+export const getOffers = (state: RootState): OfferPreview[] => state.offers.offers;
 
-export const getOffer = (state: RootState): OfferDetails | null => state.offer;
+export const getOffer = (state: RootState): OfferDetails | null => state.offer.offer;
 
-export const getComments = (state: RootState): Review[] => state.comments;
+export const getComments = (state: RootState): Review[] => state.offer.comments;
 
-export const getOffersStatus = (state: RootState): RequestStatus => state.offersStatus;
+export const getOffersStatus = (state: RootState): RequestStatus => state.offers.offersStatus;
 
-export const getOfferStatus = (state: RootState): RequestStatus => state.offerStatus;
+export const getOfferStatus = (state: RootState): RequestStatus => state.offer.offerStatus;
 
 export const getFavoriteCount = createSelector([getOffers], (offers) =>
   offers.filter((offer) => offer.isFavorite).length
