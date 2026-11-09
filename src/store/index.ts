@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import type { AxiosError } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 import { AuthorizationStatus } from '@/const';
@@ -10,14 +10,12 @@ import { offerSlice } from '@/store/offer-slice';
 
 export const api = createAPI();
 
-const rootReducer = combineReducers({
-  auth: authSlice.reducer,
-  offers: offersSlice.reducer,
-  offer: offerSlice.reducer,
-});
-
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    auth: authSlice.reducer,
+    offers: offersSlice.reducer,
+    offer: offerSlice.reducer,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
