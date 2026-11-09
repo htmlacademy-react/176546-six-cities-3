@@ -3,12 +3,10 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/header/header';
 import PlaceCard from '@/components/place-card/place-card';
 import { useAppSelector } from '@/hooks';
-import { getOffers } from '@/store/selectors';
+import { getFavoriteOffersByCity } from '@/store/selectors';
 
 function FavoritesPage(): JSX.Element {
-  const offers = useAppSelector(getOffers);
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-  const offersByCity = Object.groupBy(favoriteOffers, (offer) => offer.city.name);
+  const offersByCity = useAppSelector(getFavoriteOffersByCity);
 
   return (
     <div className="page">

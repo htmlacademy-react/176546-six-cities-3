@@ -49,6 +49,13 @@ export const getFavoriteCount = createSelector([getOffers], (offers) =>
   offers.filter((offer) => offer.isFavorite).length
 );
 
+export const getFavoriteOffersByCity = createSelector([getOffers], (offers) =>
+  Object.groupBy(
+    offers.filter((offer) => offer.isFavorite),
+    (offer) => offer.city.name
+  )
+);
+
 export const getOffersByCity = createSelector([getCity, getOffers], (city, offers) =>
   offers.filter((offer) => offer.city.name === city)
 );
