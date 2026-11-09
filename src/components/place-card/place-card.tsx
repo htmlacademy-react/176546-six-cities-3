@@ -3,7 +3,8 @@ import type { OfferPreview } from '@/types/offer';
 import { generatePath, Link } from 'react-router-dom';
 import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
-import { capitalize, getRatingWidth } from '@/utils';
+import RatingStars from '@/components/rating-stars/rating-stars';
+import { capitalize } from '@/utils';
 import { AppRoute } from '@/const';
 import { CARD_CLASSES, CARD_IMAGE_SIZES } from '@/components/place-card/const';
 import type { PlaceCardVariant } from '@/components/place-card/const';
@@ -49,12 +50,7 @@ function PlaceCardView({ offer, variant = 'cities', onCardHover }: PlaceCardProp
 
           <BookmarkButton isFavorite={isFavorite} />
         </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: getRatingWidth(rating) }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <RatingStars rating={rating} variant="place-card" />
         <h2 className="place-card__name">
           <Link to={offerPath}>{title}</Link>
         </h2>

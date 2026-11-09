@@ -1,5 +1,6 @@
 import type { Review as ReviewType } from '@/types/review';
-import { formatReviewDate, getRatingWidth } from '@/utils';
+import RatingStars from '@/components/rating-stars/rating-stars';
+import { formatReviewDate } from '@/utils';
 
 type ReviewProps = {
   review: ReviewType;
@@ -28,12 +29,7 @@ function ReviewsItem({ review }: ReviewProps): JSX.Element {
         {user.isPro && <span className="reviews__user-status">Pro</span>}
       </div>
       <div className="reviews__info">
-        <div className="reviews__rating rating">
-          <div className="reviews__stars rating__stars">
-            <span style={{ width: getRatingWidth(rating) }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <RatingStars rating={rating} variant="reviews" />
         <p className="reviews__text">{comment}</p>
         <time className="reviews__time" dateTime={date}>
           {formatReviewDate(date)}

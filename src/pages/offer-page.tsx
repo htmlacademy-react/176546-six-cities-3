@@ -4,11 +4,11 @@ import { useParams } from 'react-router-dom';
 import Header from '@/components/header/header';
 import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
+import RatingStars from '@/components/rating-stars/rating-stars';
 import ReviewsList from '@/components/reviews-list/reviews-list';
 import ReviewForm from '@/components/review-form';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
-import { getRatingWidth } from '@/utils';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { getComments, getOffer, getOffers, selectOfferStatus } from '@/store/selectors';
 import { fetchCommentsAction, fetchOfferAction } from '@/store/api-actions';
@@ -81,13 +81,7 @@ function OfferPage(): JSX.Element {
                 <BookmarkButton isFavorite={offer.isFavorite} variant="offer" />
               </div>
 
-              <div className="offer__rating rating">
-                <div className="offer__stars rating__stars">
-                  <span style={{ width: getRatingWidth(offer.rating) }}></span>
-                  <span className="visually-hidden">Rating</span>
-                </div>
-                <span className="offer__rating-value rating__value">{offer.rating}</span>
-              </div>
+              <RatingStars rating={offer.rating} variant="offer" />
 
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">{offer.type}</li>
