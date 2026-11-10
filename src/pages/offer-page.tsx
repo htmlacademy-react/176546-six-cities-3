@@ -6,19 +6,16 @@ import Header from '@/components/header/header';
 import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
 import RatingStars from '@/components/rating-stars/rating-stars';
-import ReviewsList from '@/components/reviews-list/reviews-list';
-import ReviewForm from '@/components/review-form';
 import OfferHost from '@/components/offer-host';
 import OfferGallery from '@/components/offer-gallery';
-import PlacesList from '@/components/places-list';
+import OfferReviews from '@/components/offer-reviews';
+import NearPlaces from '@/components/near-places';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { selectAuthState } from '@/store/slices/auth';
 import {
   fetchCommentsAction,
   fetchNearbyAction,
   fetchOfferAction,
-  getComments,
   getNearbyOffers,
   getOffer,
   isOfferNotFound,
@@ -34,10 +31,8 @@ function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const offer = useAppSelector(getOffer);
   const nearOffers = useAppSelector(getNearbyOffers);
-  const offerReviews = useAppSelector(getComments);
   const { isLoading: isOfferLoading, isError: isOfferError } = useAppSelector(selectOfferStatus);
   const offerNotFound = useAppSelector(isOfferNotFound);
-  const { isAuthenticated } = useAppSelector(selectAuthState);
 
   useEffect(() => {
     if (!offerId) {
@@ -49,9 +44,11 @@ function OfferPage(): JSX.Element {
     dispatch(fetchCommentsAction(offerId));
   }, [dispatch, offerId]);
 
+  const visibleNearOffers = useMemo(() => nearOffers.slice(0, NEAR_OFFERS), [nearOffers]);
+
   const mapOffers = useMemo(
-    () => (offer ? [offer, ...nearOffers.slice(0, NEAR_OFFERS)] : []),
-    [offer, nearOffers]
+    () => (offer ? [offer, ...visibleNearOffers] : []),
+    [offer, visibleNearOffers]
   );
 
   if (isOfferLoading) {
@@ -121,14 +118,7 @@ function OfferPage(): JSX.Element {
 
               <OfferHost host={offer.host} description={offer.description} />
 
-              <section className="offer__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews &middot; <span className="reviews__amount">{offerReviews.length}</span>
-                </h2>
-                <ReviewsList reviews={offerReviews} />
-
-                {isAuthenticated && <ReviewForm offerId={offerId} />}
-              </section>
+              <OfferReviews offerId={offerId} />
             </div>
           </div>
 
@@ -140,12 +130,7 @@ function OfferPage(): JSX.Element {
           />
         </section>
 
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList offers={nearOffers.slice(0, NEAR_OFFERS)} variant="near-places" />
-          </section>
-        </div>
+        <NearPlaces offers={visibleNearOffers} />
       </main>
     </div>
   );
