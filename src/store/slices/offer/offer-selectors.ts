@@ -1,10 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { RootState } from '@/store';
 import { RequestStatus } from '@/store/types';
-import type { OfferDetails } from '@/types/offer';
+import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
 
 export const getOffer = (state: RootState): OfferDetails | null => state.offer.offer;
+
+export const getNearbyOffers = (state: RootState): OfferPreview[] => state.offer.nearby;
 
 export const getComments = (state: RootState): Review[] => state.offer.comments;
 

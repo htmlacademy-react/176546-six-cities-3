@@ -27,8 +27,10 @@ export type OffersState = {
 
 export type OfferState = {
   offer: OfferDetails | null;
+  nearby: OfferPreview[];
   comments: Review[];
   offerStatus: RequestStatus;
+  nearbyStatus: RequestStatus;
 };
 
 export type State = {

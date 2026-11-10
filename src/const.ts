@@ -28,6 +28,7 @@ export enum AppRoute {
 
 export enum ApiRoute {
   Offers = '/offers',
+  Nearby = '/nearby',
   Comments = '/comments',
   Login = '/login',
 }

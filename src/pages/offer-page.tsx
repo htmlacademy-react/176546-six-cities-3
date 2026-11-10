@@ -12,9 +12,15 @@ import OfferGallery from '@/components/offer-gallery';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { getComments, getOffer, selectOfferStatus } from '@/store/slices/offer';
-import { getOffers } from '@/store/slices/offers';
-import { fetchCommentsAction, fetchOfferAction } from '@/store/slices/offer';
+import {
+  fetchCommentsAction,
+  fetchNearbyAction,
+  fetchOfferAction,
+  getComments,
+  getNearbyOffers,
+  getOffer,
+  selectOfferStatus,
+} from '@/store/slices/offer';
 import Map from '@/components/map/map.tsx';
 
 const NEAR_OFFERS = 3;
@@ -23,8 +29,8 @@ function OfferPage(): JSX.Element {
   const { id } = useParams();
   const offerId = id ?? '';
   const dispatch = useAppDispatch();
-  const offers = useAppSelector(getOffers);
   const offer = useAppSelector(getOffer);
+  const nearOffers = useAppSelector(getNearbyOffers);
   const offerReviews = useAppSelector(getComments);
   const { isLoading: isOfferLoading } = useAppSelector(selectOfferStatus);
 
@@ -34,18 +40,14 @@ function OfferPage(): JSX.Element {
     }
 
     dispatch(fetchOfferAction(offerId));
+    dispatch(fetchNearbyAction(offerId));
     dispatch(fetchCommentsAction(offerId));
   }, [dispatch, offerId]);
 
-  const nearOffers = useMemo(
-    () =>
-      offers
-        .filter((item) => item.id !== offer?.id && item.city.name === offer?.city.name)
-        .slice(0, NEAR_OFFERS),
-    [offers, offer]
+  const mapOffers = useMemo(
+    () => (offer ? [offer, ...nearOffers.slice(0, NEAR_OFFERS)] : []),
+    [offer, nearOffers]
   );
-
-  const mapOffers = useMemo(() => (offer ? [offer, ...nearOffers] : []), [offer, nearOffers]);
 
   if (isOfferLoading) {
     return <div className="page">Loading&hellip;</div>;
@@ -128,7 +130,7 @@ function OfferPage(): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList offers={nearOffers} variant="near-places" />
+            <PlacesList offers={nearOffers.slice(0, NEAR_OFFERS)} variant="near-places" />
           </section>
         </div>
       </main>
