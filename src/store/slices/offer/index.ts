@@ -9,7 +9,6 @@ export {
   getComments,
   getNearbyOffers,
   getOffer,
-  getOfferStatus,
   isOfferNotFound,
   selectCommentStatus,
   selectOfferStatus,

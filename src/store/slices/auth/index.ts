@@ -3,7 +3,6 @@ export { authSlice, changeAuthorizationStatus } from './auth-slice';
 export {
   getAuthorizationStatus,
   getLoginError,
-  getLoginStatus,
   getUser,
   selectAuthState,
   selectLoginStatus,

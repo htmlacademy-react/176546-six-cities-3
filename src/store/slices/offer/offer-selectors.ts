@@ -14,7 +14,7 @@ export const getComments = (state: RootState): Review[] => state.offer.comments;
 
 export const getOfferStatus = (state: RootState): RequestStatus => state.offer.offerStatus;
 
-export const getCommentStatus = (state: RootState): RequestStatus => state.offer.commentStatus;
+const getCommentStatus = (state: RootState): RequestStatus => state.offer.commentStatus;
 
 export const getCommentError = (state: RootState): string => state.offer.commentError;
 
