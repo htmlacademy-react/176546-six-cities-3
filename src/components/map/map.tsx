@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import clsx from 'clsx';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -20,8 +20,14 @@ function Map({ className, city, offers, selectedPointId }: MapProps): JSX.Elemen
   const mapRef = useRef<HTMLDivElement>(null);
   const map = useMap(mapRef, city);
 
-  const points: Point[] = offers.map((offer) => [offer.location.latitude, offer.location.longitude]);
-  const pointsKey = points.map(([latitude, longitude]) => `${latitude},${longitude}`).join('|');
+  const points = useMemo<Point[]>(
+    () => offers.map((offer) => [offer.location.latitude, offer.location.longitude]),
+    [offers]
+  );
+  const pointsKey = useMemo(
+    () => points.map(([latitude, longitude]) => `${latitude},${longitude}`).join('|'),
+    [points]
+  );
   const pointsRef = useRef<Point[]>(points);
   pointsRef.current = points;
 

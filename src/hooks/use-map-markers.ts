@@ -1,6 +1,11 @@
 import { useEffect, useRef } from 'react';
 import leaflet from 'leaflet';
-import { MARKER_HEIGHT, MARKER_WIDTH, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '@/components/map/const';
+import {
+  MARKER_HEIGHT,
+  MARKER_WIDTH,
+  URL_MARKER_CURRENT,
+  URL_MARKER_DEFAULT,
+} from '@/components/map/const';
 import type { MapOffer } from '@/types/map';
 
 const defaultCustomIcon = leaflet.icon({
@@ -15,31 +20,72 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [MARKER_WIDTH / 2, MARKER_HEIGHT],
 });
 
+const getIcon = (id: string, selectedPointId?: string): leaflet.Icon =>
+  id === selectedPointId ? currentCustomIcon : defaultCustomIcon;
+
 function useMapMarkers(map: leaflet.Map | null, offers: MapOffer[], selectedPointId?: string): void {
   const markersRef = useRef(new Map<string, leaflet.Marker>());
+  const selectedIdRef = useRef(selectedPointId);
+  const paintedIdRef = useRef<string | undefined>(selectedPointId);
+
+  selectedIdRef.current = selectedPointId;
 
   useEffect(() => {
     if (!map) {
       return;
     }
 
-    markersRef.current.forEach((marker) => marker.remove());
-    markersRef.current.clear();
+    const markers = markersRef.current;
+    const actualIds = new Set(offers.map(({ id }) => id));
 
-    offers.forEach((offer) => {
-      const marker = leaflet
-        .marker([offer.location.latitude, offer.location.longitude], { icon: defaultCustomIcon })
-        .addTo(map);
+    markers.forEach((marker, id) => {
+      if (!actualIds.has(id)) {
+        marker.remove();
+        markers.delete(id);
+      }
+    });
 
-      markersRef.current.set(offer.id, marker);
+    offers.forEach(({ id, location }) => {
+      const marker = markers.get(id);
+      const position: leaflet.LatLngExpression = [location.latitude, location.longitude];
+
+      if (marker) {
+        marker.setLatLng(position);
+        return;
+      }
+
+      const icon = getIcon(id, selectedIdRef.current);
+      markers.set(id, leaflet.marker(position, { icon }).addTo(map));
     });
   }, [map, offers]);
 
   useEffect(() => {
-    markersRef.current.forEach((marker, id) => {
-      marker.setIcon(id === selectedPointId ? currentCustomIcon : defaultCustomIcon);
-    });
-  }, [selectedPointId, offers]);
+    const markers = markersRef.current;
+    const previousId = paintedIdRef.current;
+
+    if (previousId === selectedPointId) {
+      return;
+    }
+
+    paintedIdRef.current = selectedPointId;
+
+    if (previousId !== undefined) {
+      markers.get(previousId)?.setIcon(defaultCustomIcon);
+    }
+
+    if (selectedPointId !== undefined) {
+      markers.get(selectedPointId)?.setIcon(currentCustomIcon);
+    }
+  }, [selectedPointId]);
+
+  useEffect(() => {
+    const markers = markersRef.current;
+
+    return () => {
+      markers.forEach((marker) => marker.remove());
+      markers.clear();
+    };
+  }, [map]);
 }
 
 export default useMapMarkers;
