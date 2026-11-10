@@ -3,6 +3,7 @@ import {
   fetchCommentsAction,
   fetchNearbyAction,
   fetchOfferAction,
+  postCommentAction,
 } from '@/store/slices/offer/offer-api-actions';
 import { RequestStatus } from '@/store/types';
 import type { OfferState } from '@/store/types';
@@ -14,6 +15,8 @@ const initialState: OfferState = {
   offerStatus: RequestStatus.Idle,
   nearbyStatus: RequestStatus.Idle,
   isNotFound: false,
+  commentStatus: RequestStatus.Idle,
+  commentError: '',
 };
 
 export const offerSlice = createSlice({
@@ -55,6 +58,18 @@ export const offerSlice = createSlice({
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
         state.comments = action.payload;
+      })
+      .addCase(postCommentAction.pending, (state) => {
+        state.commentStatus = RequestStatus.Loading;
+        state.commentError = '';
+      })
+      .addCase(postCommentAction.fulfilled, (state, action) => {
+        state.comments = [action.payload, ...state.comments];
+        state.commentStatus = RequestStatus.Success;
+      })
+      .addCase(postCommentAction.rejected, (state, action) => {
+        state.commentStatus = RequestStatus.Failed;
+        state.commentError = action.payload ?? 'Could not send the review. Please try again.';
       });
   },
 });

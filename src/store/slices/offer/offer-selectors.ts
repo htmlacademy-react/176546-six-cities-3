@@ -14,6 +14,15 @@ export const getComments = (state: RootState): Review[] => state.offer.comments;
 
 export const getOfferStatus = (state: RootState): RequestStatus => state.offer.offerStatus;
 
+export const getCommentStatus = (state: RootState): RequestStatus => state.offer.commentStatus;
+
+export const getCommentError = (state: RootState): string => state.offer.commentError;
+
+export const selectCommentStatus = createSelector([getCommentStatus], (status) => ({
+  isSending: status === RequestStatus.Loading,
+  isError: status === RequestStatus.Failed,
+}));
+
 export const selectOfferStatus = createSelector([getOfferStatus], (status) => ({
   isLoading: status === RequestStatus.Idle || status === RequestStatus.Loading,
   isSuccess: status === RequestStatus.Success,

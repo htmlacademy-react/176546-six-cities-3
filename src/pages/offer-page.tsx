@@ -13,6 +13,7 @@ import OfferGallery from '@/components/offer-gallery';
 import PlacesList from '@/components/places-list';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { useAppDispatch, useAppSelector } from '@/hooks';
+import { selectAuthState } from '@/store/slices/auth';
 import {
   fetchCommentsAction,
   fetchNearbyAction,
@@ -36,6 +37,7 @@ function OfferPage(): JSX.Element {
   const offerReviews = useAppSelector(getComments);
   const { isLoading: isOfferLoading, isError: isOfferError } = useAppSelector(selectOfferStatus);
   const offerNotFound = useAppSelector(isOfferNotFound);
+  const { isAuthenticated } = useAppSelector(selectAuthState);
 
   useEffect(() => {
     if (!offerId) {
@@ -125,7 +127,7 @@ function OfferPage(): JSX.Element {
                 </h2>
                 <ReviewsList reviews={offerReviews} />
 
-                <ReviewForm />
+                {isAuthenticated && <ReviewForm offerId={offerId} />}
               </section>
             </div>
           </div>

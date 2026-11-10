@@ -1,5 +1,7 @@
 import { Fragment, useState } from 'react';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { getCommentError, postCommentAction, selectCommentStatus } from '@/store/slices/offer';
 
 const RATING_OPTIONS = [
   { value: 5, id: '5-stars', title: 'perfect' },
@@ -10,13 +12,21 @@ const RATING_OPTIONS = [
 ];
 
 const MIN_COMMENT_LENGTH = 50;
+const MAX_COMMENT_LENGTH = 300;
 
 type ReviewFormData = {
   rating: number;
   comment: string;
 };
 
-function ReviewForm(): JSX.Element {
+type ReviewFormProps = {
+  offerId: string;
+};
+
+function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const { isSending, isError } = useAppSelector(selectCommentStatus);
+  const commentError = useAppSelector(getCommentError);
   const [reviewData, setReviewData] = useState<ReviewFormData>({ rating: 0, comment: '' });
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -30,11 +40,25 @@ function ReviewForm(): JSX.Element {
     setReviewData((prev) => ({ ...prev, comment: value }));
   };
 
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    void dispatch(
+      postCommentAction({ offerId, rating: reviewData.rating, comment: reviewData.comment })
+    )
+      .unwrap()
+      .then(() => setReviewData({ rating: 0, comment: '' }))
+      .catch(() => undefined);
+  };
+
   const isSubmitDisabled =
-    reviewData.rating === 0 || reviewData.comment.trim().length < MIN_COMMENT_LENGTH;
+    isSending ||
+    reviewData.rating === 0 ||
+    reviewData.comment.trim().length < MIN_COMMENT_LENGTH ||
+    reviewData.comment.length > MAX_COMMENT_LENGTH;
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -65,6 +89,7 @@ function ReviewForm(): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={reviewData.comment}
         onChange={handleChange}
+        maxLength={MAX_COMMENT_LENGTH}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -72,12 +97,13 @@ function ReviewForm(): JSX.Element {
           and describe your stay with at least
           <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
         </p>
+        {isError && <p className="reviews__help">{commentError}</p>}
         <button
           className="reviews__submit form__submit button"
           type="submit"
           disabled={isSubmitDisabled}
         >
-          Submit
+          {isSending ? 'Sending…' : 'Submit'}
         </button>
       </div>
     </form>
