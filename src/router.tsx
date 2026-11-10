@@ -37,6 +37,7 @@ export const createRoutes = () =>
           <OfferPage />
         )}
       />
+      <Route path={AppRoute.NotFound} element={withSuspense(<NotFoundPage />)} />
       <Route path="*" element={withSuspense(<NotFoundPage />)} />
     </>
   );

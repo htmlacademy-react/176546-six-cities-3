@@ -23,7 +23,7 @@ export enum AppRoute {
   Favorites = '/favorites',
   Root = '/',
   Offer = '/offer/:id',
-  NotFound = '*',
+  NotFound = '/404',
 }
 
 export enum ApiRoute {

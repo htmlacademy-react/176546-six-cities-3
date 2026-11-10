@@ -31,6 +31,7 @@ export type OfferState = {
   comments: Review[];
   offerStatus: RequestStatus;
   nearbyStatus: RequestStatus;
+  isNotFound: boolean;
 };
 
 export type State = {

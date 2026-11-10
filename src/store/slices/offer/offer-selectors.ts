@@ -8,6 +8,8 @@ export const getOffer = (state: RootState): OfferDetails | null => state.offer.o
 
 export const getNearbyOffers = (state: RootState): OfferPreview[] => state.offer.nearby;
 
+export const isOfferNotFound = (state: RootState): boolean => state.offer.isNotFound;
+
 export const getComments = (state: RootState): Review[] => state.offer.comments;
 
 export const getOfferStatus = (state: RootState): RequestStatus => state.offer.offerStatus;

@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
+import { AppRoute } from '@/const';
 import Header from '@/components/header/header';
 import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
@@ -19,6 +20,7 @@ import {
   getComments,
   getNearbyOffers,
   getOffer,
+  isOfferNotFound,
   selectOfferStatus,
 } from '@/store/slices/offer';
 import Map from '@/components/map/map.tsx';
@@ -32,7 +34,8 @@ function OfferPage(): JSX.Element {
   const offer = useAppSelector(getOffer);
   const nearOffers = useAppSelector(getNearbyOffers);
   const offerReviews = useAppSelector(getComments);
-  const { isLoading: isOfferLoading } = useAppSelector(selectOfferStatus);
+  const { isLoading: isOfferLoading, isError: isOfferError } = useAppSelector(selectOfferStatus);
+  const offerNotFound = useAppSelector(isOfferNotFound);
 
   useEffect(() => {
     if (!offerId) {
@@ -51,6 +54,14 @@ function OfferPage(): JSX.Element {
 
   if (isOfferLoading) {
     return <div className="page">Loading&hellip;</div>;
+  }
+
+  if (offerNotFound) {
+    return <Navigate to={AppRoute.NotFound} replace />;
+  }
+
+  if (isOfferError) {
+    return <div className="page">Could not load the offer. Please try again.</div>;
   }
 
   if (!offer || offer.id !== offerId) {

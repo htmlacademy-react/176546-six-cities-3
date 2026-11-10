@@ -13,6 +13,7 @@ const initialState: OfferState = {
   comments: [],
   offerStatus: RequestStatus.Idle,
   nearbyStatus: RequestStatus.Idle,
+  isNotFound: false,
 };
 
 export const offerSlice = createSlice({
@@ -23,15 +24,19 @@ export const offerSlice = createSlice({
     builder
       .addCase(fetchOfferAction.pending, (state) => {
         state.offer = null;
+        state.isNotFound = false;
         state.offerStatus = RequestStatus.Loading;
       })
       .addCase(fetchOfferAction.fulfilled, (state, action) => {
         state.offer = action.payload;
         state.offerStatus = RequestStatus.Success;
       })
-      .addCase(fetchOfferAction.rejected, (state) => {
+      .addCase(fetchOfferAction.rejected, (state, action) => {
         state.offer = null;
+        state.nearby = [];
+        state.comments = [];
         state.offerStatus = RequestStatus.Failed;
+        state.isNotFound = action.payload === true;
       })
       .addCase(fetchNearbyAction.pending, (state) => {
         state.nearby = [];

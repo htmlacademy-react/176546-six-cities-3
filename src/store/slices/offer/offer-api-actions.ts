@@ -1,15 +1,27 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { isAxiosError } from 'axios';
+import { StatusCodes } from 'http-status-codes';
 import { ApiRoute } from '@/const';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
 import type { ThunkOptions } from '@/types/thunk';
 
-export const fetchOfferAction = createAsyncThunk<OfferDetails, string, ThunkOptions>(
-  'data/fetchOffer',
-  async (offerId, { extra: api }) => {
-    const { data } = await api.get<OfferDetails>(`${ApiRoute.Offers}/${offerId}`);
+type OfferThunkConfig = ThunkOptions & { rejectValue: boolean };
 
-    return data;
+export const fetchOfferAction = createAsyncThunk<OfferDetails, string, OfferThunkConfig>(
+  'data/fetchOffer',
+  async (offerId, { extra: api, rejectWithValue }) => {
+    try {
+      const { data } = await api.get<OfferDetails>(`${ApiRoute.Offers}/${offerId}`);
+
+      return data;
+    } catch (error) {
+      if (isAxiosError(error) && error.response?.status === StatusCodes.NOT_FOUND) {
+        return rejectWithValue(true);
+      }
+
+      throw error;
+    }
   }
 );
 

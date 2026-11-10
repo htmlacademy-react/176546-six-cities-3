@@ -2,6 +2,7 @@ export { fetchCommentsAction, fetchNearbyAction, fetchOfferAction } from './offe
 export {
   getComments,
   getNearbyOffers,
+  isOfferNotFound,
   getOffer,
   getOfferStatus,
   selectOfferStatus,
