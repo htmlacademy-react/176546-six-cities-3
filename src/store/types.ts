@@ -35,9 +35,3 @@ export type OfferState = {
   commentError: string;
   isNotFound: boolean;
 };
-
-export type State = {
-  auth: AuthState;
-  offers: OffersState;
-  offer: OfferState;
-};
