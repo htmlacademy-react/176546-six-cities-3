@@ -1,7 +1,7 @@
 import type { City, Location } from '@/types/city';
 import type { HostInfo } from '@/types/host';
 
-export type OfferBase = {
+type OfferBase = {
   id: string;
   title: string;
   type: string;

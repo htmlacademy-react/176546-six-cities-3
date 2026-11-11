@@ -27,12 +27,11 @@ export type OffersState = {
 
 export type OfferState = {
   offer: OfferDetails | null;
+  nearby: OfferPreview[];
   comments: Review[];
   offerStatus: RequestStatus;
-};
-
-export type State = {
-  auth: AuthState;
-  offers: OffersState;
-  offer: OfferState;
+  nearbyStatus: RequestStatus;
+  commentStatus: RequestStatus;
+  commentError: string;
+  isNotFound: boolean;
 };

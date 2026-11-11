@@ -37,6 +37,8 @@ function PlaceCardView({ offer, variant = 'cities', onCardHover }: PlaceCardProp
             src={previewImage}
             width={imageSize.width}
             height={imageSize.height}
+            loading="lazy"
+            decoding="async"
             alt={title}
           />
         </Link>

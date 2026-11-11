@@ -1,21 +1,28 @@
 import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
+import { AppRoute } from '@/const';
 import Header from '@/components/header/header';
 import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
 import RatingStars from '@/components/rating-stars/rating-stars';
-import ReviewsList from '@/components/reviews-list/reviews-list';
-import ReviewForm from '@/components/review-form';
 import OfferHost from '@/components/offer-host';
 import OfferGallery from '@/components/offer-gallery';
-import PlacesList from '@/components/places-list';
+import OfferReviews from '@/components/offer-reviews';
+import NearPlaces from '@/components/near-places';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { getComments, getOffer, selectOfferStatus } from '@/store/slices/offer';
-import { getOffers } from '@/store/slices/offers';
-import { fetchCommentsAction, fetchOfferAction } from '@/store/slices/offer';
+import {
+  fetchCommentsAction,
+  fetchNearbyAction,
+  fetchOfferAction,
+  getNearbyOffers,
+  getOffer,
+  isOfferNotFound,
+  selectOfferStatus,
+} from '@/store/slices/offer';
 import Map from '@/components/map/map.tsx';
+import { capitalize } from '@/utils';
 
 const NEAR_OFFERS = 3;
 
@@ -23,10 +30,10 @@ function OfferPage(): JSX.Element {
   const { id } = useParams();
   const offerId = id ?? '';
   const dispatch = useAppDispatch();
-  const offers = useAppSelector(getOffers);
   const offer = useAppSelector(getOffer);
-  const offerReviews = useAppSelector(getComments);
-  const { isLoading: isOfferLoading } = useAppSelector(selectOfferStatus);
+  const nearOffers = useAppSelector(getNearbyOffers);
+  const { isLoading: isOfferLoading, isError: isOfferError } = useAppSelector(selectOfferStatus);
+  const offerNotFound = useAppSelector(isOfferNotFound);
 
   useEffect(() => {
     if (!offerId) {
@@ -34,21 +41,27 @@ function OfferPage(): JSX.Element {
     }
 
     dispatch(fetchOfferAction(offerId));
+    dispatch(fetchNearbyAction(offerId));
     dispatch(fetchCommentsAction(offerId));
   }, [dispatch, offerId]);
 
-  const nearOffers = useMemo(
-    () =>
-      offers
-        .filter((item) => item.id !== offer?.id && item.city.name === offer?.city.name)
-        .slice(0, NEAR_OFFERS),
-    [offers, offer]
-  );
+  const visibleNearOffers = useMemo(() => nearOffers.slice(0, NEAR_OFFERS), [nearOffers]);
 
-  const mapOffers = useMemo(() => (offer ? [offer, ...nearOffers] : []), [offer, nearOffers]);
+  const mapOffers = useMemo(
+    () => (offer ? [offer, ...visibleNearOffers] : []),
+    [offer, visibleNearOffers]
+  );
 
   if (isOfferLoading) {
     return <div className="page">Loading&hellip;</div>;
+  }
+
+  if (offerNotFound) {
+    return <Navigate to={AppRoute.NotFound} replace />;
+  }
+
+  if (isOfferError) {
+    return <div className="page">Could not load the offer. Please try again.</div>;
   }
 
   if (!offer || offer.id !== offerId) {
@@ -79,7 +92,7 @@ function OfferPage(): JSX.Element {
               <RatingStars rating={offer.rating} variant="offer" />
 
               <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">{offer.type}</li>
+                <li className="offer__feature offer__feature--entire">{capitalize(offer.type)}</li>
                 <li className="offer__feature offer__feature--bedrooms">
                   {offer.bedrooms} Bedrooms
                 </li>
@@ -106,14 +119,7 @@ function OfferPage(): JSX.Element {
 
               <OfferHost host={offer.host} description={offer.description} />
 
-              <section className="offer__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews &middot; <span className="reviews__amount">{offerReviews.length}</span>
-                </h2>
-                <ReviewsList reviews={offerReviews} />
-
-                <ReviewForm />
-              </section>
+              <OfferReviews offerId={offerId} />
             </div>
           </div>
 
@@ -125,12 +131,7 @@ function OfferPage(): JSX.Element {
           />
         </section>
 
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList offers={nearOffers} variant="near-places" />
-          </section>
-        </div>
+        <NearPlaces offers={visibleNearOffers} />
       </main>
     </div>
   );

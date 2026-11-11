@@ -20,6 +20,7 @@ function UserBadge({ user, variant }: UserBadgeProps): JSX.Element {
           src={user.avatarUrl}
           width={classes.size}
           height={classes.size}
+          decoding="async"
           alt={alt}
         />
       </div>
