@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
 import { AppRoute } from '@/const';
@@ -10,7 +10,8 @@ import OfferHost from '@/components/offer-host';
 import OfferGallery from '@/components/offer-gallery';
 import OfferReviews from '@/components/offer-reviews';
 import NearPlaces from '@/components/near-places';
-import NotFoundPage from '@/pages/not-found-page/not-found-page';
+import Spinner from '@/components/spinner/spinner';
+import ErrorMessage from '@/components/error-message/error-message';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import {
   fetchCommentsAction,
@@ -35,15 +36,19 @@ function OfferPage(): JSX.Element {
   const { isLoading: isOfferLoading, isError: isOfferError } = useAppSelector(selectOfferStatus);
   const offerNotFound = useAppSelector(isOfferNotFound);
 
-  useEffect(() => {
+  const loadOffer = useCallback(() => {
     if (!offerId) {
       return;
     }
 
-    dispatch(fetchOfferAction(offerId));
-    dispatch(fetchNearbyAction(offerId));
-    dispatch(fetchCommentsAction(offerId));
+    void dispatch(fetchOfferAction(offerId));
+    void dispatch(fetchNearbyAction(offerId));
+    void dispatch(fetchCommentsAction(offerId));
   }, [dispatch, offerId]);
+
+  useEffect(() => {
+    loadOffer();
+  }, [loadOffer]);
 
   const visibleNearOffers = useMemo(() => nearOffers.slice(0, NEAR_OFFERS), [nearOffers]);
 
@@ -52,20 +57,23 @@ function OfferPage(): JSX.Element {
     [offer, visibleNearOffers]
   );
 
-  if (isOfferLoading) {
-    return <div className="page">Loading&hellip;</div>;
+  if (isOfferLoading || (isOfferError && !offerNotFound)) {
+    return (
+      <div className="page">
+        <Header />
+        <main className="page__main page__main--offer">
+          {isOfferLoading ? (
+            <Spinner label="Loading the offer" />
+          ) : (
+            <ErrorMessage title="Could not load the offer" onRetry={loadOffer} />
+          )}
+        </main>
+      </div>
+    );
   }
 
-  if (offerNotFound) {
+  if (offerNotFound || !offer || offer.id !== offerId) {
     return <Navigate to={AppRoute.NotFound} replace />;
-  }
-
-  if (isOfferError) {
-    return <div className="page">Could not load the offer. Please try again.</div>;
-  }
-
-  if (!offer || offer.id !== offerId) {
-    return <NotFoundPage />;
   }
 
   return (

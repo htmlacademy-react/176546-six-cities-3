@@ -11,7 +11,7 @@ const OfferPage = lazy(() => import('@/pages/offer-page'));
 const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page'));
 
 const withSuspense = (element: JSX.Element) => (
-  <Suspense fallback={<div>Загрузка...</div>}>{element}</Suspense>
+  <Suspense fallback={<div>Loading&hellip;</div>}>{element}</Suspense>
 );
 
 const createRoutes = () =>
