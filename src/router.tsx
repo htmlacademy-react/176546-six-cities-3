@@ -14,7 +14,7 @@ const withSuspense = (element: JSX.Element) => (
   <Suspense fallback={<div>Загрузка...</div>}>{element}</Suspense>
 );
 
-export const createRoutes = () =>
+const createRoutes = () =>
   createRoutesFromElements(
     <>
       <Route

@@ -9,7 +9,7 @@ export const getAuthorizationStatus = (state: RootState): AuthorizationStatus =>
 
 export const getUser = (state: RootState): AuthInfo | null => state.auth.user;
 
-export const getLoginStatus = (state: RootState): RequestStatus => state.auth.loginStatus;
+const getLoginStatus = (state: RootState): RequestStatus => state.auth.loginStatus;
 
 export const getLoginError = (state: RootState): string => state.auth.loginError;
 

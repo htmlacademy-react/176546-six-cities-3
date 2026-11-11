@@ -2,7 +2,6 @@ export { changeFavoriteAction, fetchOffersAction } from './offers-api-actions';
 export {
   getCity,
   getFavoriteCount,
-  getFavoriteOffersByCity,
   getSortType,
   getSortedOffers,
   selectOffersStatus,

@@ -12,7 +12,7 @@ export const isOfferNotFound = (state: RootState): boolean => state.offer.isNotF
 
 export const getComments = (state: RootState): Review[] => state.offer.comments;
 
-export const getOfferStatus = (state: RootState): RequestStatus => state.offer.offerStatus;
+const getOfferStatus = (state: RootState): RequestStatus => state.offer.offerStatus;
 
 const getCommentStatus = (state: RootState): RequestStatus => state.offer.commentStatus;
 
