@@ -5,9 +5,10 @@ import { RATING_OPTIONS } from '@/components/review-form/const';
 type RatingInputProps = {
   rating: number;
   onChange: (evt: ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 };
 
-function RatingInput({ rating, onChange }: RatingInputProps): JSX.Element {
+function RatingInput({ rating, onChange, disabled = false }: RatingInputProps): JSX.Element {
   return (
     <div className="reviews__rating-form form__rating">
       {RATING_OPTIONS.map(({ value, id, title }) => (
@@ -20,6 +21,7 @@ function RatingInput({ rating, onChange }: RatingInputProps): JSX.Element {
             type="radio"
             checked={rating === value}
             onChange={onChange}
+            disabled={disabled}
           />
           <label htmlFor={id} className="reviews__rating-label form__rating-label" title={title}>
             <svg className="form__star-image" width="37" height="33">

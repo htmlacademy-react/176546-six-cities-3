@@ -22,6 +22,7 @@ import {
   selectOfferStatus,
 } from '@/store/slices/offer';
 import Map from '@/components/map/map.tsx';
+import { capitalize } from '@/utils';
 
 const NEAR_OFFERS = 3;
 
@@ -91,7 +92,7 @@ function OfferPage(): JSX.Element {
               <RatingStars rating={offer.rating} variant="offer" />
 
               <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">{offer.type}</li>
+                <li className="offer__feature offer__feature--entire">{capitalize(offer.type)}</li>
                 <li className="offer__feature offer__feature--bedrooms">
                   {offer.bedrooms} Bedrooms
                 </li>

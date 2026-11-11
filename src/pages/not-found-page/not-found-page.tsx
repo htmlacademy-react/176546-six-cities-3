@@ -10,7 +10,7 @@ function NotFoundPage(): JSX.Element {
   return (
     <>
       <Helmet>
-        <title>404 — Страница не найдена</title>
+        <title>404 — Page not found</title>
       </Helmet>
 
       <div className={styles.root}>
@@ -19,15 +19,15 @@ function NotFoundPage(): JSX.Element {
         </div>
         <h1 className={styles.title}>{statusText}</h1>
         <p className={styles.text}>
-          Кажется, вы забрели не туда. Такой страницы не существует или она была перемещена.
+          Looks like you&apos;ve wandered off. This page doesn&apos;t exist or has been moved.
         </p>
 
         <div className={styles.actions}>
           <Link to="/" className={`${styles.button} ${styles.buttonPrimary}`}>
-            На главную
+            Go home
           </Link>
           <button type="button" className={styles.button} onClick={() => window.history.back()}>
-            Назад
+            Back
           </button>
         </div>
       </div>

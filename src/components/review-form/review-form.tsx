@@ -8,7 +8,12 @@ import {
 } from '@/components/review-form/const';
 import type { ReviewFormData } from '@/components/review-form/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { getCommentError, postCommentAction, selectCommentStatus } from '@/store/slices/offer';
+import {
+  fetchCommentsAction,
+  getCommentError,
+  postCommentAction,
+  selectCommentStatus,
+} from '@/store/slices/offer';
 
 type ReviewFormProps = {
   offerId: string;
@@ -38,7 +43,10 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       postCommentAction({ offerId, rating: reviewData.rating, comment: reviewData.comment })
     )
       .unwrap()
-      .then(() => setReviewData(EMPTY_REVIEW))
+      .then(() => {
+        setReviewData(EMPTY_REVIEW);
+        void dispatch(fetchCommentsAction(offerId));
+      })
       .catch(() => undefined);
   };
 
@@ -53,7 +61,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <RatingInput rating={reviewData.rating} onChange={handleChange} />
+      <RatingInput rating={reviewData.rating} onChange={handleChange} disabled={isSending} />
       <textarea
         className="reviews__textarea form__textarea"
         id="comment"
@@ -62,14 +70,19 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         value={reviewData.comment}
         onChange={handleChange}
         maxLength={MAX_COMMENT_LENGTH}
+        disabled={isSending}
       />
+      {isError && (
+        <p className="reviews__help" role="alert" style={{ color: '#d14343' }}>
+          {commentError}
+        </p>
+      )}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span>
-          and describe your stay with at least
+          To submit review please make sure to set{' '}
+          <span className="reviews__star">rating</span> and describe your stay with at least{' '}
           <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
         </p>
-        {isError && <p className="reviews__help">{commentError}</p>}
         <button
           className="reviews__submit form__submit button"
           type="submit"
