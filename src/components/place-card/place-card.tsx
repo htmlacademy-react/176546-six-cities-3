@@ -50,7 +50,7 @@ function PlaceCardView({ offer, variant = 'cities', onCardHover }: PlaceCardProp
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <BookmarkButton isFavorite={isFavorite} />
+          <BookmarkButton offerId={id} isFavorite={isFavorite} />
         </div>
         <RatingStars rating={rating} variant="place-card" />
         <h2 className="place-card__name">

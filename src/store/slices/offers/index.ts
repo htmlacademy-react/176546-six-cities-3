@@ -1,4 +1,4 @@
-export { fetchOffersAction } from './offers-api-actions';
+export { changeFavoriteAction, fetchOffersAction } from './offers-api-actions';
 export {
   getCity,
   getFavoriteCount,
