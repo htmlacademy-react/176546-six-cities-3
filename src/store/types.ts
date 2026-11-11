@@ -25,6 +25,11 @@ export type OffersState = {
   offersStatus: RequestStatus;
 };
 
+export type FavoritesState = {
+  favorites: OfferPreview[];
+  favoritesStatus: RequestStatus;
+};
+
 export type OfferState = {
   offer: OfferDetails | null;
   nearby: OfferPreview[];
