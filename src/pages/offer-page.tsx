@@ -6,7 +6,7 @@ import Header from '@/components/header/header';
 import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
 import RatingStars from '@/components/rating-stars/rating-stars';
-import Price from '@/components/price/price';
+import OfferInfo from '@/components/offer-info/offer-info';
 import OfferHost from '@/components/offer-host';
 import OfferGallery from '@/components/offer-gallery';
 import OfferReviews from '@/components/offer-reviews';
@@ -24,7 +24,6 @@ import {
   selectOfferStatus,
 } from '@/store/slices/offer';
 import Map from '@/components/map/map.tsx';
-import { capitalize } from '@/utils';
 
 const NEAR_OFFERS = 3;
 
@@ -100,28 +99,7 @@ function OfferPage(): JSX.Element {
 
               <RatingStars rating={offer.rating} variant="offer" />
 
-              <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">{capitalize(offer.type)}</li>
-                <li className="offer__feature offer__feature--bedrooms">
-                  {offer.bedrooms} Bedrooms
-                </li>
-                <li className="offer__feature offer__feature--adults">
-                  Max {offer.maxAdults} adults
-                </li>
-              </ul>
-
-              <Price price={offer.price} variant="offer" />
-
-              <div className="offer__inside">
-                <h2 className="offer__inside-title">What&apos;s inside</h2>
-                <ul className="offer__inside-list">
-                  {offer.goods.map((good) => (
-                    <li className="offer__inside-item" key={good}>
-                      {good}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <OfferInfo offer={offer} />
 
               <OfferHost host={offer.host} description={offer.description} />
 
