@@ -14,7 +14,6 @@ const initialState: OfferState = {
   nearby: [],
   comments: [],
   offerStatus: RequestStatus.Idle,
-  nearbyStatus: RequestStatus.Idle,
   isNotFound: false,
   commentStatus: RequestStatus.Idle,
   commentError: '',
@@ -47,15 +46,12 @@ export const offerSlice = createSlice({
       })
       .addCase(fetchNearbyAction.pending, (state) => {
         state.nearby = [];
-        state.nearbyStatus = RequestStatus.Loading;
       })
       .addCase(fetchNearbyAction.fulfilled, (state, action) => {
         state.nearby = action.payload;
-        state.nearbyStatus = RequestStatus.Success;
       })
       .addCase(fetchNearbyAction.rejected, (state) => {
         state.nearby = [];
-        state.nearbyStatus = RequestStatus.Failed;
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
         state.comments = action.payload;

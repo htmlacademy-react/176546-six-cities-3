@@ -3,6 +3,7 @@ import { AuthorizationStatus } from '@/const';
 import type { RootState } from '@/store';
 import type { AuthInfo } from '@/types/user';
 import { RequestStatus } from '@/store/types';
+import { isInFlight } from '@/store/request-status';
 
 export const getAuthorizationStatus = (state: RootState): AuthorizationStatus =>
   state.auth.authorizationStatus;
@@ -22,6 +23,5 @@ export const selectAuthState = createSelector(
 );
 
 export const selectLoginStatus = createSelector([getLoginStatus], (status) => ({
-  isLoading: status === RequestStatus.Loading,
-  isSuccess: status === RequestStatus.Success,
+  isLoading: isInFlight(status),
 }));

@@ -4,6 +4,7 @@ import { generatePath, Link } from 'react-router-dom';
 import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
 import RatingStars from '@/components/rating-stars/rating-stars';
+import Price from '@/components/price/price';
 import { capitalize } from '@/utils';
 import { AppRoute } from '@/const';
 import { CARD_CLASSES, CARD_IMAGE_SIZES } from '@/components/place-card/const';
@@ -45,10 +46,7 @@ function PlaceCardView({ offer, variant = 'cities', onCardHover }: PlaceCardProp
       </div>
       <div className={cardClasses.info}>
         <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;night</span>
-          </div>
+          <Price price={price} variant="place-card" />
 
           <BookmarkButton offerId={id} isFavorite={isFavorite} />
         </div>

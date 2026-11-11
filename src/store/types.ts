@@ -35,7 +35,6 @@ export type OfferState = {
   nearby: OfferPreview[];
   comments: Review[];
   offerStatus: RequestStatus;
-  nearbyStatus: RequestStatus;
   commentStatus: RequestStatus;
   commentError: string;
   isNotFound: boolean;

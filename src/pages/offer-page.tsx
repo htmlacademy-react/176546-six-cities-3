@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
 import { AppRoute } from '@/const';
@@ -6,12 +6,12 @@ import Header from '@/components/header/header';
 import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
 import RatingStars from '@/components/rating-stars/rating-stars';
+import Price from '@/components/price/price';
 import OfferHost from '@/components/offer-host';
 import OfferGallery from '@/components/offer-gallery';
 import OfferReviews from '@/components/offer-reviews';
 import NearPlaces from '@/components/near-places';
-import Spinner from '@/components/spinner/spinner';
-import ErrorMessage from '@/components/error-message/error-message';
+import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import {
   fetchCommentsAction,
@@ -36,19 +36,15 @@ function OfferPage(): JSX.Element {
   const { isLoading: isOfferLoading, isError: isOfferError } = useAppSelector(selectOfferStatus);
   const offerNotFound = useAppSelector(isOfferNotFound);
 
-  const loadOffer = useCallback(() => {
+  useEffect(() => {
     if (!offerId) {
       return;
     }
 
-    void dispatch(fetchOfferAction(offerId));
-    void dispatch(fetchNearbyAction(offerId));
-    void dispatch(fetchCommentsAction(offerId));
+    dispatch(fetchOfferAction(offerId));
+    dispatch(fetchNearbyAction(offerId));
+    dispatch(fetchCommentsAction(offerId));
   }, [dispatch, offerId]);
-
-  useEffect(() => {
-    loadOffer();
-  }, [loadOffer]);
 
   const visibleNearOffers = useMemo(() => nearOffers.slice(0, NEAR_OFFERS), [nearOffers]);
 
@@ -57,23 +53,20 @@ function OfferPage(): JSX.Element {
     [offer, visibleNearOffers]
   );
 
-  if (isOfferLoading || (isOfferError && !offerNotFound)) {
-    return (
-      <div className="page">
-        <Header />
-        <main className="page__main page__main--offer">
-          {isOfferLoading ? (
-            <Spinner label="Loading the offer" />
-          ) : (
-            <ErrorMessage title="Could not load the offer" onRetry={loadOffer} />
-          )}
-        </main>
-      </div>
-    );
+  if (isOfferLoading) {
+    return <div className="page">Loading&hellip;</div>;
   }
 
-  if (offerNotFound || !offer || offer.id !== offerId) {
+  if (offerNotFound) {
     return <Navigate to={AppRoute.NotFound} replace />;
+  }
+
+  if (isOfferError) {
+    return <div className="page">Could not load the offer. Please try again.</div>;
+  }
+
+  if (!offer || offer.id !== offerId) {
+    return <NotFoundPage />;
   }
 
   return (
@@ -109,10 +102,7 @@ function OfferPage(): JSX.Element {
                 </li>
               </ul>
 
-              <div className="offer__price">
-                <b className="offer__price-value">&euro;{offer.price}</b>
-                <span className="offer__price-text">&nbsp;night</span>
-              </div>
+              <Price price={offer.price} variant="offer" />
 
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>

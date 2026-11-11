@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import type { SortType } from '@/const';
 import type { RootState } from '@/store';
 import { RequestStatus } from '@/store/types';
+import { isFailed, isPending } from '@/store/request-status';
 import type { CityName } from '@/types/city';
 import type { OfferPreview } from '@/types/offer';
 import { sortOffers } from '@/utils';
@@ -27,7 +28,6 @@ export const getSortedOffers = createSelector([getOffersByCity, getSortType], (o
 );
 
 export const selectOffersStatus = createSelector([getOffersStatus], (status) => ({
-  isLoading: status === RequestStatus.Idle || status === RequestStatus.Loading,
-  isSuccess: status === RequestStatus.Success,
-  isError: status === RequestStatus.Failed,
+  isLoading: isPending(status),
+  isError: isFailed(status),
 }));

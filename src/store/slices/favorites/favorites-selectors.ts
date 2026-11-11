@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { RootState } from '@/store';
 import { RequestStatus } from '@/store/types';
+import { isFailed, isPending } from '@/store/request-status';
 import type { OfferPreview } from '@/types/offer';
 
 const getFavoritesStatus = (state: RootState): RequestStatus => state.favorites.favoritesStatus;
@@ -12,6 +13,6 @@ export const getFavoritesByCity = createSelector([getFavorites], (favorites) =>
 );
 
 export const selectFavoritesStatus = createSelector([getFavoritesStatus], (status) => ({
-  isLoading: status === RequestStatus.Idle || status === RequestStatus.Loading,
-  isError: status === RequestStatus.Failed,
+  isLoading: isPending(status),
+  isError: isFailed(status),
 }));
