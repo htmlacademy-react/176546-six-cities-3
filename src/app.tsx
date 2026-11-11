@@ -5,6 +5,7 @@ import { AuthorizationStatus } from '@/const';
 import { useAppSelector } from '@/hooks';
 import { getAuthorizationStatus } from '@/store/slices/auth';
 import { router } from './router';
+//
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
