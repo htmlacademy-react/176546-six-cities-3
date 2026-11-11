@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { createRoutesFromElements, Route } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
 import PrivateRoute from './components/private-route';
 
 import { AppRoute } from '@/const';
@@ -31,13 +31,10 @@ export const createRoutes = () =>
           </PrivateRoute>
         )}
       />
-      <Route
-        path={AppRoute.Offer}
-        element={withSuspense(
-          <OfferPage />
-        )}
-      />
+      <Route path={AppRoute.Offer} element={withSuspense(<OfferPage />)} />
       <Route path={AppRoute.NotFound} element={withSuspense(<NotFoundPage />)} />
       <Route path="*" element={withSuspense(<NotFoundPage />)} />
     </>
   );
+
+export const router = createBrowserRouter(createRoutes());
