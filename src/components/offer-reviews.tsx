@@ -3,7 +3,7 @@ import ReviewsList from '@/components/reviews-list/reviews-list';
 import ReviewForm from '@/components/review-form/review-form';
 import { useAppSelector } from '@/hooks';
 import { selectAuthState } from '@/store/slices/auth';
-import { getComments } from '@/store/slices/offer-page';
+import { getComments } from '@/store/slices/offer';
 
 const MAX_REVIEWS = 10;
 

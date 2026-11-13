@@ -2,20 +2,21 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { CITIES, SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
-import { fetchOffersAction } from '@/store/slices/entities/offers';
+import { fetchOffersAction } from './offers-api-actions';
 import { RequestStatus } from '@/store/types';
 import type { CityName } from '@/types/city';
+import type { OfferPreview } from '@/types/offer';
 
 export type OffersState = {
   city: CityName;
-  ids: string[];
+  offers: OfferPreview[];
   sortType: SortType;
   offersStatus: RequestStatus;
 };
 
 const initialState: OffersState = {
   city: CITIES[0].name,
-  ids: [],
+  offers: [],
   sortType: SORT_OPTIONS.Popular,
   offersStatus: RequestStatus.Idle,
 };
@@ -37,7 +38,7 @@ export const offersSlice = createSlice({
         state.offersStatus = RequestStatus.Loading;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
-        state.ids = action.payload.map((offer) => offer.id);
+        state.offers = action.payload;
         state.offersStatus = RequestStatus.Success;
       })
       .addCase(fetchOffersAction.rejected, (state) => {

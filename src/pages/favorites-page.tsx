@@ -8,8 +8,12 @@ import Spinner from '@/components/spinner/spinner';
 import ErrorMessage from '@/components/error-message/error-message';
 import FavoritesEmpty from '@/components/favorites-empty/favorites-empty';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { getFavorites, getFavoritesByCity, selectFavoritesStatus } from '@/store/slices/favorites';
-import { fetchFavoritesAction } from '@/store/slices/entities/offers';
+import {
+  fetchFavoritesAction,
+  getFavorites,
+  getFavoritesByCity,
+  selectFavoritesStatus,
+} from '@/store/slices/favorites';
 
 function FavoritesPage(): JSX.Element {
   const dispatch = useAppDispatch();

@@ -6,7 +6,7 @@ import App from './app';
 import { Provider } from 'react-redux';
 import { store } from '@/store';
 import { checkAuthAction } from '@/store/slices/auth';
-import { fetchOffersAction } from '@/store/slices/entities/offers';
+import { fetchOffersAction } from '@/store/slices/offers';
 import Notifications from '@/components/notifications/notifications';
 
 store.dispatch(checkAuthAction());

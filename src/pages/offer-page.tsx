@@ -22,7 +22,7 @@ import {
   getOffer,
   isOfferNotFound,
   selectOfferStatus,
-} from '@/store/slices/offer-page';
+} from '@/store/slices/offer';
 import Map from '@/components/map/map.tsx';
 
 const NEAR_OFFERS = 3;

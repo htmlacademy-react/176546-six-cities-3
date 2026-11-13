@@ -13,7 +13,7 @@ import {
   getCommentError,
   postCommentAction,
   selectCommentStatus,
-} from '@/store/slices/offer-page';
+} from '@/store/slices/offer';
 
 type ReviewFormProps = {
   offerId: string;
