@@ -5,7 +5,6 @@ import {
   fetchOfferAction,
   postCommentAction,
 } from '@/store/slices/offer/offer-api-actions';
-import { changeFavoriteAction } from '@/store/slices/offers/offers-api-actions';
 import { RequestStatus } from '@/store/types';
 import type { OfferState } from '@/store/types';
 
@@ -67,19 +66,6 @@ export const offerSlice = createSlice({
       .addCase(postCommentAction.rejected, (state, action) => {
         state.commentStatus = RequestStatus.Failed;
         state.commentError = action.payload ?? 'Could not send the review. Please try again.';
-      })
-      .addCase(changeFavoriteAction.fulfilled, (state, action) => {
-        const { offerId, isFavorite } = action.payload;
-
-        if (state.offer?.id === offerId) {
-          state.offer.isFavorite = isFavorite;
-        }
-
-        const nearbyOffer = state.nearby.find((offer) => offer.id === offerId);
-
-        if (nearbyOffer) {
-          nearbyOffer.isFavorite = isFavorite;
-        }
       });
   },
 });

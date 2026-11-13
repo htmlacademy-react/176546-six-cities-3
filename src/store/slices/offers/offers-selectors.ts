@@ -15,10 +15,6 @@ const getOffers = (state: RootState): OfferPreview[] => state.offers.offers;
 
 const getOffersStatus = (state: RootState): RequestStatus => state.offers.offersStatus;
 
-export const getFavoriteCount = createSelector([getOffers], (offers) =>
-  offers.filter((offer) => offer.isFavorite).length
-);
-
 const getOffersByCity = createSelector([getCity, getOffers], (city, offers) =>
   offers.filter((offer) => offer.city.name === city)
 );

@@ -2,10 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { CITIES, SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
-import {
-  changeFavoriteAction,
-  fetchOffersAction,
-} from '@/store/slices/offers/offers-api-actions';
+import { fetchOffersAction } from '@/store/slices/offers/offers-api-actions';
 import { RequestStatus } from '@/store/types';
 import type { OffersState } from '@/store/types';
 import type { CityName } from '@/types/city';
@@ -39,13 +36,6 @@ export const offersSlice = createSlice({
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.offersStatus = RequestStatus.Failed;
-      })
-      .addCase(changeFavoriteAction.fulfilled, (state, action) => {
-        const target = state.offers.find((offer) => offer.id === action.payload.offerId);
-
-        if (target) {
-          target.isFavorite = action.payload.isFavorite;
-        }
       });
   },
 });

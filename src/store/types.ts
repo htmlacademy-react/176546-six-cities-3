@@ -27,6 +27,8 @@ export type OffersState = {
 
 export type FavoritesState = {
   favorites: OfferPreview[];
+  favoriteIds: string[];
+  pendingIds: string[];
   favoritesStatus: RequestStatus;
 };
 
