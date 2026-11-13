@@ -1,9 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { logoutAction } from '@/store/slices/auth';
-import { fetchFavoritesAction } from '@/store/slices/favorites/favorites-api-actions';
-import { changeFavoriteAction } from '@/store/slices/offers/offers-api-actions';
+import { fetchFavoritesAction } from './favorites-api-actions';
+import { changeFavoriteAction } from '@/store/slices/offers';
 import { RequestStatus } from '@/store/types';
-import type { FavoritesState } from '@/store/types';
+import type { OfferPreview } from '@/types/offer';
+
+export type FavoritesState = {
+  favorites: OfferPreview[];
+  favoriteIds: string[];
+  pendingIds: string[];
+  favoritesStatus: RequestStatus;
+};
 
 const initialState: FavoritesState = {
   favorites: [],

@@ -1,9 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '@/const';
-import { checkAuthAction, loginAction, logoutAction } from '@/store/slices/auth/auth-api-actions';
+import { checkAuthAction, loginAction, logoutAction } from './auth-api-actions';
 import { RequestStatus } from '@/store/types';
-import type { AuthState } from '@/store/types';
+import type { AuthInfo } from '@/types/user';
+
+export type AuthState = {
+  authorizationStatus: AuthorizationStatus;
+  user: AuthInfo | null;
+  loginStatus: RequestStatus;
+  loginError: string;
+};
 
 const initialState: AuthState = {
   authorizationStatus: AuthorizationStatus.Unknown,

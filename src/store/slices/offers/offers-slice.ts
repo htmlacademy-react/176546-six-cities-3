@@ -2,10 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { CITIES, SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
-import { fetchOffersAction } from '@/store/slices/offers/offers-api-actions';
+import { fetchOffersAction } from './offers-api-actions';
 import { RequestStatus } from '@/store/types';
-import type { OffersState } from '@/store/types';
 import type { CityName } from '@/types/city';
+import type { OfferPreview } from '@/types/offer';
+
+export type OffersState = {
+  city: CityName;
+  offers: OfferPreview[];
+  sortType: SortType;
+  offersStatus: RequestStatus;
+};
 
 const initialState: OffersState = {
   city: CITIES[0].name,

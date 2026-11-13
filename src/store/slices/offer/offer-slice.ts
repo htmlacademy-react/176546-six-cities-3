@@ -4,9 +4,20 @@ import {
   fetchNearbyAction,
   fetchOfferAction,
   postCommentAction,
-} from '@/store/slices/offer/offer-api-actions';
+} from './offer-api-actions';
 import { RequestStatus } from '@/store/types';
-import type { OfferState } from '@/store/types';
+import type { OfferDetails, OfferPreview } from '@/types/offer';
+import type { Review } from '@/types/review';
+
+export type OfferState = {
+  offer: OfferDetails | null;
+  nearby: OfferPreview[];
+  comments: Review[];
+  offerStatus: RequestStatus;
+  commentStatus: RequestStatus;
+  commentError: string;
+  isNotFound: boolean;
+};
 
 const initialState: OfferState = {
   offer: null,
