@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/hooks';
-import { fetchOffersAction } from '@/store/slices/offers';
+import { fetchOffersAction } from '@/store/slices/entities/offers';
 import styles from './error-message.module.css';
 
 type ErrorMessageProps = {

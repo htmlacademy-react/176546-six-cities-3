@@ -4,7 +4,7 @@ import { AppRoute, AuthorizationStatus } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { getAuthorizationStatus } from '@/store/slices/auth';
 import { selectFavoritesIds, selectPendingIds } from '@/store/slices/favorites';
-import { changeFavoriteAction } from '@/store/slices/offers';
+import { changeFavoriteAction } from '@/store/slices/entities/offers';
 
 type BookmarkButtonProps = {
   offerId: string;

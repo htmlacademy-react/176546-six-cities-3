@@ -1,9 +1,8 @@
-export { fetchFavoritesAction } from './favorites-api-actions';
 export { favoritesSlice } from './favorites-slice';
+export type { FavoritesState } from './favorites-slice';
 export {
   getFavorites,
   getFavoritesByCity,
-  getFavoritesIds,
   selectFavoritesCount,
   selectFavoritesIds,
   selectFavoritesStatus,

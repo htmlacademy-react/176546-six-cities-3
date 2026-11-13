@@ -1,4 +1,3 @@
-export { changeFavoriteAction, fetchOffersAction } from './offers-api-actions';
 export {
   getCity,
   getSortType,
@@ -6,3 +5,4 @@ export {
   selectOffersStatus,
 } from './offers-selectors';
 export { changeCity, changeSortType, offersSlice } from './offers-slice';
+export type { OffersState } from './offers-slice';

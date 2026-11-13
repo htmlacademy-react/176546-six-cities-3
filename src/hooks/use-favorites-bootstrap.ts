@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { AuthorizationStatus } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { getAuthorizationStatus } from '@/store/slices/auth';
-import { fetchFavoritesAction } from '@/store/slices/favorites';
+import { fetchFavoritesAction } from '@/store/slices/entities/offers';
 import { RequestStatus } from '@/store/types';
 
 export const useFavoritesBootstrap = (): void => {
