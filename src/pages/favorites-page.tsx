@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import clsx from 'clsx';
 import { Helmet } from 'react-helmet-async';
 import Logo from '@/components/logo/logo';
@@ -6,19 +7,25 @@ import PlaceCard from '@/components/place-card/place-card';
 import Spinner from '@/components/spinner/spinner';
 import ErrorMessage from '@/components/error-message/error-message';
 import FavoritesEmpty from '@/components/favorites-empty/favorites-empty';
-import { useAppSelector } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import {
-  getFavoriteCount,
-  getFavoriteOffersByCity,
-  selectOffersStatus,
-} from '@/store/slices/offers';
+  fetchFavoritesAction,
+  getFavorites,
+  getFavoritesByCity,
+  selectFavoritesStatus,
+} from '@/store/slices/favorites';
 
 function FavoritesPage(): JSX.Element {
-  const offersByCity = useAppSelector(getFavoriteOffersByCity);
-  const favoriteCount = useAppSelector(getFavoriteCount);
-  const { isLoading, isError } = useAppSelector(selectOffersStatus);
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector(getFavorites);
+  const favoritesByCity = useAppSelector(getFavoritesByCity);
+  const { isLoading, isError } = useAppSelector(selectFavoritesStatus);
 
-  const isEmpty = !isLoading && !isError && favoriteCount === 0;
+  useEffect(() => {
+    void dispatch(fetchFavoritesAction());
+  }, [dispatch]);
+
+  const isEmpty = !isLoading && !isError && favorites.length === 0;
 
   const renderContent = () => {
     if (isLoading) {
@@ -26,7 +33,12 @@ function FavoritesPage(): JSX.Element {
     }
 
     if (isError) {
-      return <ErrorMessage />;
+      return (
+        <ErrorMessage
+          title="Could not load favorites"
+          onRetry={() => void dispatch(fetchFavoritesAction())}
+        />
+      );
     }
 
     if (isEmpty) {
@@ -37,7 +49,7 @@ function FavoritesPage(): JSX.Element {
       <section className="favorites">
         <h1 className="favorites__title">Saved listing</h1>
         <ul className="favorites__list">
-          {Object.entries(offersByCity).map(([city, cityOffers = []]) => (
+          {Object.entries(favoritesByCity).map(([city, cityOffers = []]) => (
             <li className="favorites__locations-items" key={city}>
               <div className="favorites__locations locations locations--current">
                 <div className="locations__item">

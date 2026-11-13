@@ -30,6 +30,7 @@ export enum ApiRoute {
   Offers = '/offers',
   Nearby = '/nearby',
   Comments = '/comments',
+  Favorite = '/favorite',
   Login = '/login',
 }
 

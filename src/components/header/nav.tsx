@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { getAuthorizationStatus, getUser, logoutAction } from '@/store/slices/auth';
-import { getFavoriteCount } from '@/store/slices/offers';
+import { selectFavoritesCount } from '@/store/slices/favorites';
 
 function Nav(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const user = useAppSelector(getUser);
-  const favoriteCount = useAppSelector(getFavoriteCount);
+  const favoriteCount = useAppSelector(selectFavoritesCount);
   const dispatch = useAppDispatch();
 
   const handleSignOut = (evt: MouseEvent<HTMLAnchorElement>) => {

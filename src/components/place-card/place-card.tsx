@@ -4,6 +4,7 @@ import { generatePath, Link } from 'react-router-dom';
 import PremiumBadge from '@/components/premium-badge';
 import BookmarkButton from '@/components/bookmark-button';
 import RatingStars from '@/components/rating-stars/rating-stars';
+import Price from '@/components/price/price';
 import { capitalize } from '@/utils';
 import { AppRoute } from '@/const';
 import { CARD_CLASSES, CARD_IMAGE_SIZES } from '@/components/place-card/const';
@@ -16,7 +17,7 @@ type PlaceCardProps = {
 };
 
 function PlaceCardView({ offer, variant = 'cities', onCardHover }: PlaceCardProps): JSX.Element {
-  const { id, isPremium, isFavorite, price, rating, title, type, previewImage } = offer;
+  const { id, isPremium, price, rating, title, type, previewImage } = offer;
 
   const cardClasses = CARD_CLASSES[variant];
   const imageSize = CARD_IMAGE_SIZES[variant];
@@ -45,12 +46,9 @@ function PlaceCardView({ offer, variant = 'cities', onCardHover }: PlaceCardProp
       </div>
       <div className={cardClasses.info}>
         <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;night</span>
-          </div>
+          <Price price={price} variant="place-card" />
 
-          <BookmarkButton isFavorite={isFavorite} />
+          <BookmarkButton offerId={id} />
         </div>
         <RatingStars rating={rating} variant="place-card" />
         <h2 className="place-card__name">

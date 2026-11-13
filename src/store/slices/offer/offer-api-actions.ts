@@ -13,7 +13,9 @@ export const fetchOfferAction = createAsyncThunk<OfferDetails, string, OfferThun
   'data/fetchOffer',
   async (offerId, { extra: api, rejectWithValue }) => {
     try {
-      const { data } = await api.get<OfferDetails>(`${ApiRoute.Offers}/${offerId}`);
+      const { data } = await api.get<OfferDetails>(`${ApiRoute.Offers}/${offerId}`, {
+        silentError: true,
+      });
 
       return data;
     } catch (error) {
@@ -45,7 +47,11 @@ export const postCommentAction = createAsyncThunk<
   ThunkOptions & { rejectValue: string }
 >('data/postComment', async ({ offerId, comment, rating }, { extra: api, rejectWithValue }) => {
   try {
-    const { data } = await api.post<Review>(`${ApiRoute.Comments}/${offerId}`, { comment, rating });
+    const { data } = await api.post<Review>(
+      `${ApiRoute.Comments}/${offerId}`,
+      { comment, rating },
+      { silentError: true }
+    );
 
     return data;
   } catch (error) {

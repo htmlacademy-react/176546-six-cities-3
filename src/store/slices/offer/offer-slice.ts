@@ -4,16 +4,26 @@ import {
   fetchNearbyAction,
   fetchOfferAction,
   postCommentAction,
-} from '@/store/slices/offer/offer-api-actions';
+} from './offer-api-actions';
 import { RequestStatus } from '@/store/types';
-import type { OfferState } from '@/store/types';
+import type { OfferDetails, OfferPreview } from '@/types/offer';
+import type { Review } from '@/types/review';
+
+export type OfferState = {
+  offer: OfferDetails | null;
+  nearby: OfferPreview[];
+  comments: Review[];
+  offerStatus: RequestStatus;
+  commentStatus: RequestStatus;
+  commentError: string;
+  isNotFound: boolean;
+};
 
 const initialState: OfferState = {
   offer: null,
   nearby: [],
   comments: [],
   offerStatus: RequestStatus.Idle,
-  nearbyStatus: RequestStatus.Idle,
   isNotFound: false,
   commentStatus: RequestStatus.Idle,
   commentError: '',
@@ -46,15 +56,12 @@ export const offerSlice = createSlice({
       })
       .addCase(fetchNearbyAction.pending, (state) => {
         state.nearby = [];
-        state.nearbyStatus = RequestStatus.Loading;
       })
       .addCase(fetchNearbyAction.fulfilled, (state, action) => {
         state.nearby = action.payload;
-        state.nearbyStatus = RequestStatus.Success;
       })
       .addCase(fetchNearbyAction.rejected, (state) => {
         state.nearby = [];
-        state.nearbyStatus = RequestStatus.Failed;
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
         state.comments = action.payload;

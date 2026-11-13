@@ -15,7 +15,7 @@ const toAuthInfo = ({ email, name, avatarUrl, isPro }: AuthInfoWithToken): AuthI
 export const checkAuthAction = createAsyncThunk<AuthInfo, undefined, ThunkOptions>(
   'user/checkAuth',
   async (_arg, { extra: api }) => {
-    const { data } = await api.get<AuthInfoWithToken>(ApiRoute.Login);
+    const { data } = await api.get<AuthInfoWithToken>(ApiRoute.Login, { silentError: true });
 
     return toAuthInfo(data);
   }
@@ -34,7 +34,11 @@ export const loginAction = createAsyncThunk<AuthInfo, User, LoginThunkConfig>(
   'user/login',
   async ({ email, password }, { rejectWithValue, extra: api }) => {
     try {
-      const { data } = await api.post<AuthInfoWithToken>(ApiRoute.Login, { email, password });
+      const { data } = await api.post<AuthInfoWithToken>(
+        ApiRoute.Login,
+        { email, password },
+        { silentError: true }
+      );
 
       saveToken(data.token);
 
