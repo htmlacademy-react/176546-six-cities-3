@@ -5,6 +5,7 @@ import {
   fetchOfferAction,
   postCommentAction,
 } from './offer-api-actions';
+import { changeFavoriteAction } from '@/store/slices/offers/offers-api-actions';
 import { RequestStatus } from '@/store/types';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
@@ -73,6 +74,13 @@ export const offerSlice = createSlice({
       .addCase(postCommentAction.fulfilled, (state, action) => {
         state.comments = [action.payload, ...state.comments];
         state.commentStatus = RequestStatus.Success;
+      })
+      .addCase(changeFavoriteAction.fulfilled, (state, action) => {
+        const { offerId, isFavorite } = action.payload;
+
+        if (state.offer && state.offer.id === offerId) {
+          state.offer.isFavorite = isFavorite;
+        }
       })
       .addCase(postCommentAction.rejected, (state, action) => {
         state.commentStatus = RequestStatus.Failed;
