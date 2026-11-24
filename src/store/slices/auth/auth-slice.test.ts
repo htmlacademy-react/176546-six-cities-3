@@ -2,18 +2,12 @@ import { authSlice, changeAuthorizationStatus } from './auth-slice';
 import { checkAuthAction, loginAction, logoutAction } from './auth-api-actions';
 import { AuthorizationStatus } from '@/const';
 import { RequestStatus } from '@/store/types';
+import { makeFakeAuthInfo } from '@/utils/mocks';
 import type { AuthState } from './auth-slice';
-import type { AuthInfo } from '@/types/user';
 
 const { reducer } = authSlice;
 
-const makeFakeAuthInfo = (overrides: Partial<AuthInfo> = {}): AuthInfo => ({
-  email: 'user@example.com',
-  name: 'Angelina',
-  avatarUrl: 'img/avatar.jpg',
-  isPro: false,
-  ...overrides,
-});
+const credentials = { email: 'user@example.com', password: 'secret' };
 
 describe('authSlice', () => {
   it('возвращает начальное состояние при пустом экшене', () => {
@@ -53,12 +47,9 @@ describe('authSlice', () => {
   it('переводит статус входа в Loading и очищает ошибку', () => {
     const failedState = reducer(
       undefined,
-      loginAction.rejected(null, '', { email: 'user@example.com', password: 'secret' }, 'Ошибка')
+      loginAction.rejected(null, '', credentials, 'Ошибка')
     );
-    const state = reducer(
-      failedState,
-      loginAction.pending('', { email: 'user@example.com', password: 'secret' })
-    );
+    const state = reducer(failedState, loginAction.pending('', credentials));
 
     expect(state.loginStatus).toBe(RequestStatus.Loading);
     expect(state.loginError).toBe('');
@@ -66,10 +57,7 @@ describe('authSlice', () => {
 
   it('авторизует пользователя после успешного входа', () => {
     const user = makeFakeAuthInfo({ isPro: true });
-    const state = reducer(
-      undefined,
-      loginAction.fulfilled(user, '', { email: 'user@example.com', password: 'secret' })
-    );
+    const state = reducer(undefined, loginAction.fulfilled(user, '', credentials));
 
     expect(state.user).toEqual(user);
     expect(state.authorizationStatus).toBe(AuthorizationStatus.Auth);
@@ -77,20 +65,14 @@ describe('authSlice', () => {
   });
 
   it('пишет текст ошибки входа из payload', () => {
-    const state = reducer(
-      undefined,
-      loginAction.rejected(null, '', { email: 'user@example.com', password: 'secret' }, 'Неверный пароль')
-    );
+    const state = reducer(undefined, loginAction.rejected(null, '', credentials, 'Неверный пароль'));
 
     expect(state.loginStatus).toBe(RequestStatus.Failed);
     expect(state.loginError).toBe('Неверный пароль');
   });
 
   it('подставляет текст ошибки входа по умолчанию', () => {
-    const state = reducer(
-      undefined,
-      loginAction.rejected(null, '', { email: 'user@example.com', password: 'secret' })
-    );
+    const state = reducer(undefined, loginAction.rejected(null, '', credentials));
 
     expect(state.loginError).toBe('Sign in failed. Please try again.');
   });
@@ -98,7 +80,7 @@ describe('authSlice', () => {
   it('сбрасывает пользователя при выходе', () => {
     const authorizedState = reducer(
       undefined,
-      loginAction.fulfilled(makeFakeAuthInfo(), '', { email: 'user@example.com', password: 'secret' })
+      loginAction.fulfilled(makeFakeAuthInfo(), '', credentials)
     );
     const state = reducer(authorizedState, logoutAction.fulfilled(undefined, '', undefined));
 

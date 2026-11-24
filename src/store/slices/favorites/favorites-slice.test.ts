@@ -3,26 +3,10 @@ import { fetchFavoritesAction } from './favorites-api-actions';
 import { changeFavoriteAction } from '@/store/slices/offers';
 import { logoutAction } from '@/store/slices/auth';
 import { RequestStatus } from '@/store/types';
+import { makeFakeOfferPreview } from '@/utils/mocks';
 import type { FavoritesState } from './favorites-slice';
-import type { OfferPreview } from '@/types/offer';
 
 const { reducer } = favoritesSlice;
-
-const makeFakeOffer = (id: string): OfferPreview => ({
-  id,
-  title: 'Уютная студия',
-  type: 'apartment',
-  price: 120,
-  city: {
-    name: 'Paris',
-    location: { latitude: 48.85661, longitude: 2.351499, zoom: 13 },
-  },
-  location: { latitude: 48.85661, longitude: 2.351499, zoom: 13 },
-  isFavorite: true,
-  isPremium: false,
-  rating: 4.8,
-  previewImage: 'img/studio-01.jpg',
-});
 
 describe('favoritesSlice', () => {
   it('возвращает начальное состояние при пустом экшене', () => {
@@ -41,7 +25,7 @@ describe('favoritesSlice', () => {
   });
 
   it('записывает избранное и его идентификаторы', () => {
-    const favorites = [makeFakeOffer('1'), makeFakeOffer('2')];
+    const favorites = [makeFakeOfferPreview('1'), makeFakeOfferPreview('2')];
     const state = reducer(undefined, fetchFavoritesAction.fulfilled(favorites, '', undefined));
 
     expect(state.favorites).toEqual(favorites);
@@ -52,7 +36,7 @@ describe('favoritesSlice', () => {
   it('очищает избранное при ошибке загрузки', () => {
     const loadedState = reducer(
       undefined,
-      fetchFavoritesAction.fulfilled([makeFakeOffer('1')], '', undefined)
+      fetchFavoritesAction.fulfilled([makeFakeOfferPreview('1')], '', undefined)
     );
     const state = reducer(loadedState, fetchFavoritesAction.rejected(null, '', undefined));
 
@@ -90,7 +74,7 @@ describe('favoritesSlice', () => {
   it('не дублирует идентификатор, если предложение уже в избранном', () => {
     const loadedState = reducer(
       undefined,
-      fetchFavoritesAction.fulfilled([makeFakeOffer('1')], '', undefined)
+      fetchFavoritesAction.fulfilled([makeFakeOfferPreview('1')], '', undefined)
     );
     const state = reducer(
       loadedState,
@@ -106,7 +90,11 @@ describe('favoritesSlice', () => {
   it('удаляет предложение из избранного и снимает ожидание', () => {
     const loadedState = reducer(
       undefined,
-      fetchFavoritesAction.fulfilled([makeFakeOffer('1'), makeFakeOffer('2')], '', undefined)
+      fetchFavoritesAction.fulfilled(
+        [makeFakeOfferPreview('1'), makeFakeOfferPreview('2')],
+        '',
+        undefined
+      )
     );
     const state = reducer(
       loadedState,
@@ -137,7 +125,7 @@ describe('favoritesSlice', () => {
   it('сбрасывает избранное при выходе из аккаунта', () => {
     const loadedState = reducer(
       undefined,
-      fetchFavoritesAction.fulfilled([makeFakeOffer('1')], '', undefined)
+      fetchFavoritesAction.fulfilled([makeFakeOfferPreview('1')], '', undefined)
     );
     const state = reducer(loadedState, logoutAction.fulfilled(undefined, '', undefined));
 

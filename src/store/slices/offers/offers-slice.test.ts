@@ -2,29 +2,14 @@ import { offersSlice, changeCity, changeSortType } from './offers-slice';
 import { fetchOffersAction } from './offers-api-actions';
 import { CITIES, SORT_OPTIONS } from '@/const';
 import { RequestStatus } from '@/store/types';
+import { makeFakeOfferPreview } from '@/utils/mocks';
 import type { OffersState } from './offers-slice';
-import type { OfferPreview } from '@/types/offer';
 
 const { reducer } = offersSlice;
 
-const makeFakeOffer = (id: string): OfferPreview => ({
-  id,
-  title: 'Уютная студия',
-  type: 'apartment',
-  price: 120,
-  city: CITIES[0],
-  location: CITIES[0].location,
-  isFavorite: false,
-  isPremium: false,
-  rating: 4.8,
-  previewImage: 'img/studio-01.jpg',
-});
-
 describe('offersSlice', () => {
   it('возвращает начальное состояние при пустом экшене', () => {
-    const state = reducer(undefined, { type: '' });
-
-    expect(state).toEqual({
+    expect(reducer(undefined, { type: '' })).toEqual({
       city: CITIES[0].name,
       offers: [],
       sortType: SORT_OPTIONS.Popular,
@@ -53,7 +38,7 @@ describe('offersSlice', () => {
   });
 
   it('записывает предложения и статус Success при успешном запросе', () => {
-    const offers = [makeFakeOffer('1'), makeFakeOffer('2')];
+    const offers = [makeFakeOfferPreview('1'), makeFakeOfferPreview('2')];
     const state = reducer(undefined, fetchOffersAction.fulfilled(offers, '', undefined));
 
     expect(state.offers).toEqual(offers);

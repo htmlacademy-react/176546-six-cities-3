@@ -6,45 +6,10 @@ import {
   postCommentAction,
 } from './offer-api-actions';
 import { RequestStatus } from '@/store/types';
+import { makeFakeOfferDetails, makeFakeOfferPreview, makeFakeReview } from '@/utils/mocks';
 import type { OfferState } from './offer-slice';
-import type { OfferDetails, OfferPreview } from '@/types/offer';
-import type { Review } from '@/types/review';
 
 const { reducer } = offerSlice;
-
-const makeFakeOfferPreview = (id: string): OfferPreview => ({
-  id,
-  title: 'Уютная студия',
-  type: 'apartment',
-  price: 120,
-  city: {
-    name: 'Paris',
-    location: { latitude: 48.85661, longitude: 2.351499, zoom: 13 },
-  },
-  location: { latitude: 48.85661, longitude: 2.351499, zoom: 13 },
-  isFavorite: false,
-  isPremium: false,
-  rating: 4.8,
-  previewImage: 'img/studio-01.jpg',
-});
-
-const makeFakeOfferDetails = (id: string): OfferDetails => ({
-  ...makeFakeOfferPreview(id),
-  description: 'Просторная студия в центре',
-  bedrooms: 2,
-  goods: ['Wi-Fi', 'Kitchen'],
-  host: { name: 'Angelina', avatarUrl: 'img/avatar.jpg', isPro: true },
-  images: ['img/room-1.jpg', 'img/room-2.jpg'],
-  maxAdults: 3,
-});
-
-const makeFakeReview = (id: string, comment: string): Review => ({
-  id,
-  date: '2026-11-24T10:00:00.000Z',
-  user: { name: 'Angelina', avatarUrl: 'img/avatar.jpg', isPro: true },
-  comment,
-  rating: 4,
-});
 
 describe('offerSlice', () => {
   it('возвращает начальное состояние при пустом экшене', () => {
@@ -130,11 +95,10 @@ describe('offerSlice', () => {
     const existing = [makeFakeReview('1', 'Был раньше')];
     const newReview = makeFakeReview('2', 'Только что');
     const loadedState = reducer(undefined, fetchCommentsAction.fulfilled(existing, '', '1'));
-    const state = reducer(loadedState, postCommentAction.fulfilled(newReview, '', {
-      offerId: '1',
-      comment: 'Только что',
-      rating: 4,
-    }));
+    const state = reducer(
+      loadedState,
+      postCommentAction.fulfilled(newReview, '', { offerId: '1', comment: 'Только что', rating: 4 })
+    );
 
     expect(state.comments).toEqual([newReview, ...existing]);
     expect(state.commentStatus).toBe(RequestStatus.Success);
