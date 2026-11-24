@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import { AuthorizationStatus } from '@/const';
 import { RequestStatus } from '@/store/types';
 import { renderRoute } from '@/test-utils/render';
@@ -35,11 +35,16 @@ describe('маршрутизация', () => {
     expect(await screen.findByText('Nothing yet saved.')).toBeInTheDocument();
   });
 
-  it('не пускает в избранное, пока статус авторизации неизвестен', () => {
+  it('не пускает в избранное, пока статус авторизации неизвестен', async () => {
     const { router } = renderRoute('/favorites', {
       auth: makeAuthState(AuthorizationStatus.Unknown),
     });
 
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    expect(screen.queryByText(/Loading/)).not.toBeInTheDocument();
     expect(router.state.location.pathname).toBe('/favorites');
     expect(screen.queryByRole('button', { name: 'Sign in' })).not.toBeInTheDocument();
     expect(screen.queryByText('Nothing yet saved.')).not.toBeInTheDocument();
