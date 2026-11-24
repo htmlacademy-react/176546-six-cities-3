@@ -3,7 +3,7 @@ export const RATING_OPTIONS = [
   { value: 4, id: '4-stars', title: 'good' },
   { value: 3, id: '3-stars', title: 'not bad' },
   { value: 2, id: '2-stars', title: 'badly' },
-  { value: 1, id: '1-star', title: 'terribly' },
+  { value: 1, id: '1-stars', title: 'terribly' },
 ];
 
 export const MIN_COMMENT_LENGTH = 50;

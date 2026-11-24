@@ -12,9 +12,9 @@ function RatingStars({ rating, variant }: RatingStarsProps): JSX.Element {
   const classes = RATING_CLASSES[variant];
 
   return (
-    <div className={clsx(classes.wrapper, 'rating')}>
+    <div className={clsx(classes.wrapper, 'rating')} data-testid="rating-stars">
       <div className={clsx(classes.stars, 'rating__stars')}>
-        <span style={{ width: getRatingWidth(rating) }}></span>
+        <span data-testid="rating-stars-fill" style={{ width: getRatingWidth(rating) }}></span>
         <span className="visually-hidden">Rating</span>
       </div>
       {variant === 'offer' && <span className="offer__rating-value rating__value">{rating}</span>}

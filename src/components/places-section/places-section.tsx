@@ -14,7 +14,7 @@ function PlacesSectionView({ offers, cityName, onCardHover }: PlacesSectionProps
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">
-        {offers.length} places to stay in {cityName}
+        {offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {cityName}
       </b>
 
       <Sorting />

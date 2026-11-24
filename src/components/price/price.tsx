@@ -10,7 +10,7 @@ function Price({ price, variant }: PriceProps): JSX.Element {
   const { wrapper, value, text, suffix } = PRICE_VARIANTS[variant];
 
   return (
-    <div className={wrapper}>
+    <div className={wrapper} data-testid="price">
       <b className={value}>&euro;{price}</b>
       <span className={text}>{suffix}</span>
     </div>

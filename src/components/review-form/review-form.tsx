@@ -9,7 +9,6 @@ import {
 import type { ReviewFormData } from '@/components/review-form/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import {
-  fetchCommentsAction,
   getCommentError,
   postCommentAction,
   selectCommentStatus,
@@ -45,7 +44,6 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       .unwrap()
       .then(() => {
         setReviewData(EMPTY_REVIEW);
-        void dispatch(fetchCommentsAction(offerId));
       })
       .catch(() => undefined);
   };
@@ -69,7 +67,6 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={reviewData.comment}
         onChange={handleChange}
-        maxLength={MAX_COMMENT_LENGTH}
         disabled={isSending}
       />
       {isError && (

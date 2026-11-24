@@ -11,12 +11,7 @@ type MapSectionProps = {
 function MapSection({ city, offers, selectedPointId }: MapSectionProps): JSX.Element {
   return (
     <div className="cities__right-section">
-      <Map
-        className="cities__map"
-        city={city}
-        offers={offers}
-        selectedPointId={selectedPointId}
-      />
+      <Map className="cities__map" city={city} offers={offers} selectedPointId={selectedPointId} />
     </div>
   );
 }

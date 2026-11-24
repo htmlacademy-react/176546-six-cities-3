@@ -3,7 +3,7 @@ import type { OfferPreview } from '@/types/offer';
 import { MAX_RATING, SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
 
-export const getRatingWidth = (rating: number): string => `${(rating / MAX_RATING) * 100}%`;
+export const getRatingWidth = (rating: number): string => `${(Math.round(rating) / MAX_RATING) * 100}%`;
 
 export const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1);
 

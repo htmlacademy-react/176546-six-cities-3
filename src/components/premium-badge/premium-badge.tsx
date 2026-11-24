@@ -7,7 +7,7 @@ function PremiumBadge({ text, variant = 'place-card' }: PremiumBadgeProps): JSX.
   const markClass = variant === 'offer' ? 'offer__mark' : 'place-card__mark';
 
   return (
-    <div className={markClass}>
+    <div className={markClass} data-testid="premium-badge">
       <span>{text}</span>
     </div>
   );

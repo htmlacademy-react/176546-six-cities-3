@@ -23,6 +23,10 @@ const validate = ({ email, password }: LoginForm): string => {
     return 'Password must contain something other than spaces.';
   }
 
+  if (password.length < 2) {
+    return 'Password must be at least 2 characters long.';
+  }
+
   return '';
 };
 
