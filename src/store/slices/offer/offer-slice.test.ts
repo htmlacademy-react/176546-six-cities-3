@@ -6,7 +6,7 @@ import {
   postCommentAction,
 } from './offer-api-actions';
 import { RequestStatus } from '@/store/types';
-import { makeFakeOfferDetails, makeFakeOfferPreview, makeFakeReview } from '@/utils/mocks';
+import { makeFakeOfferDetails, makeFakeOfferPreview, makeFakeReview } from '@/test-utils/mocks';
 import type { OfferState } from './offer-slice';
 
 const { reducer } = offerSlice;

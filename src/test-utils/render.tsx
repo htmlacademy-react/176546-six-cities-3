@@ -7,7 +7,7 @@ import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { createRoutes } from '@/router';
-import { makeFakeStore } from '@/utils/mocks';
+import { makeFakeStore } from '@/test-utils/mocks';
 import type { AnyAction } from 'redux';
 import type { AxiosInstance } from 'axios';
 import type { RootState } from '@/store';

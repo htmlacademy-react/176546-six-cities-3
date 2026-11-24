@@ -2,7 +2,7 @@ import { authSlice, changeAuthorizationStatus } from './auth-slice';
 import { checkAuthAction, loginAction, logoutAction } from './auth-api-actions';
 import { AuthorizationStatus } from '@/const';
 import { RequestStatus } from '@/store/types';
-import { makeFakeAuthInfo } from '@/utils/mocks';
+import { makeFakeAuthInfo } from '@/test-utils/mocks';
 import type { AuthState } from './auth-slice';
 
 const { reducer } = authSlice;

@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { renderWrapper } from '@/test-utils/render';
 import UserBadge from './user-badge';
-import { makeFakeAuthInfo } from '@/utils/mocks';
+import { makeFakeAuthInfo } from '@/test-utils/mocks';
 
 const user = makeFakeAuthInfo({ name: 'Angelina' });
 

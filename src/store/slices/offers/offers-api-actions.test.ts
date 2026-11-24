@@ -6,7 +6,7 @@ import type { AxiosInstance } from 'axios';
 import type { AnyAction } from 'redux';
 import { rootReducer } from '@/store/root-reducer';
 import { ApiRoute } from '@/const';
-import { extractActionsTypes, makeFakeOfferPreview } from '@/utils/mocks';
+import { extractActionsTypes, makeFakeOfferPreview } from '@/test-utils/mocks';
 import { changeFavoriteAction, fetchOffersAction } from './offers-api-actions';
 
 type State = ReturnType<typeof rootReducer>;

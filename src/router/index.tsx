@@ -1,14 +1,14 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
-import PrivateRoute from './components/private-route';
+import PrivateRoute from '@/components/private-route';
 
 import { AppRoute } from '@/const';
 
 const MainPage = lazy(() => import('@/pages/main-page'));
-const LoginPage = lazy(() => import('@/pages/login-page/login-page'));
+const LoginPage = lazy(() => import('@/pages/login-page'));
 const FavoritesPage = lazy(() => import('@/pages/favorites-page'));
 const OfferPage = lazy(() => import('@/pages/offer-page'));
-const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page'));
+const NotFoundPage = lazy(() => import('@/pages/not-found-page'));
 
 const withSuspense = (element: JSX.Element) => (
   <Suspense fallback={<div>Loading&hellip;</div>}>{element}</Suspense>

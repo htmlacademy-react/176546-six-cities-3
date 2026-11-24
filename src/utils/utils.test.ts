@@ -1,4 +1,4 @@
-import { getRatingWidth } from './utils';
+import { getRatingWidth } from '@/utils';
 
 describe('getRatingWidth', () => {
   it('округляет рейтинг перед расчётом ширины заливки', () => {

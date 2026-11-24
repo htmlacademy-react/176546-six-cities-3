@@ -3,7 +3,7 @@ import { fetchFavoritesAction } from './favorites-api-actions';
 import { changeFavoriteAction } from '@/store/slices/offers';
 import { logoutAction } from '@/store/slices/auth';
 import { RequestStatus } from '@/store/types';
-import { makeFakeOfferPreview } from '@/utils/mocks';
+import { makeFakeOfferPreview } from '@/test-utils/mocks';
 import type { FavoritesState } from './favorites-slice';
 
 const { reducer } = favoritesSlice;

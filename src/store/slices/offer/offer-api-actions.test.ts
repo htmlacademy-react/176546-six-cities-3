@@ -11,7 +11,7 @@ import {
   makeFakeOfferDetails,
   makeFakeOfferPreview,
   makeFakeReview,
-} from '@/utils/mocks';
+} from '@/test-utils/mocks';
 import {
   fetchCommentsAction,
   fetchNearbyAction,

@@ -2,7 +2,7 @@ import { act, screen } from '@testing-library/react';
 import { AuthorizationStatus } from '@/const';
 import { RequestStatus } from '@/store/types';
 import { renderRoute } from '@/test-utils/render';
-import { makeAuthState, makeFavoritesState, makeOffersState } from '@/utils/mocks';
+import { makeAuthState, makeFavoritesState, makeOffersState } from '@/test-utils/mocks';
 
 describe('маршрутизация', () => {
   it('открывает главную страницу по адресу /', async () => {

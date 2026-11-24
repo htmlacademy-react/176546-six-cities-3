@@ -2,7 +2,7 @@ import { offersSlice, changeCity, changeSortType } from './offers-slice';
 import { fetchOffersAction } from './offers-api-actions';
 import { CITIES, SORT_OPTIONS } from '@/const';
 import { RequestStatus } from '@/store/types';
-import { makeFakeOfferPreview } from '@/utils/mocks';
+import { makeFakeOfferPreview } from '@/test-utils/mocks';
 import type { OffersState } from './offers-slice';
 
 const { reducer } = offersSlice;
