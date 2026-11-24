@@ -26,3 +26,15 @@ export const selectFavoritesIds = createSelector([getFavoritesIds], (ids) => new
 export const selectFavoritesCount = createSelector([getFavoritesIds], (ids) => ids.length);
 
 export const selectPendingIds = createSelector([getPendingIds], (ids) => new Set(ids));
+
+export const selectIsFavorite = (state: RootState, offerId: string): boolean => {
+  const details = state.offer.offer;
+
+  if (details && details.id === offerId) {
+    return details.isFavorite;
+  }
+
+  const offer = state.offers.offers.find((item) => item.id === offerId);
+
+  return offer ? offer.isFavorite : state.favorites.favoriteIds.includes(offerId);
+};

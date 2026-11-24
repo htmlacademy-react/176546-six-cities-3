@@ -7,7 +7,7 @@ export const RATING_OPTIONS = [
 ];
 
 export const MIN_COMMENT_LENGTH = 50;
-export const MAX_COMMENT_LENGTH = 250;
+export const MAX_COMMENT_LENGTH = 300;
 
 export type ReviewFormData = {
   rating: number;

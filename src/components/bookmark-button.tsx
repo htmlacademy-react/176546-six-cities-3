@@ -3,12 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { getAuthorizationStatus } from '@/store/slices/auth';
-import { selectPendingIds } from '@/store/slices/favorites';
+import { selectIsFavorite, selectPendingIds } from '@/store/slices/favorites';
 import { changeFavoriteAction } from '@/store/slices/offers';
 
 type BookmarkButtonProps = {
   offerId: string;
-  isFavorite: boolean;
   variant?: 'place-card' | 'offer';
 };
 
@@ -27,10 +26,11 @@ const ICON_SIZES = {
   offer: { width: 31, height: 33 },
 };
 
-function BookmarkButton({ offerId, isFavorite, variant = 'place-card' }: BookmarkButtonProps): JSX.Element {
+function BookmarkButton({ offerId, variant = 'place-card' }: BookmarkButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isFavorite = useAppSelector((state) => selectIsFavorite(state, offerId));
   const isPending = useAppSelector(selectPendingIds).has(offerId);
 
   const handleClick = () => {

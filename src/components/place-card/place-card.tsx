@@ -17,7 +17,7 @@ type PlaceCardProps = {
 };
 
 function PlaceCardView({ offer, variant = 'cities', onCardHover }: PlaceCardProps): JSX.Element {
-  const { id, isPremium, isFavorite, price, rating, title, type, previewImage } = offer;
+  const { id, isPremium, price, rating, title, type, previewImage } = offer;
 
   const cardClasses = CARD_CLASSES[variant];
   const imageSize = CARD_IMAGE_SIZES[variant];
@@ -48,7 +48,7 @@ function PlaceCardView({ offer, variant = 'cities', onCardHover }: PlaceCardProp
         <div className="place-card__price-wrapper">
           <Price price={price} variant="place-card" />
 
-          <BookmarkButton offerId={id} isFavorite={isFavorite} />
+          <BookmarkButton offerId={id} />
         </div>
         <RatingStars rating={rating} variant="place-card" />
         <h2 className="place-card__name">
