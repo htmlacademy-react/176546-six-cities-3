@@ -7,6 +7,8 @@ import type { RootState } from '@/store';
 import type { AuthInfo } from '@/types/user';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
+import { AuthorizationStatus } from '@/const';
+import { RequestStatus } from '@/store/types';
 
 export const extractActionsTypes = (actions: { type: string }[]): string[] =>
   actions.map(({ type }) => type);
@@ -60,4 +62,19 @@ export const makeFakeStore = (initialState: Partial<RootState> = {}): RootState 
   offer: offerSlice.reducer(undefined, { type: '' }),
   offers: offersSlice.reducer(undefined, { type: '' }),
   ...initialState,
+});
+
+export const makeAuthState = (authorizationStatus: AuthorizationStatus): RootState['auth'] => ({
+  ...makeFakeStore().auth,
+  authorizationStatus,
+});
+
+export const makeOffersState = (offersStatus: RequestStatus): RootState['offers'] => ({
+  ...makeFakeStore().offers,
+  offersStatus,
+});
+
+export const makeFavoritesState = (favoritesStatus: RequestStatus): RootState['favorites'] => ({
+  ...makeFakeStore().favorites,
+  favoritesStatus,
 });
