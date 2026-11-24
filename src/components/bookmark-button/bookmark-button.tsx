@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { getAuthorizationStatus } from '@/store/slices/auth';
-import { selectFavoriteFlags, selectPendingIds } from '@/store/slices/favorites';
+import { selectFavoritesIds, selectPendingIds } from '@/store/slices/favorites';
 import { changeFavoriteAction } from '@/store/slices/offers';
 
 type BookmarkButtonProps = {
@@ -30,7 +30,7 @@ function BookmarkButton({ offerId, variant = 'place-card' }: BookmarkButtonProps
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isFavorite = useAppSelector(selectFavoriteFlags).get(offerId) ?? false;
+  const isFavorite = useAppSelector(selectFavoritesIds).has(offerId);
   const isPending = useAppSelector(selectPendingIds).has(offerId);
 
   const handleClick = () => {

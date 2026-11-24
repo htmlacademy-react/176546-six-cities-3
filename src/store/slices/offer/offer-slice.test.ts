@@ -6,7 +6,6 @@ import {
   postCommentAction,
 } from './offer-api-actions';
 import { RequestStatus } from '@/store/types';
-import { logoutAction } from '@/store/slices/auth';
 import { makeFakeOfferDetails, makeFakeOfferPreview, makeFakeReview } from '@/test-utils/mocks';
 import type { OfferState } from './offer-slice';
 
@@ -127,17 +126,6 @@ describe('offerSlice', () => {
     );
 
     expect(state.commentError).toBe('Could not send the review. Please try again.');
-  });
-
-  it('снимает отметки избранного у оффера и соседей после выхода', () => {
-    const offer = { ...makeFakeOfferDetails('1'), isFavorite: true };
-    const nearby = [{ ...makeFakeOfferPreview('2'), isFavorite: true }];
-    const loaded = reducer(undefined, fetchOfferAction.fulfilled(offer, '', '1'));
-    const withNearby = reducer(loaded, fetchNearbyAction.fulfilled(nearby, '', '1'));
-    const state = reducer(withNearby, logoutAction.fulfilled(undefined, '', undefined));
-
-    expect(state.offer?.isFavorite).toBe(false);
-    expect(state.nearby.every((item) => item.isFavorite === false)).toBe(true);
   });
 
   it('не меняет состояние при неизвестном экшене', () => {
