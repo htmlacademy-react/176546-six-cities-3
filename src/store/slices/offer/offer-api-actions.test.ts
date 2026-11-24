@@ -12,16 +12,15 @@ import {
   makeFakeOfferPreview,
   makeFakeReview,
 } from '@/utils/mocks';
-
-type State = ReturnType<typeof rootReducer>;
-type AppThunkDispatch = ThunkDispatch<State, AxiosInstance, AnyAction>;
-
 import {
   fetchCommentsAction,
   fetchNearbyAction,
   fetchOfferAction,
   postCommentAction,
 } from './offer-api-actions';
+
+type State = ReturnType<typeof rootReducer>;
+type AppThunkDispatch = ThunkDispatch<State, AxiosInstance, AnyAction>;
 
 describe('offer async actions', () => {
   const api = axios.create();

@@ -7,11 +7,10 @@ import type { AnyAction } from 'redux';
 import { rootReducer } from '@/store/root-reducer';
 import { ApiRoute } from '@/const';
 import { extractActionsTypes, makeFakeOfferPreview } from '@/utils/mocks';
+import { changeFavoriteAction, fetchOffersAction } from './offers-api-actions';
 
 type State = ReturnType<typeof rootReducer>;
 type AppThunkDispatch = ThunkDispatch<State, AxiosInstance, AnyAction>;
-
-import { fetchOffersAction, changeFavoriteAction } from './offers-api-actions';
 
 describe('offers async actions', () => {
   const api = axios.create();
