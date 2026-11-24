@@ -3,8 +3,6 @@ import { renderWrapper } from '@/test-utils/render';
 import RatingStars from './rating-stars';
 import { getRatingWidth } from '@/utils';
 
-const getFill = () => screen.getByText('Rating').previousElementSibling as HTMLElement;
-
 describe('RatingStars', () => {
   it('показывает скрытую подпись для экранного диктора', () => {
     renderWrapper(<RatingStars rating={4} variant="place-card" />);
@@ -15,7 +13,7 @@ describe('RatingStars', () => {
   it('задаёт ширину заливки звёзд по рейтингу', () => {
     renderWrapper(<RatingStars rating={4} variant="place-card" />);
 
-    expect(getFill().style.width).toBe(getRatingWidth(4));
+    expect(screen.getByTestId('rating-stars-fill').style.width).toBe(getRatingWidth(4));
   });
 
   it('выводит числовое значение рейтинга только в карточке предложения', () => {
