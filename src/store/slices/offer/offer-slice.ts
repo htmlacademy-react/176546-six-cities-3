@@ -6,6 +6,7 @@ import {
   postCommentAction,
 } from './offer-api-actions';
 import { changeFavoriteAction } from '@/store/slices/offers/offers-api-actions';
+import { logoutAction } from '@/store/slices/auth';
 import { RequestStatus } from '@/store/types';
 import type { OfferDetails, OfferPreview } from '@/types/offer';
 import type { Review } from '@/types/review';
@@ -80,6 +81,13 @@ export const offerSlice = createSlice({
 
         if (state.offer && state.offer.id === offerId) {
           state.offer.isFavorite = isFavorite;
+        }
+      })
+      .addCase(logoutAction.fulfilled, (state) => {
+        state.nearby = state.nearby.map((offer) => ({ ...offer, isFavorite: false }));
+
+        if (state.offer) {
+          state.offer.isFavorite = false;
         }
       })
       .addCase(postCommentAction.rejected, (state, action) => {

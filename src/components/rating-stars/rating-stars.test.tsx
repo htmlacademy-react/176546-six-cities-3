@@ -16,6 +16,20 @@ describe('RatingStars', () => {
     expect(screen.getByTestId('rating-stars-fill').style.width).toBe(getRatingWidth(4));
   });
 
+  it('применяет классы обёртки под вариант использования', () => {
+    const { rerender } = renderWrapper(<RatingStars rating={3} variant="place-card" />);
+
+    expect(screen.getByTestId('rating-stars')).toHaveClass('place-card__rating');
+
+    rerender(<RatingStars rating={3} variant="reviews" />);
+
+    expect(screen.getByTestId('rating-stars')).toHaveClass('reviews__rating');
+
+    rerender(<RatingStars rating={3} variant="offer" />);
+
+    expect(screen.getByTestId('rating-stars')).toHaveClass('offer__rating');
+  });
+
   it('выводит числовое значение рейтинга только в карточке предложения', () => {
     const { rerender } = renderWrapper(<RatingStars rating={4.8} variant="offer" />);
 

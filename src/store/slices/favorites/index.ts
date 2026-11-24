@@ -7,6 +7,6 @@ export {
   selectFavoritesCount,
   selectFavoritesIds,
   selectFavoritesStatus,
-  selectIsFavorite,
+  selectFavoriteFlags,
   selectPendingIds,
 } from './favorites-selectors';

@@ -27,14 +27,21 @@ export const selectFavoritesCount = createSelector([getFavoritesIds], (ids) => i
 
 export const selectPendingIds = createSelector([getPendingIds], (ids) => new Set(ids));
 
-export const selectIsFavorite = (state: RootState, offerId: string): boolean => {
-  const details = state.offer.offer;
+const getOffersList = (state: RootState) => state.offers.offers;
+const getOfferDetails = (state: RootState) => state.offer.offer;
 
-  if (details && details.id === offerId) {
-    return details.isFavorite;
+export const selectFavoriteFlags = createSelector(
+  [getOfferDetails, getOffersList, getFavoritesIds],
+  (details, offers, favoriteIds) => {
+    const flags = new Map<string, boolean>();
+
+    favoriteIds.forEach((id) => flags.set(id, true));
+    offers.forEach((offer) => flags.set(offer.id, offer.isFavorite));
+
+    if (details) {
+      flags.set(details.id, details.isFavorite);
+    }
+
+    return flags;
   }
-
-  const offer = state.offers.offers.find((item) => item.id === offerId);
-
-  return offer ? offer.isFavorite : state.favorites.favoriteIds.includes(offerId);
-};
+);

@@ -13,7 +13,7 @@ export const getSortType = (state: RootState): SortType => state.offers.sortType
 
 const getOffers = (state: RootState): OfferPreview[] => state.offers.offers;
 
-const getOffersStatus = (state: RootState): RequestStatus => state.offers.offersStatus;
+export const getOffersStatus = (state: RootState): RequestStatus => state.offers.offersStatus;
 
 const getOffersByCity = createSelector([getCity, getOffers], (city, offers) =>
   offers.filter((offer) => offer.city.name === city)

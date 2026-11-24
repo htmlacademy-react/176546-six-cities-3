@@ -2,7 +2,8 @@ import { offersSlice, changeCity, changeSortType } from './offers-slice';
 import { fetchOffersAction } from './offers-api-actions';
 import { CITIES, SORT_OPTIONS } from '@/const';
 import { RequestStatus } from '@/store/types';
-import { makeFakeOfferPreview } from '@/test-utils/mocks';
+import { loginAction, logoutAction } from '@/store/slices/auth';
+import { makeFakeAuthInfo, makeFakeOfferPreview } from '@/test-utils/mocks';
 import type { OffersState } from './offers-slice';
 
 const { reducer } = offersSlice;
@@ -52,6 +53,29 @@ describe('offersSlice', () => {
     );
 
     expect(state.offersStatus).toBe(RequestStatus.Failed);
+  });
+
+  it('сбрасывает список после входа, чтобы он перезапросился', () => {
+    const offers = [makeFakeOfferPreview('1')];
+    const loaded = reducer(undefined, fetchOffersAction.fulfilled(offers, '', undefined));
+    const state = reducer(
+      loaded,
+      loginAction.fulfilled(makeFakeAuthInfo(), '', { email: 'user@example.com', password: '123' })
+    );
+
+    expect(state.offers).toEqual([]);
+    expect(state.offersStatus).toBe(RequestStatus.Idle);
+  });
+
+  it('снимает отметки избранного после выхода', () => {
+    const offers = [
+      { ...makeFakeOfferPreview('1'), isFavorite: true },
+      { ...makeFakeOfferPreview('2'), isFavorite: false },
+    ];
+    const loaded = reducer(undefined, fetchOffersAction.fulfilled(offers, '', undefined));
+    const state = reducer(loaded, logoutAction.fulfilled(undefined, '', undefined));
+
+    expect(state.offers.map((offer) => offer.isFavorite)).toEqual([false, false]);
   });
 
   it('не меняет состояние при неизвестном экшене', () => {

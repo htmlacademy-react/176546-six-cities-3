@@ -3,6 +3,7 @@ export {
   getCity,
   getSortType,
   getSortedOffers,
+  getOffersStatus,
   selectOffersStatus,
 } from './offers-selectors';
 export { changeCity, changeSortType, offersSlice } from './offers-slice';

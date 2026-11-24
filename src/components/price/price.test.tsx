@@ -16,4 +16,16 @@ describe('Price', () => {
     expect(screen.getByText('€999')).toBeInTheDocument();
     expect(screen.getByText(/night/)).toBeInTheDocument();
   });
+
+  it('применяет класс карточки места по умолчанию', () => {
+    renderWrapper(<Price price={120} variant="place-card" />);
+
+    expect(screen.getByTestId('price')).toHaveClass('place-card__price');
+  });
+
+  it('применяет класс страницы предложения для variant="offer"', () => {
+    renderWrapper(<Price price={120} variant="offer" />);
+
+    expect(screen.getByTestId('price')).toHaveClass('offer__price');
+  });
 });

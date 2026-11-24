@@ -4,6 +4,7 @@ import { CITIES, SORT_OPTIONS } from '@/const';
 import type { SortType } from '@/const';
 import { fetchOffersAction } from './offers-api-actions';
 import { changeFavoriteAction } from './offers-api-actions';
+import { loginAction, logoutAction } from '@/store/slices/auth';
 import { RequestStatus } from '@/store/types';
 import type { CityName } from '@/types/city';
 import type { OfferPreview } from '@/types/offer';
@@ -44,6 +45,13 @@ export const offersSlice = createSlice({
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.offersStatus = RequestStatus.Failed;
+      })
+      .addCase(loginAction.fulfilled, (state) => {
+        state.offers = [];
+        state.offersStatus = RequestStatus.Idle;
+      })
+      .addCase(logoutAction.fulfilled, (state) => {
+        state.offers = state.offers.map((offer) => ({ ...offer, isFavorite: false }));
       })
       .addCase(changeFavoriteAction.fulfilled, (state, action) => {
         const { offerId, isFavorite } = action.payload;

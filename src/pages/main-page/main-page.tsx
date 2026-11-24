@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import clsx from 'clsx';
 import Header from '@/components/header/header';
@@ -7,13 +8,28 @@ import MainEmpty from '@/components/main-empty/main-empty';
 import Spinner from '@/components/spinner/spinner';
 import ErrorMessage from '@/components/error-message/error-message';
 import { CITIES } from '@/const';
-import { useAppSelector } from '@/hooks';
-import { getCity, getSortedOffers, selectOffersStatus } from '@/store/slices/offers';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import {
+  fetchOffersAction,
+  getCity,
+  getOffersStatus,
+  getSortedOffers,
+  selectOffersStatus,
+} from '@/store/slices/offers';
+import { RequestStatus } from '@/store/types';
 
 function MainPage(): JSX.Element {
   const selectedCity = useAppSelector(getCity);
   const sortedOffers = useAppSelector(getSortedOffers);
   const { isLoading, isError } = useAppSelector(selectOffersStatus);
+  const offersStatus = useAppSelector(getOffersStatus);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (offersStatus === RequestStatus.Idle) {
+      void dispatch(fetchOffersAction());
+    }
+  }, [dispatch, offersStatus]);
 
   const activeCity = CITIES.find((city) => city.name === selectedCity) ?? CITIES[0];
   const isEmpty = !isLoading && !isError && sortedOffers.length === 0;
