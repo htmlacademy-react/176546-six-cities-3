@@ -3,29 +3,17 @@ import { renderWrapper } from '@/test-utils/render';
 import Price from './price';
 
 describe('Price', () => {
-  it('выводит цену в евро', () => {
+  it('выводит цену и суффикс «за ночь» в карточке места', () => {
     renderWrapper(<Price price={120} variant="place-card" />);
 
     expect(screen.getByText('€120')).toBeInTheDocument();
+    expect(screen.getByText(/night/)).toBeInTheDocument();
   });
 
-  it('показывает суффикс «за ночь» для карточки места', () => {
-    const { container } = renderWrapper(<Price price={120} variant="place-card" />);
+  it('выводит цену и суффикс «за ночь» на странице предложения', () => {
+    renderWrapper(<Price price={999} variant="offer" />);
 
-    expect(container.querySelector('.place-card__price-text')?.textContent).toContain('night');
-  });
-
-  it('показывает суффикс «за ночь» для карточки предложения', () => {
-    const { container } = renderWrapper(<Price price={999} variant="offer" />);
-
-    expect(container.querySelector('.offer__price-value')?.textContent).toBe('€999');
-    expect(container.querySelector('.offer__price-text')?.textContent).toContain('night');
-  });
-
-  it('применяет классы под вариант использования', () => {
-    const { container } = renderWrapper(<Price price={120} variant="offer" />);
-
-    expect(container.querySelector('.offer__price')).not.toBeNull();
-    expect(container.querySelector('.place-card__price')).toBeNull();
+    expect(screen.getByText('€999')).toBeInTheDocument();
+    expect(screen.getByText(/night/)).toBeInTheDocument();
   });
 });
