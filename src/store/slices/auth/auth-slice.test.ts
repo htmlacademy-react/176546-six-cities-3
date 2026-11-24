@@ -45,10 +45,7 @@ describe('authSlice', () => {
   });
 
   it('переводит статус входа в Loading и очищает ошибку', () => {
-    const failedState = reducer(
-      undefined,
-      loginAction.rejected(null, '', credentials, 'Ошибка')
-    );
+    const failedState = reducer(undefined, loginAction.rejected(null, '', credentials, 'Ошибка'));
     const state = reducer(failedState, loginAction.pending('', credentials));
 
     expect(state.loginStatus).toBe(RequestStatus.Loading);
@@ -65,7 +62,10 @@ describe('authSlice', () => {
   });
 
   it('пишет текст ошибки входа из payload', () => {
-    const state = reducer(undefined, loginAction.rejected(null, '', credentials, 'Неверный пароль'));
+    const state = reducer(
+      undefined,
+      loginAction.rejected(null, '', credentials, 'Неверный пароль')
+    );
 
     expect(state.loginStatus).toBe(RequestStatus.Failed);
     expect(state.loginError).toBe('Неверный пароль');

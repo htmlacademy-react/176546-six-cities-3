@@ -107,7 +107,12 @@ describe('offerSlice', () => {
   it('пишет текст ошибки отзыва из payload', () => {
     const state = reducer(
       undefined,
-      postCommentAction.rejected(null, '', { offerId: '1', comment: 'Текст', rating: 5 }, 'Не сохранилось')
+      postCommentAction.rejected(
+        null,
+        '',
+        { offerId: '1', comment: 'Текст', rating: 5 },
+        'Не сохранилось'
+      )
     );
 
     expect(state.commentStatus).toBe(RequestStatus.Failed);

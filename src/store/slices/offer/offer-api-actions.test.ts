@@ -6,7 +6,12 @@ import type { AxiosInstance } from 'axios';
 import type { AnyAction } from 'redux';
 import { rootReducer } from '@/store/root-reducer';
 import { ApiRoute } from '@/const';
-import { extractActionsTypes, makeFakeOfferDetails, makeFakeOfferPreview, makeFakeReview } from '@/utils/mocks';
+import {
+  extractActionsTypes,
+  makeFakeOfferDetails,
+  makeFakeOfferPreview,
+  makeFakeReview,
+} from '@/utils/mocks';
 
 type State = ReturnType<typeof rootReducer>;
 type AppThunkDispatch = ThunkDispatch<State, AxiosInstance, AnyAction>;

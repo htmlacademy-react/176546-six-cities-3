@@ -61,7 +61,7 @@ describe('маршрутизация', () => {
     expect(await screen.findByText('Nothing yet saved.')).toBeInTheDocument();
   });
 
-  it('не пускает в избранное, пока статус авторизации неизвестен', async () => {
+  it('не пускает в избранное, пока статус авторизации неизвестен', () => {
     const { router } = renderAt('/favorites', { auth: authState(AuthorizationStatus.Unknown) });
 
     expect(router.state.location.pathname).toBe('/favorites');

@@ -8,7 +8,8 @@ if (typeof globalThis.Request !== 'undefined') {
   globalThis.Request = class extends NativeRequest {
     constructor(input: RequestInfo | URL, init?: RequestInit) {
       if (init && 'signal' in init) {
-        const { signal: _signal, ...rest } = init;
+        const rest = { ...init };
+        delete rest.signal;
 
         super(input, rest);
         return;
