@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import RatingInput from '@/components/review-form/rating-input';
+import styles from '@/components/review-form/review-form.module.css';
 import {
   EMPTY_REVIEW,
   MAX_COMMENT_LENGTH,
@@ -70,7 +71,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         disabled={isSending}
       />
       {isError && (
-        <p className="reviews__help" role="alert" style={{ color: '#d14343' }}>
+        <p className={`reviews__help ${styles.error}`} role="alert">
           {commentError}
         </p>
       )}
