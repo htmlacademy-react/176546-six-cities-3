@@ -4,7 +4,8 @@ import { RequestStatus } from '@/store/types';
 import type { RootState } from '@/store';
 import type { OfferPreview } from '@/types/offer';
 
-const getFavoritesStatus = (state: RootState): RequestStatus => state.favorites.favoritesStatus;
+export const getFavoritesStatus = (state: RootState): RequestStatus =>
+  state.favorites.favoritesStatus;
 
 export const getFavorites = (state: RootState): OfferPreview[] => state.favorites.favorites;
 
@@ -26,5 +27,3 @@ export const selectFavoritesIds = createSelector([getFavoritesIds], (ids) => new
 export const selectFavoritesCount = createSelector([getFavoritesIds], (ids) => ids.length);
 
 export const selectPendingIds = createSelector([getPendingIds], (ids) => new Set(ids));
-
-
