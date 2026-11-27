@@ -1,8 +1,9 @@
-import { Link, useRouteError } from 'react-router-dom';
+import { Link, useNavigate, useRouteError } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import styles from './not-found-page.module.css';
 
 function NotFoundPage(): JSX.Element {
+  const navigate = useNavigate();
   const error = useRouteError() as { status?: number; statusText?: string } | null;
   const status = error?.status ?? 404;
   const statusText = error?.statusText ?? 'Not Found';
@@ -26,7 +27,7 @@ function NotFoundPage(): JSX.Element {
           <Link to="/" className={`${styles.button} ${styles.buttonPrimary}`}>
             Go home
           </Link>
-          <button type="button" className={styles.button} onClick={() => window.history.back()}>
+          <button type="button" className={styles.button} onClick={() => navigate(-1)}>
             Back
           </button>
         </div>
