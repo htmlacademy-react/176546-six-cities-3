@@ -5,7 +5,7 @@ import { AppRoute } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { getLoginError, loginAction, selectAuthState, selectLoginStatus } from '@/store/slices/auth';
 
-import { EMAIL_PATTERN, EMPTY_FORM, LOGIN_FIELDS } from './const';
+import { EMAIL_PATTERN, EMPTY_FORM, LOGIN_FIELDS, PASSWORD_PATTERN } from './const';
 
 type FieldName = 'email' | 'password';
 
@@ -23,8 +23,8 @@ const validate = ({ email, password }: LoginForm): string => {
     return 'Password must contain something other than spaces.';
   }
 
-  if (password.length < 2) {
-    return 'Password must be at least 2 characters long.';
+  if (!PASSWORD_PATTERN.test(password)) {
+    return 'Password must contain at least one letter and one digit.';
   }
 
   return '';
