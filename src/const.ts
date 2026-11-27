@@ -32,6 +32,7 @@ export enum ApiRoute {
   Comments = '/comments',
   Favorite = '/favorite',
   Login = '/login',
+  Logout = '/logout',
 }
 
 export enum AuthorizationStatus {

@@ -23,8 +23,14 @@ export const checkAuthAction = createAsyncThunk<AuthInfo, undefined, ThunkOption
 
 export const logoutAction = createAsyncThunk<void, undefined, ThunkOptions>(
   'user/logout',
-  () => {
-    dropToken();
+  async (_arg, { extra: api }) => {
+    try {
+      await api.delete(ApiRoute.Logout, { silentError: true });
+    } catch {
+      // Сеть не должна мешать выходу: локальный токен снимаем в любом случае.
+    } finally {
+      dropToken();
+    }
   }
 );
 

@@ -1,8 +1,16 @@
+import MockAdapter from 'axios-mock-adapter';
+import axios from 'axios';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import thunk, { ThunkDispatch } from 'redux-thunk';
+import type { AxiosInstance } from 'axios';
+import type { AnyAction } from 'redux';
 import { authSlice, changeAuthorizationStatus } from './auth-slice';
 import { checkAuthAction, loginAction, logoutAction } from './auth-api-actions';
-import { AuthorizationStatus } from '@/const';
+import { ApiRoute, AuthorizationStatus } from '@/const';
+import { rootReducer } from '@/store/root-reducer';
 import { RequestStatus } from '@/store/types';
-import { makeFakeAuthInfo } from '@/test-utils/mocks';
+import { getToken, saveToken } from '@/services/token';
+import { extractActionsTypes, makeFakeAuthInfo } from '@/test-utils/mocks';
 import type { AuthState } from './auth-slice';
 
 const { reducer } = authSlice;
@@ -94,5 +102,60 @@ describe('authSlice', () => {
     const initialState: AuthState = reducer(undefined, { type: '' });
 
     expect(reducer(initialState, { type: 'unknown/action' })).toEqual(initialState);
+  });
+});
+
+describe('logoutAction', () => {
+  type State = ReturnType<typeof rootReducer>;
+  type AppThunkDispatch = ThunkDispatch<State, AxiosInstance, AnyAction>;
+
+  const api = axios.create();
+  const mockApi = new MockAdapter(api);
+  const createMockStore = configureMockStore<State, AnyAction, AppThunkDispatch>([
+    thunk.withExtraArgument(api),
+  ]);
+
+  const dispatchLogout = async () => {
+    const store = createMockStore({} as State);
+
+    await store.dispatch(logoutAction());
+
+    return store.getActions();
+  };
+
+  beforeEach(() => {
+    localStorage.clear();
+    saveToken('six-cities-token');
+  });
+
+  afterEach(() => {
+    mockApi.reset();
+    localStorage.clear();
+  });
+
+  it('отправляет DELETE /logout и снимает токен', async () => {
+    mockApi.onDelete(ApiRoute.Logout).reply(204);
+
+    const actions = await dispatchLogout();
+
+    expect(mockApi.history.delete).toHaveLength(1);
+    expect(mockApi.history.delete[0].url).toBe(ApiRoute.Logout);
+    expect(getToken()).toBe('');
+    expect(extractActionsTypes(actions)).toEqual([
+      logoutAction.pending.type,
+      logoutAction.fulfilled.type,
+    ]);
+  });
+
+  it('снимает токен, даже если сервер ответил ошибкой', async () => {
+    mockApi.onDelete(ApiRoute.Logout).reply(500);
+
+    const actions = await dispatchLogout();
+
+    expect(getToken()).toBe('');
+    expect(extractActionsTypes(actions)).toEqual([
+      logoutAction.pending.type,
+      logoutAction.fulfilled.type,
+    ]);
   });
 });
